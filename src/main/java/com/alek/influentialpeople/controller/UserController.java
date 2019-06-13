@@ -26,6 +26,10 @@ public class UserController {
 	private UserService userService;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	public UserController(BCryptPasswordEncoder bCryptPasswordEncoder) {
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
+
 	@CrossOrigin
 	@RequestMapping(path = "/user", method = RequestMethod.GET)
 	public List<User> getAllUsers(@RequestParam(value = "id", required = false) Long id,
