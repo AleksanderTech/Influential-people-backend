@@ -1,12 +1,16 @@
 package com.alek.influentialpeople.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.alek.influentialpeople.persistance.entity.Biography;
 import com.alek.influentialpeople.persistance.entity.Person;
 import com.alek.influentialpeople.service.BiographyService;
@@ -18,7 +22,7 @@ public class BiographyController { // potrrzebuje jsona
 	BiographyService biographyService;
 
 	@RequestMapping(path = "/person/{id}/biography", method = RequestMethod.GET)
-	public List<Biography> getAllBiographies() {
+	public List<Biography> getAllBiographies(HttpServletResponse s) {
 
 		return biographyService.getAllBiographies();
 	}
