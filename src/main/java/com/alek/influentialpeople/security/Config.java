@@ -1,10 +1,8 @@
-package com.alek.influentialpeople.configuration;
+package com.alek.influentialpeople.security;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.alek.influentialpeople.security.CustomFilter;
-import com.alek.influentialpeople.security.AuthorizationFilter;
 
 @Configuration
 public class Config {

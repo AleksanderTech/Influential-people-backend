@@ -3,10 +3,12 @@ package com.alek.influentialpeople.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +23,8 @@ import com.alek.influentialpeople.service.UserService;
 public class UserController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@CrossOrigin
 	@RequestMapping(path = "/user", method = RequestMethod.GET)
@@ -29,7 +32,7 @@ public class UserController {
 			@RequestParam(value = "start", required = false) Long start,
 			@RequestParam(value = "size", required = false) Long size,
 			@CookieValue(value = "aCookie", required = false) String aValue,
-			@RequestHeader MultiValueMap<String,String>headers) {
+			@RequestHeader MultiValueMap<String, String> headers) {
 		System.out.println(headers.entrySet());
 		if (id != null) {
 			return userService.getUsersForId(id);
@@ -39,7 +42,6 @@ public class UserController {
 
 		return userService.getAllUsers();
 	}
-
 
 	@RequestMapping(path = "/user", method = RequestMethod.POST)
 	public void addUser(@RequestBody User user) {
@@ -58,6 +60,11 @@ public class UserController {
 		return userService.getUser(Long.valueOf(id));
 	}
 
+	@PostMapping("/sign-up")
+	public void signUp(@RequestBody User user) {
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		userService.addUser(user);
+	}
 //
 //	@RequestMapping(path = "/user", method = RequestMethod.GET)
 //	public User getUser5() {
