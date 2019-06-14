@@ -1,7 +1,6 @@
 package com.alek.influentialpeople.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.MultiValueMap;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.alek.influentialpeople.persistance.entity.User;
 import com.alek.influentialpeople.service.UserService;
 
@@ -64,7 +62,7 @@ public class UserController {
 		return userService.getUser(Long.valueOf(id));
 	}
 
-	@PostMapping("/sign-up")
+	@PostMapping("/user/sign-up")
 	public void signUp(@RequestBody User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userService.addUser(user);

@@ -18,7 +18,7 @@ public class User {
 	private long id;
 	@NotNull
 	@Column(unique = true, nullable = false)
-	private String nickname;
+	private String username;
 	@Column(nullable = false)
 	private String email;
 	@Column(nullable = false)
@@ -38,9 +38,9 @@ public class User {
 	public User() {
 	}
 
-	public User(Long id, String nickname, String email, String password, int activation, String role, long created_at) {
+	public User(Long id, String username, String email, String password, int activation, String role, long created_at) {
 		this.id = id;
-		this.nickname = nickname;
+		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.activation = activation;
@@ -56,12 +56,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getEmail() {
@@ -106,8 +106,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return String.format("User [id=%s, nickname=%s, email=%s, password=%s, activation=%s, role=%s, created_at=%s]",
-				id, nickname, email, password, activation, role, created_at);
+		return String.format("User [id=%s, username=%s, email=%s, password=%s, activation=%s, role=%s, created_at=%s]",
+				id, username, email, password, activation, role, created_at);
 	}
 
 }

@@ -23,18 +23,22 @@ import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-	
+
 	private AuthenticationManager authenticationManager;
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
-		this.authenticationManager = authenticationManager;
+		this.authenticationManager = authenticationManager; // rozszerzamy takze spokojnie ta klasa to bean.
 	}
 
+	// ten filtr jest jako drugi
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
 			throws AuthenticationException {
+		//tutaj parsujemy sobie dane uzytkownika i przkazujemy do obiektu authentication poprzez menagera
+		System.out.println("attemt in JWTAUTHENTI");
 		try {
-			User creds = new ObjectMapper().readValue(req.getInputStream(), User.class);
+			com.alek.influentialpeople.persistance.entity.User creds = new ObjectMapper() // wyciagniecie usera z req
+					.readValue(req.getInputStream(), com.alek.influentialpeople.persistance.entity.User.class);
 
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
 					creds.getPassword(), new ArrayList<>()));
@@ -46,7 +50,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
-
+		//wywolana w momencie udanego logowania 
+		System.out.println("successfulin JWTAUTHENti");
 		String token = JWT.create().withSubject(((User) auth.getPrincipal()).getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME)).sign(HMAC512(SECRET.getBytes()));
 		res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
