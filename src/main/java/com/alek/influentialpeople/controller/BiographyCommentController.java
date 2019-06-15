@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alek.influentialpeople.persistance.entity.BiographyComment;
+import com.alek.influentialpeople.persistance.entity.ArticleComment;
 import com.alek.influentialpeople.service.BiographyCommentService;
 
 @RestController //serializacja
@@ -18,13 +18,13 @@ public class BiographyCommentController { // potrrzebuje jsona
 	BiographyCommentService biographyCommentService;
 	
 	@RequestMapping(path = "/person/{id}/biography/{id}/comment", method = RequestMethod.GET)
-	public List<BiographyComment> getAllUsers() {
+	public List<ArticleComment> getAllUsers() {
 		
 		return biographyCommentService.getAllBiographyComments();
 	}
 
 	@RequestMapping(path = "/person/{id}/biography/{id}/comment", method = RequestMethod.POST)
-	public void addUser(@RequestBody BiographyComment biographyComment) { //deserializacja
+	public void addUser(@RequestBody ArticleComment biographyComment) { //deserializacja
 		biographyCommentService.addBiographyComment(biographyComment);
 	}
 

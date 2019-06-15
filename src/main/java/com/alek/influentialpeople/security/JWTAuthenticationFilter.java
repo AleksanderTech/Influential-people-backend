@@ -35,6 +35,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
 			throws AuthenticationException {
 		//tutaj parsujemy sobie dane uzytkownika i przkazujemy do obiektu authentication poprzez menagera
+		//spring security zapewnia /login endpoint 
 		System.out.println("attemt in JWTAUTHENTI");
 		try {
 			com.alek.influentialpeople.persistance.entity.User creds = new ObjectMapper() // wyciagniecie usera z req

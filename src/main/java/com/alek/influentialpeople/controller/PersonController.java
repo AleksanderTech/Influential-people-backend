@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alek.influentialpeople.persistance.entity.Person;
+import com.alek.influentialpeople.persistance.entity.Hero;
 import com.alek.influentialpeople.service.PersonService;
 
 @RestController
@@ -18,13 +18,13 @@ public class PersonController { // potrrzebuje jsona
 	PersonService personService;
 	
 	@RequestMapping(path = "/person", method = RequestMethod.GET)
-	public List<Person> getAllPersons() {
+	public List<Hero> getAllPersons() {
 		
 		return personService.getAllPersons();
 	}
 
 	@RequestMapping(path = "/person", method = RequestMethod.POST)
-	public void addPerson(@RequestBody Person person) {
+	public void addPerson(@RequestBody Hero person) {
 		personService.addPerson(person);
 	}
 

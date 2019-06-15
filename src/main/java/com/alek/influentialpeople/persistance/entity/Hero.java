@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Person {
+public class Hero {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -15,14 +15,14 @@ public class Person {
 	private long points;
 	private String category;
 
-	public Person(int id, String fullName, long points, String category) {
+	public Hero(int id, String fullName, long points, String category) {
 		this.id = id;
 		this.fullName = fullName;
 		this.points = points;
 		this.category = category;
 	}
 
-	public Person() {
+	public Hero() {
 	}
 
 	public long getId() {

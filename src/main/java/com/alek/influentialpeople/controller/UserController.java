@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.alek.influentialpeople.persistance.entity.User;
+import com.alek.influentialpeople.persistence.entity.ProfileImage;
 import com.alek.influentialpeople.service.UserService;
 
 @RestController
@@ -28,7 +29,6 @@ public class UserController {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
-	@CrossOrigin
 	@RequestMapping(path = "/user", method = RequestMethod.GET)
 	public List<User> getAllUsers(@RequestParam(value = "id", required = false) Long id,
 			@RequestParam(value = "start", required = false) Long start,
@@ -45,6 +45,12 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 
+	@RequestMapping(path="/user/image",method=RequestMethod.POST)
+	public void addImage(@RequestBody ProfileImage image) {
+		
+		
+	}
+	
 	@RequestMapping(path = "/user", method = RequestMethod.POST)
 	public void addUser(@RequestBody User user) {
 		userService.addUser(user);

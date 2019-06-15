@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alek.influentialpeople.persistance.BiographyRepository;
-import com.alek.influentialpeople.persistance.entity.Biography;
+import com.alek.influentialpeople.persistance.entity.Article;
 
 @Service
 public class BiographyService {
@@ -15,13 +15,13 @@ public class BiographyService {
 	@Autowired
 	BiographyRepository biographyRepository;
 
-	public List<Biography> getAllBiographies() {
-		List<Biography> biographies = new ArrayList<>();
+	public List<Article> getAllBiographies() {
+		List<Article> biographies = new ArrayList<>();
 		biographyRepository.findAll().forEach(biographies::add);
 		return biographies;
 	}
 
-	public void addBiography(Biography biography) {
+	public void addBiography(Article biography) {
 		biographyRepository.save(biography);
 	}
 
