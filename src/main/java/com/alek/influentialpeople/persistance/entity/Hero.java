@@ -7,22 +7,32 @@ import javax.persistence.Id;
 
 @Entity
 public class Hero {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	private String fullName;
-	private long points;
-	private String category;
 
-	public Hero(int id, String fullName, long points, String category) {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+	private String fullName;
+	
+	private Long created_at;
+
+	
+	public Hero(int id, String fullName, Long created_at) {
+		super();
 		this.id = id;
 		this.fullName = fullName;
-		this.points = points;
-		this.category = category;
+		this.created_at = created_at;
 	}
 
 	public Hero() {
+	}
+
+	public Long getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(Long created_at) {
+		this.created_at = created_at;
 	}
 
 	public long getId() {
@@ -40,21 +50,4 @@ public class Hero {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
-
-	public long getPoints() {
-		return points;
-	}
-
-	public void setPoints(long points) {
-		this.points = points;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
 }
