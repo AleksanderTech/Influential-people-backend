@@ -6,23 +6,23 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alek.influentialpeople.persistance.PersonRepository;
-import com.alek.influentialpeople.persistance.entity.Hero;
+import com.alek.influentialpeople.persistance.ArticleRepository;
+import com.alek.influentialpeople.persistance.entity.Article;
 
 @Service
-public class PersonService {
+public class ArticleService {
 
 	@Autowired
-	PersonRepository personRepository;
+	ArticleRepository biographyRepository;
 
-	public List<Hero> getAllPersons() {
-		List<Hero> persons = new ArrayList<>();
-		personRepository.findAll().forEach(persons::add);
-		return persons;
+	public List<Article> getAllBiographies() {
+		List<Article> biographies = new ArrayList<>();
+		biographyRepository.findAll().forEach(biographies::add);
+		return biographies;
 	}
 
-	public void addPerson(Hero person) {
-		personRepository.save(person);
+	public void addBiography(Article biography) {
+		biographyRepository.save(biography);
 	}
 
 	// napisz metode zwracajaca liste userow uzywajac spring jpa crudrepository

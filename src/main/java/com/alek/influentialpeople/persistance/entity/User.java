@@ -1,50 +1,51 @@
 package com.alek.influentialpeople.persistance.entity;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false)
+	@Column(updatable = false)
 	private long id;
-	@NotNull
 	@Column(unique = true, nullable = false)
 	private String username;
 	@Column(nullable = false)
-	private String email;
-	@Column(nullable = false)
 	private String password;
+	@Column(nullable = false)
+	private String email;
+	@Column(nullable = false,length=20)
+	private String role;
 	@Column(columnDefinition = "int default '0'")
 	private int activation;
-	@Column(nullable = false)
-	private String role;
-	@Column(updatable = false)
+	@Column(updatable = false, nullable = false)
 	private Long created_at;
 
 	@PrePersist
 	private void onCreate() {
-		created_at = ZonedDateTime.now().toEpochSecond();
+		created_at = new Date().toInstant().getEpochSecond();
 	}
 
 	public User() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public User(Long id, String username, String email, String password, int activation, String role, long created_at) {
+	public User(long id, String username, String password, String email, String role, int activation, Long created_at) {
+		super();
 		this.id = id;
 		this.username = username;
-		this.email = email;
 		this.password = password;
-		this.activation = activation;
+		this.email = email;
 		this.role = role;
+		this.activation = activation;
 		this.created_at = created_at;
 	}
 
@@ -64,14 +65,6 @@ public class User {
 		this.username = username;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -80,12 +73,12 @@ public class User {
 		this.password = password;
 	}
 
-	public int getActivation() {
-		return activation;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setActivation(int activation) {
-		this.activation = activation;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getRole() {
@@ -94,6 +87,14 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public int getActivation() {
+		return activation;
+	}
+
+	public void setActivation(int activation) {
+		this.activation = activation;
 	}
 
 	public Long getCreated_at() {
@@ -106,8 +107,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return String.format("User [id=%s, username=%s, email=%s, password=%s, activation=%s, role=%s, created_at=%s]",
-				id, username, email, password, activation, role, created_at);
+		return String.format("User [id=%s, username=%s, password=%s, email=%s, role=%s, activation=%s, created_at=%s]",
+				id, username, password, email, role, activation, created_at);
 	}
 
 }

@@ -1,68 +1,43 @@
 package com.alek.influentialpeople.persistance.entity;
 
+import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 
 @Entity
 public class Article {
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(updatable = false)
 	private long id;
+	@Column(nullable = false)
+	private String title;
+	@Column(nullable = false)
 	private String content;
-	@OneToOne
+	@Column(updatable = false, nullable = false)
+	private Long created_at;
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "hero_id", referencedColumnName = "id")
 	private Hero person;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
-
-	public Article(long id, String content, Hero person, User user) {
-		this.id = id;
-		this.content = content;
-		this.person = person;
-		this.user = user;
-	}
-//	private String getDateTime() {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat(
-//                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-//        Date date = new Date();
-//        return dateFormat.format(date);
-//}
-	public Article() {
+	
+	@PrePersist
+	private void onCreate() {
+		created_at = new Date().toInstant().getEpochSecond();
 	}
 
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public Hero getPerson() {
-		return person;
-	}
-
-	public void setPerson(Hero person) {
-		this.person = person;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("Biography [id=%s, content=%s, person=%s, user=%s]", id, content, person, user);
-	}
+	
+	
+	
 }

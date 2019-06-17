@@ -12,13 +12,15 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.alek.influentialpeople.service.UserDetailsServiceImpl;
+
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	private UserDetailsService userDetailsService;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public WebSecurity(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public WebSecurity(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userDetailsService = userDetailsService;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}

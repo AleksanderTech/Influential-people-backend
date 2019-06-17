@@ -4,13 +4,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.alek.influentialpeople.email.EmailService;
 import com.alek.influentialpeople.persistance.entity.User;
 import com.alek.influentialpeople.service.UserService;
 
@@ -28,9 +32,13 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired
+	private EmailService emailService;
+	
+	private PasswordEncoder bCryptPasswordEncoder;
+	private User user;
 
-	public UserController(BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public UserController(PasswordEncoder bCryptPasswordEncoder) {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
@@ -50,10 +58,10 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 
-	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
+	@RequestMapping(value = "/user/{id}/uploadFile", method = RequestMethod.POST)
+	public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable String id) {
 
-		File uploadedFile = new File("C:\\Users\\Aleks\\Desktop\\Games", file.getOriginalFilename());
+		File uploadedFile = new File("static/storage/user/image/", file.getOriginalFilename()+id);
 
 		try {
 			uploadedFile.createNewFile();
@@ -66,14 +74,13 @@ public class UserController {
 		return new ResponseEntity<Object>("file Uplaoded succesfully", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/uploadmultipleFiles", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<Object> uploadmultipleFile(@RequestParam("files") MultipartFile[] files) {
+	@RequestMapping(value = "/user/{id}/uploadmultipleFiles", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<Object> uploadmultipleFile(@RequestParam("files") MultipartFile[] files,@PathVariable String id) {
 		FileOutputStream fileOutputStream = null;
 		System.out.println("hae");
 		System.out.println(files);
 		for (MultipartFile multipartFile : files) {
-
-			File uploadedFile = new File("C:\\Users\\Aleks\\Desktop\\Games", multipartFile.getOriginalFilename());
+			File uploadedFile = new File("src/main/resources/static/storage/user/image", multipartFile.getOriginalFilename()+id);
 			System.out.println("hae2");
 			try {
 				System.out.println("hae3");
@@ -108,21 +115,18 @@ public class UserController {
 	}
 
 	@PostMapping("/user/sign-up")
-	public void signUp(@RequestBody User user) {
+	public void sendEmail(@RequestBody User user) throws IOException {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		// wyslanie emaila z kodem w url-u
+		
+		this.user=user;
+		emailService.sendMail(String.valueOf(user.getId()));
+	}
+	@GetMapping("/user/sign-up")
+	public void signUp(@RequestParam(name = "user_id") String id) {
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		// wyslanie emaila z kodem w url-u
 		userService.addUser(user);
 	}
-//
-//	@RequestMapping(path = "/user", method = RequestMethod.GET)
-//	public User getUser5() {
-//
-//		return new User();
-//	}
-//
-//	@RequestMapping(path = "/user", method = RequestMethod.GET)
-//	public User getUs1er() {
-//
-//		return new User();
-//	}
 
 }
