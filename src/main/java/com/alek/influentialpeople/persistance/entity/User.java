@@ -1,11 +1,14 @@
 package com.alek.influentialpeople.persistance.entity;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 
 @Entity
@@ -21,12 +24,15 @@ public class User {
 	private String password;
 	@Column(nullable = false)
 	private String email;
-	@Column(nullable = false,length=20)
+	@Column(nullable = false, length = 20)
 	private String role;
 	@Column(columnDefinition = "int default '0'")
 	private int activation;
 	@Column(updatable = false, nullable = false)
 	private Long created_at;
+	@OneToMany(mappedBy="user")
+	private List<Article> article;
+	
 
 	@PrePersist
 	private void onCreate() {
@@ -36,6 +42,11 @@ public class User {
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public User(long id) {
+		super();
+		this.id = id;
 	}
 
 	public User(long id, String username, String password, String email, String role, int activation, Long created_at) {

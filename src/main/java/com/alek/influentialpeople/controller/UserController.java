@@ -118,14 +118,19 @@ public class UserController {
 	public void sendEmail(@RequestBody User user) throws IOException {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		// wyslanie emaila z kodem w url-u
-		
+		System.out.println("sending email ...");
 		this.user=user;
-		emailService.sendMail(String.valueOf(user.getId()));
+		System.out.println(user.getUsername());
+		emailService.sendMail(user.getUsername());
 	}
 	@GetMapping("/user/sign-up")
-	public void signUp(@RequestParam(name = "user_id") String id) {
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	public void signUp(@RequestParam(name = "username") String username) {
+		System.out.println(user.getPassword());
+//		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.setActivation(1);
+		System.out.println(user.getUsername());
 		// wyslanie emaila z kodem w url-u
+		System.out.println(user.getPassword());
 		userService.addUser(user);
 	}
 

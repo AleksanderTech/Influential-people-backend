@@ -25,6 +25,8 @@ public class HeroController { // potrrzebuje jsona
 
 	@RequestMapping(path = "/hero", method = RequestMethod.POST)
 	public void addPerson(@RequestBody Hero person) {
+		System.out.println(person.toString()+"  !!!!!!!!!!!!!!!!!!!!!");
+		System.out.println();
 		personService.addPerson(person);
 	}
 

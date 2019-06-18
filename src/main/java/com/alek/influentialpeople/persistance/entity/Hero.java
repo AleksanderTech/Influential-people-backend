@@ -1,11 +1,14 @@
 package com.alek.influentialpeople.persistance.entity;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 
 @Entity
@@ -19,6 +22,8 @@ public class Hero {
 	private String fullName;
 	@Column(updatable = false, nullable = false)
 	private Long created_at;
+	@OneToMany(mappedBy="hero")
+	private List<Article> article;
 
 	@PrePersist
 	private void onCreate() {
@@ -31,6 +36,31 @@ public class Hero {
 	public Hero(int id, String fullName, Long created_at) {
 		this.id = id;
 		this.fullName = fullName;
+		this.created_at = created_at;
+	}
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public Long getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(Long created_at) {
 		this.created_at = created_at;
 	}
 

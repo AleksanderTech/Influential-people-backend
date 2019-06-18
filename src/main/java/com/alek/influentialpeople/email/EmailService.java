@@ -10,11 +10,14 @@ import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.springframework.stereotype.Component;
 
@@ -47,7 +50,7 @@ public class EmailService {
 			// Creating a Message object to set the email content
 			MimeMessage msg = new MimeMessage(session);
 			// Storing the comma seperated values to email addresses
-			String to = "olek50000@o2.pl";
+			String to = "aleksanderroztrop@gmail.com,olek50000@o2.pl";
 			/*
 			 * Parsing the String with defualt delimiter as a comma by marking the boolean
 			 * as true and storing the email addresses in an array of InternetAddress
@@ -58,11 +61,15 @@ public class EmailService {
 			msg.setRecipients(Message.RecipientType.TO, address);
 			String timeStamp = new SimpleDateFormat("yyyymmdd_hh-mm-ss").format(new Date());
 			msg.setSubject("Sample Mail : " + timeStamp);
-			msg.setSentDate(new Date());
-			msg.setContent("<h1>Hello</h1><br><br><a href=\"http://localhost:8080/user/sign-up?user_id="+activationParameter+">Activation link</a>", "text/html; charset=utf-8");
 			
-			msg.setText("Sampel System Generated mail");
-			msg.setHeader("XPriority", "1");
+			String body="<a href=\"http://localhost:8080/user/sign-up?username="+activationParameter+">Activation link</a>";
+			MimeBodyPart mimeBodyPart = new MimeBodyPart();
+			mimeBodyPart.setContent(body, "text/html");
+			 
+			Multipart multipart = new MimeMultipart();
+			multipart.addBodyPart(mimeBodyPart);
+			 
+			msg.setContent(multipart);
 			Transport.send(msg);
 			System.out.println("Mail has been sent successfully");
 		} catch (MessagingException mex) {

@@ -7,55 +7,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.alek.influentialpeople.persistance.HeroRepository;
+import com.alek.influentialpeople.persistance.UserRepository;
 import com.alek.influentialpeople.persistance.entity.Article;
 import com.alek.influentialpeople.persistance.entity.Hero;
+import com.alek.influentialpeople.persistance.entity.User;
 import com.alek.influentialpeople.service.ArticleService;
 
 @RestController
 public class ArticleController { // potrrzebuje jsona
 
 	@Autowired
-	ArticleService biographyService;
+	ArticleService articleService;
+	@Autowired
+	UserRepository userRespository;
+	@Autowired
+	HeroRepository heroRespository;
 
-	@RequestMapping(path = "/person/{id}/biography", method = RequestMethod.GET)
+	@RequestMapping(path = "/hero/{id}/article", method = RequestMethod.GET)
 	public List<Article> getAllBiographies(HttpServletResponse s) {
 
-		return biographyService.getAllBiographies();
+		return articleService.getAllBiographies();
 	}
 
-	@RequestMapping(path = "/person/{id}/biography", method = RequestMethod.POST)
-	public void addBiography(@RequestBody Article biography, @PathVariable String id) {
-		int biographyId = Integer.valueOf(id);
-//		biography.setPerson(new Hero(biographyId, "", 0L));
-		System.out.println(biography.toString());
-//		long userId = biography.getUser().getId();
-//		biography.setUser(new User("", "", "", userId, 0, ""));
-		biographyService.addBiography(biography);
+	@RequestMapping(path = "/hero/{id}/article", method = RequestMethod.POST)
+	public void addBiography(@RequestBody Article article,@RequestParam String username,@PathVariable String id) {
+		int heroId = Integer.valueOf(id);
+		Hero hero =heroRespository.findById(heroId).get();
+		User user=userRespository.findByUsername(username);
+		article.setPerson(hero);
+		article.setUser(user);
+		System.out.println(article.toString());
+		articleService.addBiography(article);
 	}
 
-//	@RequestMapping(path = "/user", method = RequestMethod.GET)
-//	public User getUser3() {
-//
-//		return new User();
-//	}
-//
-//	@RequestMapping(path = "/user", method = RequestMethod.GET)
-//	public User getUser4() {
-//
-//		return new User();
-//	}
-//
-//	@RequestMapping(path = "/user", method = RequestMethod.GET)
-//	public User getUser5() {
-//
-//		return new User();
-//	}
-//
-//	@RequestMapping(path = "/user", method = RequestMethod.GET)
-//	public User getUs1er() {
-//
-//		return new User();
-//	}
 
 }
