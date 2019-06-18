@@ -1,7 +1,6 @@
-package com.alek.influentialpeople.persistance.entity;
+package com.alek.influentialpeople.persistence.entity;
 
 import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +19,7 @@ public class Article {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
 	private long id;
-	@Column(nullable = false)
+	@Column(unique=true,nullable = false)
 	private String title;
 	@Column(nullable = false)
 	private String content;

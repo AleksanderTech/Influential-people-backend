@@ -1,6 +1,8 @@
 package com.alek.influentialpeople.persistence.entity;
 
+public class HeroScore {
 
-public class ProfileImage {
-
+	
+	
+	
 }

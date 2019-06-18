@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.alek.influentialpeople.persistance.HeroRepository;
 import com.alek.influentialpeople.persistance.UserRepository;
-import com.alek.influentialpeople.persistance.entity.Article;
-import com.alek.influentialpeople.persistance.entity.Hero;
-import com.alek.influentialpeople.persistance.entity.User;
+import com.alek.influentialpeople.persistence.entity.Article;
+import com.alek.influentialpeople.persistence.entity.Hero;
+import com.alek.influentialpeople.persistence.entity.User;
 import com.alek.influentialpeople.service.ArticleService;
 
 @RestController

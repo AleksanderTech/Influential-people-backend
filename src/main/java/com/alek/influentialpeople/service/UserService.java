@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.alek.influentialpeople.persistance.UserRepository;
-import com.alek.influentialpeople.persistance.entity.User;
+import com.alek.influentialpeople.persistence.entity.User;
 
 @Service
 public class UserService {

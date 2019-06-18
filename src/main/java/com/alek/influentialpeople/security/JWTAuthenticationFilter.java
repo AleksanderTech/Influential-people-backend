@@ -38,8 +38,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		//spring security zapewnia /login endpoint 
 		System.out.println("attemt in JWTAUTHENTI");
 		try {
-			com.alek.influentialpeople.persistance.entity.User creds = new ObjectMapper() // wyciagniecie usera z req
-					.readValue(req.getInputStream(), com.alek.influentialpeople.persistance.entity.User.class);
+			com.alek.influentialpeople.persistence.entity.User creds = new ObjectMapper() // wyciagniecie usera z req
+					.readValue(req.getInputStream(), com.alek.influentialpeople.persistence.entity.User.class);
 
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
 					creds.getPassword(), new ArrayList<>()));

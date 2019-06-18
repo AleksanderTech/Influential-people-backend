@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alek.influentialpeople.persistance.ArticleRepository;
-import com.alek.influentialpeople.persistance.entity.Article;
+import com.alek.influentialpeople.persistence.entity.Article;
 
 @Service
 public class ArticleService {

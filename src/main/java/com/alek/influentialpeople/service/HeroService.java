@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alek.influentialpeople.persistance.HeroRepository;
-import com.alek.influentialpeople.persistance.entity.Hero;
+import com.alek.influentialpeople.persistence.entity.Hero;
 
 @Service
 public class HeroService {

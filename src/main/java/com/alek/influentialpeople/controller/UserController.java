@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alek.influentialpeople.email.EmailService;
-import com.alek.influentialpeople.persistance.entity.User;
+import com.alek.influentialpeople.persistence.entity.User;
 import com.alek.influentialpeople.service.UserService;
 
 @RestController

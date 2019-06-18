@@ -1,13 +1,11 @@
-package com.alek.influentialpeople.persistance.entity;
+package com.alek.influentialpeople.persistence.entity;
 
 import java.util.Set;
 
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-@Entity
 public class Category {
 	
 	@Id

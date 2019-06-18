@@ -1,6 +1,5 @@
 package com.alek.influentialpeople.persistence.entity;
 
-
-public class ProfileImage {
+public class Quote {
 
 }
