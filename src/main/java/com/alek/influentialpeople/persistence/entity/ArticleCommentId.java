@@ -1,48 +1,49 @@
 package com.alek.influentialpeople.persistence.entity;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
-import javax.persistence.Entity;
-
-@Entity
+@Embeddable
 public class ArticleCommentId implements Serializable {
 
-	private long article_id;
-
-	private long comment_id;
+	@Column(name = "aricle_id")
+	private long articleId;
+	@Column(name = "comment_id")
+	private long commentId;
 
 	public ArticleCommentId() {
 		super();
 	}
 
-	public ArticleCommentId(long article_id, long comment_id) {
+	public ArticleCommentId(long articleId, long commentId) {
 		super();
-		this.article_id = article_id;
-		this.comment_id = comment_id;
+		this.articleId = articleId;
+		this.commentId = commentId;
 	}
 
-	public long getArticle_id() {
-		return article_id;
+	public long getArticleId() {
+		return articleId;
 	}
 
-	public void setArticle_id(long article_id) {
-		this.article_id = article_id;
+	public void setArticleId(long articleId) {
+		this.articleId = articleId;
 	}
 
-	public long getComment_id() {
-		return comment_id;
+	public long getCommentId() {
+		return commentId;
 	}
 
-	public void setComment_id(long comment_id) {
-		this.comment_id = comment_id;
+	public void setCommentId(long commentId) {
+		this.commentId = commentId;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (article_id ^ (article_id >>> 32));
-		result = prime * result + (int) (comment_id ^ (comment_id >>> 32));
+		result = prime * result + (int) (articleId ^ (articleId >>> 32));
+		result = prime * result + (int) (commentId ^ (commentId >>> 32));
 		return result;
 	}
 
@@ -55,9 +56,9 @@ public class ArticleCommentId implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ArticleCommentId other = (ArticleCommentId) obj;
-		if (article_id != other.article_id)
+		if (articleId != other.articleId)
 			return false;
-		if (comment_id != other.comment_id)
+		if (commentId != other.commentId)
 			return false;
 		return true;
 	}

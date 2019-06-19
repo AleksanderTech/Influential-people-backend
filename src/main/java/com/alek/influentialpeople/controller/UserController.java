@@ -117,7 +117,6 @@ public class UserController {
 	@PostMapping("/user/sign-up")
 	public void sendEmail(@RequestBody User user) throws IOException {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		// wyslanie emaila z kodem w url-u
 		System.out.println("sending email ...");
 		this.user=user;
 		System.out.println(user.getUsername());
@@ -129,7 +128,6 @@ public class UserController {
 //		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setActivation(1);
 		System.out.println(user.getUsername());
-		// wyslanie emaila z kodem w url-u
 		System.out.println(user.getPassword());
 		userService.addUser(user);
 	}
