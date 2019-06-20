@@ -1,36 +1,43 @@
 package com.alek.influentialpeople.persistence.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"title"})})
 public class Article {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
 	private long id;
-	@Column(unique=true,nullable = false)
+	@Column(nullable = false,length = 32,unique=true)
 	private String title;
 	@Column(nullable = false)
 	private String content;
 	@Column(updatable = false, nullable = false)
 	private Long created_at;
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)   //change 
 	@JoinColumn(name = "hero_id", referencedColumnName = "id")
 	private Hero hero;
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)   //change
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
+	@OneToMany(mappedBy="article")
+	List<ArticleComment>articleComments=new ArrayList<>();
 
 	@PrePersist
 	private void onCreate() {
@@ -39,7 +46,6 @@ public class Article {
 
 	public Article() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Article(long id, String title, String content, Long created_at, Hero person, User user) {
@@ -50,6 +56,11 @@ public class Article {
 		this.created_at = created_at;
 		this.hero = person;
 		this.user = user;
+	}
+
+	public Article(long id) {
+		super();
+		this.id = id;
 	}
 
 	public long getId() {

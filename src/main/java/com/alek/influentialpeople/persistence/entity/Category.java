@@ -1,46 +1,53 @@
-//package com.alek.influentialpeople.persistence.entity;
-//
-//import java.util.Set;
-//
-//import javax.persistence.FetchType;
-//import javax.persistence.Id;
-//import javax.persistence.OneToMany;
-//
-//public class Category {
-//	
-//	@Id
-//	private int id;
-//	
-//	private String name;
-//
-//	@OneToMany(fetch = FetchType.LAZY)
-//	private Set<Comment> set;
-//
-//	public Category() {
-//		super();
-//		// TODO Auto-generated constructor stub
-//	}
-//
-//	public Category(String name, Set<Comment> set) {
-//		super();
-//		this.name = name;
-//		this.set = set;
-//	}
-//
-//	public String getName() {
-//		return name;
-//	}
-//
-//	public void setName(String name) {
-//		this.name = name;
-//	}
-//
-//	public Set<Comment> getSet() {
-//		return set;
-//	}
-//
-//	public void setSet(Set<Comment> set) {
-//		this.set = set;
-//	}
-//
-//}
+package com.alek.influentialpeople.persistence.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
+public class Category {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(updatable = false)
+	private int id;
+	@Column(nullable = false)
+	private String name;
+	@OneToMany(mappedBy="category")
+	private List<HeroCategory> heroCategories=new ArrayList<>();
+
+	public Category() {
+		super();
+	}
+
+	public Category(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
+
+}

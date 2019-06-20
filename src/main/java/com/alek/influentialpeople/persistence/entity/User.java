@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 public class User {
@@ -19,7 +21,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
 	private long id;
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false,length = 32,unique=true)
 	private String username;
 	@Column(nullable = false)
 	private String password;
@@ -27,15 +29,18 @@ public class User {
 	private String email;
 	@Column(nullable = false, length = 20)
 	private String role;
-	@Column(columnDefinition = "int default '0'")
+	@Column(columnDefinition = "int default 0")
 	private int activation;
 	@Column(updatable = false, nullable = false)
 	private Long created_at;
+	@OneToMany(mappedBy = "user")
+	private List<Article> articles = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<ArticleComment> articleComments = new ArrayList<>();
+	@Column(nullable = true)
+	private String profileImagePath;
 	@OneToMany(mappedBy="user")
-	private List<Article> articles=new ArrayList<>();
-	@OneToMany(mappedBy="user")
-	private List<Comment> comments=new ArrayList<>();
-	
+	private List<HeroScore>heroScores=new ArrayList<>();
 
 	@PrePersist
 	private void onCreate() {
@@ -44,7 +49,6 @@ public class User {
 
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public User(long id) {
@@ -52,7 +56,8 @@ public class User {
 		this.id = id;
 	}
 
-	public User(long id, String username, String password, String email, String role, int activation, Long created_at) {
+	public User(long id, String username, String password, String email, String role, int activation, Long created_at,
+			List<Article> articles, List<ArticleComment> comments, String profileImagePath) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -61,6 +66,8 @@ public class User {
 		this.role = role;
 		this.activation = activation;
 		this.created_at = created_at;
+		this.articles = articles;
+		this.profileImagePath = profileImagePath;
 	}
 
 	public long getId() {
@@ -91,6 +98,23 @@ public class User {
 		return email;
 	}
 
+	public List<Article> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
+	}
+
+
+	public String getProfileImagePath() {
+		return profileImagePath;
+	}
+
+	public void setProfileImagePath(String profileImagePath) {
+		this.profileImagePath = profileImagePath;
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -119,10 +143,5 @@ public class User {
 		this.created_at = created_at;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("User [id=%s, username=%s, password=%s, email=%s, role=%s, activation=%s, created_at=%s]",
-				id, username, password, email, role, activation, created_at);
-	}
 
 }

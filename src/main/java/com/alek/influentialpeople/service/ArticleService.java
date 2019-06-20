@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.alek.influentialpeople.persistance.ArticleRepository;
 import com.alek.influentialpeople.persistence.entity.Article;
 import com.alek.influentialpeople.persistence.entity.Hero;
+import com.alek.influentialpeople.persistence.entity.User;
 
 @Service
 public class ArticleService {
@@ -33,9 +34,10 @@ public class ArticleService {
 		articleRepository.save(article);
 	}
 
-	public List<Article> getUserArticles() {
+	public List<Article> getUserArticles(long id) {
 		List<Article> articles = new ArrayList<>();
-		return null;
+		articleRepository.findByUser(new User(id)).forEach(articles::add);
+		return articles;
 	}
 	
 }
