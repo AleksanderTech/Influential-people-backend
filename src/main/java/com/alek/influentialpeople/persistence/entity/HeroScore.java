@@ -23,7 +23,7 @@ public class HeroScore {
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@Column(updatable=false)
+	@Column(updatable=false,nullable = false)
 	private long points;
 
 	public HeroScore() {

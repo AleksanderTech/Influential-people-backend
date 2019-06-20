@@ -13,28 +13,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"title"})})
 public class Article {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
 	private long id;
-	@Column(nullable = false,length = 32,unique=true)
+	@Column(nullable = false,unique=true)
 	private String title;
-	@Column(nullable = false)
+	@Column(nullable = false,columnDefinition = "TEXT")
 	private String content;
 	@Column(updatable = false, nullable = false)
 	private Long created_at;
 	@ManyToOne(cascade = CascadeType.ALL)   //change 
-	@JoinColumn(name = "hero_id", referencedColumnName = "id")
+	@JoinColumn(name = "hero_id", referencedColumnName = "id",nullable = false)
 	private Hero hero;
 	@ManyToOne(cascade = CascadeType.ALL)   //change
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@JoinColumn(name = "user_id", referencedColumnName = "id",nullable = false)
 	private User user;
 	@OneToMany(mappedBy="article")
 	List<ArticleComment>articleComments=new ArrayList<>();

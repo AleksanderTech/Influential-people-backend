@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
 public class User {
@@ -21,13 +19,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
 	private long id;
-	@Column(nullable = false,length = 32,unique=true)
+	@Column(nullable = false,unique=true)
 	private String username;
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
 	private String email;
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false)
 	private String role;
 	@Column(columnDefinition = "int default 0")
 	private int activation;
@@ -35,6 +33,8 @@ public class User {
 	private Long created_at;
 	@OneToMany(mappedBy = "user")
 	private List<Article> articles = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<Quote> quotes = new ArrayList<>();
 	@OneToMany(mappedBy = "user")
 	private List<ArticleComment> articleComments = new ArrayList<>();
 	@Column(nullable = true)

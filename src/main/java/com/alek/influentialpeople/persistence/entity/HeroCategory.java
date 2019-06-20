@@ -13,7 +13,7 @@ public class HeroCategory {
 	private HeroCategoryKey id;
 
 	@ManyToOne
-	@MapsId("id") //mapuje primary key z forign key 
+	@MapsId("id") 
 	@JoinColumn(name = "hero_id")
 	Hero hero;
 

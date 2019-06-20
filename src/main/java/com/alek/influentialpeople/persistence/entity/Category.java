@@ -2,7 +2,6 @@ package com.alek.influentialpeople.persistence.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,7 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
 	private int id;
-	@Column(nullable = false)
+	@Column(nullable = false,unique=true)
 	private String name;
 	@OneToMany(mappedBy="category")
 	private List<HeroCategory> heroCategories=new ArrayList<>();

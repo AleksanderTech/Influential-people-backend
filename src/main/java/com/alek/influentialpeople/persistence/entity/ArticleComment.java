@@ -18,15 +18,15 @@ public class ArticleComment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
 	private long id;
-	@Column(nullable = false)
+	@Column(nullable = false,columnDefinition="TEXT")
 	private String content;
 	@Column(updatable = false, nullable = false)
 	private Long created_at;
 	@ManyToOne
-	@JoinColumn(name = "article_id", referencedColumnName = "id")
+	@JoinColumn(name = "article_id", referencedColumnName = "id",nullable = false)
 	private Article article;
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@JoinColumn(name = "user_id", referencedColumnName = "id",nullable = false)
 	private User user;
 
 	@PrePersist
