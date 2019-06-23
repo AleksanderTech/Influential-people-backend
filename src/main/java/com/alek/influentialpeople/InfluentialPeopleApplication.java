@@ -12,7 +12,7 @@ public class InfluentialPeopleApplication {
 		SpringApplication.run(InfluentialPeopleApplication.class, args);
 	}
 
-	@Bean
+	@Bean 
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
