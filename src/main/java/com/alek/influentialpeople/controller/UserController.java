@@ -34,7 +34,7 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private EmailService emailService;
-	
+
 	private PasswordEncoder bCryptPasswordEncoder;
 	private User user;
 
@@ -61,7 +61,7 @@ public class UserController {
 	@RequestMapping(value = "/user/{id}/uploadFile", method = RequestMethod.POST)
 	public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable String id) {
 
-		File uploadedFile = new File("static/storage/user/image/", file.getOriginalFilename()+id);
+		File uploadedFile = new File("static/storage/user/image/", file.getOriginalFilename() + id);
 
 		try {
 			uploadedFile.createNewFile();
@@ -75,12 +75,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/{id}/uploadmultipleFiles", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<Object> uploadmultipleFile(@RequestParam("files") MultipartFile[] files,@PathVariable String id) {
+	public ResponseEntity<Object> uploadmultipleFile(@RequestParam("files") MultipartFile[] files,
+			@PathVariable String id) {
 		FileOutputStream fileOutputStream = null;
 		System.out.println("hae");
 		System.out.println(files);
 		for (MultipartFile multipartFile : files) {
-			File uploadedFile = new File("src/main/resources/static/storage/user/image", multipartFile.getOriginalFilename()+id);
+			File uploadedFile = new File("src/main/resources/static/storage/user/image",
+					multipartFile.getOriginalFilename() + id);
 			System.out.println("hae2");
 			try {
 				System.out.println("hae3");
@@ -99,7 +101,15 @@ public class UserController {
 
 	@RequestMapping(path = "/user", method = RequestMethod.POST)
 	public void addUser(@RequestBody User user) {
+
 		userService.addUser(user);
+	}
+
+	protected void validateRole() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		if (!validationService.validateRole(authentication, "ADMIN")) {
+//			throw new RuntimeException(e);
+//		}
 	}
 
 	@RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
@@ -118,10 +128,11 @@ public class UserController {
 	public void sendEmail(@RequestBody User user) throws IOException {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		System.out.println("sending email ...");
-		this.user=user;
+		this.user = user;
 		System.out.println(user.getUsername());
 		emailService.sendMail(user.getUsername());
 	}
+
 	@GetMapping("/user/sign-up")
 	public void signUp(@RequestParam(name = "username") String username) {
 		System.out.println(user.getPassword());
