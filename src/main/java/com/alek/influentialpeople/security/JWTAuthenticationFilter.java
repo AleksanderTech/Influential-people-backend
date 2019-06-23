@@ -27,18 +27,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	private AuthenticationManager authenticationManager;
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
-		this.authenticationManager = authenticationManager; // rozszerzamy takze spokojnie ta klasa to bean.
+		this.authenticationManager = authenticationManager; // r
 	}
 
-	// ten filtr jest jako drugi
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
 			throws AuthenticationException {
-		//tutaj parsujemy sobie dane uzytkownika i przkazujemy do obiektu authentication poprzez menagera
-		//spring security zapewnia /login endpoint 
+		
 		System.out.println("attemt in JWTAUTHENTI");
 		try {
-			com.alek.influentialpeople.persistence.entity.User creds = new ObjectMapper() // wyciagniecie usera z req
+			com.alek.influentialpeople.persistence.entity.User creds = new ObjectMapper() 
 					.readValue(req.getInputStream(), com.alek.influentialpeople.persistence.entity.User.class);
 
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
@@ -51,7 +49,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
-		//wywolana w momencie udanego logowania 
 		System.out.println("successfulin JWTAUTHENti");
 		String token = JWT.create().withSubject(((User) auth.getPrincipal()).getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME)).sign(HMAC512(SECRET.getBytes()));

@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -49,6 +52,7 @@ public class UserController {
 			@CookieValue(value = "aCookie", required = false) String aValue,
 			@RequestHeader MultiValueMap<String, String> headers) {
 		System.out.println(headers.entrySet());
+		validateRole();
 		if (id != null) {
 			return userService.getUsersForId(id);
 		} else if (start != null && size != null) {
@@ -101,17 +105,29 @@ public class UserController {
 
 	@RequestMapping(path = "/user", method = RequestMethod.POST)
 	public void addUser(@RequestBody User user) {
-
+		
 		userService.addUser(user);
 	}
 
 	protected void validateRole() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		if (!validationService.validateRole(authentication, "ADMIN")) {
-//			throw new RuntimeException(e);
-//		}
+		if (!validateRole(authentication, "ADMIN")) {
+			throw new RuntimeException();
+		}
+		
 	}
-
+	
+	  public boolean validateRole(Authentication authentication, String role) {
+			if (authentication.getAuthorities().isEmpty()) {
+			    return false;
+			}
+			for (GrantedAuthority authority : authentication.getAuthorities()) {
+			    if (role.equals(authority.getAuthority())) {
+				return true;
+			    }
+			}
+			return false;
+		    }
 	@RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
 	public void updateUser(@RequestBody User user, @PathVariable String id) {
 

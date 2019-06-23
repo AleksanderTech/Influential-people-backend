@@ -9,6 +9,7 @@ public class TheRoleValidator implements RoleValidator {
 	
 	@Override
 	public boolean isPublisher() {
+		
 		return false;
 	}
 

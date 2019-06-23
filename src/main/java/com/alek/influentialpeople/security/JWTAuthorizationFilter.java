@@ -19,8 +19,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		super(authManager);
 		System.out.println("proba init");
 	}
-// ten filtr jest pierwszy w kolejce a potem authenticationfilter dlatego przepuszczamy nawet jesli brak bear.
-//basicauthenticationfilter ma metode dofilterinternal przyjmujaca to samo co filter
 	@Override
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
@@ -29,7 +27,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 		if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
 			System.out.println("JWTAUTHORIZA doFIlter passing");
-			chain.doFilter(req, res); // co ma sie stac jesli brakuje tokena JWT 
+			chain.doFilter(req, res); // 
 			return;
 		} 
 
@@ -38,13 +36,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		chain.doFilter(req, res);
 	}
-	//ten token to implementuje authentication
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-		System.out.println("JWTAUTHORIZA getauthentication");  // sprawdzanie poprawnosci tokena 
-		// oraz zwrocenie tokena z userem wyciagnietym z subjectu i przekazaniem go do kontekstu
+		System.out.println("JWTAUTHORIZA getauthentication");  
 		String token = request.getHeader(SecurityConstants.HEADER_STRING);
 		if (token != null) {
-			// parse the token jesli wszystko w porzadku przepuszczamy dalej
 			String user = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes())).build()
 					.verify(token.replace(SecurityConstants.TOKEN_PREFIX, "")).getSubject();
 
