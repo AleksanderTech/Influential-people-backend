@@ -2,6 +2,7 @@ package com.alek.influentialpeople.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,9 +37,15 @@ public class ArticleController { // potrrzebuje jsona
 	}
 
 	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.GET)
-	public List<ArticleComment> getAllArticles(@PathVariable String id) {
+	public List<ArticleComment> getAllComments(@PathVariable String id) {
 
 		return articleCommentService.getAllArticleComments(Long.valueOf(id));
+	}
+	
+	@RequestMapping(path="/article",method=RequestMethod.GET)
+	public List<Article>getAllArticles(){
+		
+		return articleService.getAllArticles();
 	}
 
 	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.POST)

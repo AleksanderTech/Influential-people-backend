@@ -50,9 +50,9 @@ public class UserController {
 			@RequestParam(value = "start", required = false) Long start,
 			@RequestParam(value = "size", required = false) Long size,
 			@CookieValue(value = "aCookie", required = false) String aValue,
-			@RequestHeader MultiValueMap<String, String> headers) {
+			@RequestHeader MultiValueMap<String, String> headers,Authentication authentication) {
 		System.out.println(headers.entrySet());
-		validateRole();
+//		validateRole(authentication);
 		if (id != null) {
 			return userService.getUsersForId(id);
 		} else if (start != null && size != null) {
@@ -105,29 +105,34 @@ public class UserController {
 
 	@RequestMapping(path = "/user", method = RequestMethod.POST)
 	public void addUser(@RequestBody User user) {
-		
+
 		userService.addUser(user);
 	}
 
-	protected void validateRole() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!validateRole(authentication, "ADMIN")) {
-			throw new RuntimeException();
-		}
-		
-	}
-	
-	  public boolean validateRole(Authentication authentication, String role) {
-			if (authentication.getAuthorities().isEmpty()) {
-			    return false;
-			}
-			for (GrantedAuthority authority : authentication.getAuthorities()) {
-			    if (role.equals(authority.getAuthority())) {
-				return true;
-			    }
-			}
-			return false;
-		    }
+//	protected void validateRole(Authentication authentication) {
+//		authentication = SecurityContextHolder.getContext().getAuthentication();
+////		if (!validateRole(authentication, "ADMIN")) {
+////			throw new RuntimeException();
+////		}
+//		System.out.println(authentication);
+//		System.out.println(authentication.getCredentials().toString());
+//		System.out.println(authentication.getDetails().toString());
+//		System.out.println(authentication.getPrincipal().toString());
+//		System.out.println(authentication.getName());
+//	}
+
+//	public boolean validateRole(Authentication authentication, String role) {
+//		if (authentication.getAuthorities().isEmpty()) {
+//			return false;
+//		}
+//		for (GrantedAuthority authority : authentication.getAuthorities()) {
+//			if (role.equals(authority.getAuthority())) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+
 	@RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
 	public void updateUser(@RequestBody User user, @PathVariable String id) {
 
@@ -152,7 +157,6 @@ public class UserController {
 	@GetMapping("/user/sign-up")
 	public void signUp(@RequestParam(name = "username") String username) {
 		System.out.println(user.getPassword());
-//		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setActivation(1);
 		System.out.println(user.getUsername());
 		System.out.println(user.getPassword());

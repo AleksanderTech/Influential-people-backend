@@ -12,30 +12,43 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 
+import com.alek.influentialpeople.jsonview.View;
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
+	@JsonView(View.OveralView.class)
 	private long id;
 	@Column(nullable = false,unique=true)
+	@JsonView(View.OveralView.class)
 	private String username;
 	@Column(nullable = false)
+	@JsonView(View.OveralView.class)
 	private String password;
 	@Column(nullable = false)
+	@JsonView(View.OveralView.class)
 	private String email;
 	@Column(nullable = false)
+	@JsonView(View.OveralView.class)
 	private String role;
 	@Column(columnDefinition = "int default 0")
+	@JsonView(View.OveralView.class)
 	private int activation;
 	@Column(updatable = false, nullable = false)
+	@JsonView(View.OveralView.class)
 	private Long created_at;
 	@OneToMany(mappedBy = "user")
+	@JsonView(View.DetailView.class)
 	private List<Article> articles = new ArrayList<>();
 	@OneToMany(mappedBy = "user")
+	@JsonView(View.DetailView.class)
 	private List<Quote> quotes = new ArrayList<>();
 	@OneToMany(mappedBy = "user")
+	@JsonView(View.DetailView.class)
 	private List<ArticleComment> articleComments = new ArrayList<>();
 	@Column(nullable = true)
 	private String profileImagePath;
