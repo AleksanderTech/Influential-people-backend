@@ -3,9 +3,11 @@ package com.alek.influentialpeople.persistence.entity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,28 +15,44 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Transient;
+
+import com.alek.influentialpeople.controller.Link;
+import com.alek.influentialpeople.jsonview.View;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
-public class Article {
+public class Article implements Comparable<Article> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
+	@JsonView(View.Public.class)
 	private long id;
-	@Column(nullable = false,unique=true)
+	@Column(nullable = false, unique = true)
+	@JsonView(View.Public.class)
 	private String title;
-	@Column(nullable = false,columnDefinition = "TEXT")
+	@Column(nullable = false, columnDefinition = "TEXT")
+	@JsonView(View.Private.class)
 	private String content;
 	@Column(updatable = false, nullable = false)
+	@JsonView(View.Public.class)
 	private Long created_at;
-	@ManyToOne(cascade = CascadeType.ALL)   //change 
-	@JoinColumn(name = "hero_id", referencedColumnName = "id",nullable = false)
+	@ManyToOne(cascade = CascadeType.ALL) // change
+	@JoinColumn(name = "hero_id", referencedColumnName = "id", nullable = false)
+	@JsonView(View.Public.class)
 	private Hero hero;
-	@ManyToOne(cascade = CascadeType.ALL)   //change
-	@JoinColumn(name = "user_id", referencedColumnName = "id",nullable = false)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // change
+	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+	@JsonView(View.Public.class)
 	private User user;
-	@OneToMany(mappedBy="article")
-	List<ArticleComment>articleComments=new ArrayList<>();
+	@OneToMany(mappedBy = "article")
+	@JsonView(View.Private.class)
+	private List<ArticleComment> articleComments = new ArrayList<>();
+	@JsonInclude()
+	@Transient
+	private List<Link> links = new ArrayList<>();
 
 	@PrePersist
 	private void onCreate() {
@@ -58,6 +76,21 @@ public class Article {
 	public Article(long id) {
 		super();
 		this.id = id;
+	}
+
+	public void addLink(String url, String rel) {
+		Link link = new Link();
+		link.setLink(url);
+		link.setRel(rel);
+		links.add(link);
+	}
+
+	public List<Link> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<Link> links) {
+		this.links = links;
 	}
 
 	public long getId() {
@@ -92,11 +125,11 @@ public class Article {
 		this.created_at = created_at;
 	}
 
-	public Hero getPerson() {
+	public Hero getHero() {
 		return hero;
 	}
 
-	public void setPerson(Hero person) {
+	public void setHero(Hero person) {
 		this.hero = person;
 	}
 
@@ -112,6 +145,11 @@ public class Article {
 	public String toString() {
 		return String.format("Article [id=%s, title=%s, content=%s, created_at=%s, person=%s, user=%s]", id, title,
 				content, created_at, hero, user);
+	}
+
+	@Override
+	public int compareTo(Article article) {
+		return Long.compare(this.created_at, article.created_at);
 	}
 
 }

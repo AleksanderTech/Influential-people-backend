@@ -1,7 +1,14 @@
 package com.alek.influentialpeople.jsonview;
 
 public class View {
-	  public static interface OveralView {}
-	  public static interface DetailView extends OveralView {}
-	  public static interface ProductView{}
+	
+	public static interface Public {
 	}
+	
+	public static interface Profile extends Public{
+	}
+	
+	public static interface Private extends Profile {
+	}
+
+}

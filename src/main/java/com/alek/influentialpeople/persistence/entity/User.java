@@ -3,7 +3,6 @@ package com.alek.influentialpeople.persistence.entity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-
 import com.alek.influentialpeople.jsonview.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -21,39 +19,35 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
-	@JsonView(View.OveralView.class)
+	@JsonView(View.Public.class)
 	private long id;
-	@Column(nullable = false,unique=true)
-	@JsonView(View.OveralView.class)
+	@Column(nullable = false, unique = true)
+	@JsonView(View.Public.class)
 	private String username;
 	@Column(nullable = false)
-	@JsonView(View.OveralView.class)
 	private String password;
 	@Column(nullable = false)
-	@JsonView(View.OveralView.class)
+	@JsonView(View.Profile.class)
 	private String email;
 	@Column(nullable = false)
-	@JsonView(View.OveralView.class)
+	@JsonView(View.Profile.class)
 	private String role;
 	@Column(columnDefinition = "int default 0")
-	@JsonView(View.OveralView.class)
+	@JsonView(View.Private.class)
 	private int activation;
 	@Column(updatable = false, nullable = false)
-	@JsonView(View.OveralView.class)
+	@JsonView(View.Profile.class)
 	private Long created_at;
-	@OneToMany(mappedBy = "user")
-	@JsonView(View.DetailView.class)
-	private List<Article> articles = new ArrayList<>();
-	@OneToMany(mappedBy = "user")
-	@JsonView(View.DetailView.class)
-	private List<Quote> quotes = new ArrayList<>();
-	@OneToMany(mappedBy = "user")
-	@JsonView(View.DetailView.class)
-	private List<ArticleComment> articleComments = new ArrayList<>();
 	@Column(nullable = true)
 	private String profileImagePath;
-	@OneToMany(mappedBy="user")
-	private List<HeroScore>heroScores=new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<Article> articles = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<Quote> quotes = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<ArticleComment> articleComments = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<HeroScore> heroScores = new ArrayList<>();
 
 	@PrePersist
 	private void onCreate() {
@@ -69,8 +63,9 @@ public class User {
 		this.id = id;
 	}
 
+	
 	public User(long id, String username, String password, String email, String role, int activation, Long created_at,
-			List<Article> articles, List<ArticleComment> comments, String profileImagePath) {
+			String profileImagePath) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -79,8 +74,18 @@ public class User {
 		this.role = role;
 		this.activation = activation;
 		this.created_at = created_at;
-		this.articles = articles;
 		this.profileImagePath = profileImagePath;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"User [id=%s, username=%s, password=%s, email=%s, role=%s, activation=%s, created_at=%s, profileImagePath=%s]",
+				id, username, password, email, role, activation, created_at, profileImagePath);
+	}
+
+	public User(String username) {
+		this.username = username;
 	}
 
 	public long getId() {
@@ -119,7 +124,6 @@ public class User {
 		this.articles = articles;
 	}
 
-
 	public String getProfileImagePath() {
 		return profileImagePath;
 	}
@@ -155,6 +159,5 @@ public class User {
 	public void setCreated_at(Long created_at) {
 		this.created_at = created_at;
 	}
-
 
 }

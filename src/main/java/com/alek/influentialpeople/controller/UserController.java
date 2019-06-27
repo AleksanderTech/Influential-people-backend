@@ -4,14 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -27,8 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alek.influentialpeople.email.EmailService;
+import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.persistence.entity.User;
 import com.alek.influentialpeople.service.UserService;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 public class UserController {
@@ -44,7 +43,7 @@ public class UserController {
 	public UserController(PasswordEncoder bCryptPasswordEncoder) {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
-
+	@JsonView(View.Public.class)
 	@RequestMapping(path = "/user", method = RequestMethod.GET)
 	public List<User> getAllUsers(@RequestParam(value = "id", required = false) Long id,
 			@RequestParam(value = "start", required = false) Long start,

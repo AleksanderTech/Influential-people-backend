@@ -1,14 +1,15 @@
 package com.alek.influentialpeople.controller;
 
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.persistance.HeroRepository;
 import com.alek.influentialpeople.persistance.UserRepository;
 import com.alek.influentialpeople.persistence.entity.Article;
@@ -17,9 +18,10 @@ import com.alek.influentialpeople.persistence.entity.Hero;
 import com.alek.influentialpeople.persistence.entity.User;
 import com.alek.influentialpeople.service.ArticleCommentService;
 import com.alek.influentialpeople.service.ArticleService;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
-public class ArticleController { // potrrzebuje jsona
+public class ArticleController {
 
 	@Autowired
 	ArticleService articleService;
@@ -30,6 +32,7 @@ public class ArticleController { // potrrzebuje jsona
 	@Autowired
 	HeroRepository heroRespository;
 
+	@JsonView(View.Public.class)
 	@RequestMapping(path = "/article/hero/{id}", method = RequestMethod.GET)
 	public List<Article> getHeroArticles(@PathVariable String id) {
 
@@ -41,11 +44,24 @@ public class ArticleController { // potrrzebuje jsona
 
 		return articleCommentService.getAllArticleComments(Long.valueOf(id));
 	}
-	
-	@RequestMapping(path="/article",method=RequestMethod.GET)
-	public List<Article>getAllArticles(){
-		
+
+	@JsonView(View.Private.class)
+	@RequestMapping(path = "/article", method = RequestMethod.GET)
+	public List<Article> getAllArticles() {
+
 		return articleService.getAllArticles();
+	}
+
+	@JsonView(View.Public.class)
+	@RequestMapping(path = "/article/{id}", method = RequestMethod.GET)
+	public Article getArticle(@PathVariable String id,HttpServletRequest request) {
+
+		Article article = articleService.getArticle(Long.valueOf(id));
+//		User user = articleService.changeUser(article);
+//		Hero hero = articleService.changeHero(article);
+//		article.setHero(hero);
+//		article.setUser(user);
+		return article;
 	}
 
 	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.POST)
@@ -53,6 +69,7 @@ public class ArticleController { // potrrzebuje jsona
 		articleCommentService.addArticleComment(comment);
 	}
 
+	@JsonView(View.Public.class)
 	@RequestMapping(path = "/article/user/{id}", method = RequestMethod.GET)
 	public List<Article> getUserArticles(@PathVariable String id) {
 
@@ -64,7 +81,7 @@ public class ArticleController { // potrrzebuje jsona
 		int heroId = Integer.valueOf(id);
 		Hero hero = heroRespository.findById(heroId).get();
 		User user = userRespository.findByUsername(username);
-		article.setPerson(hero);
+		article.setHero(hero);
 		article.setUser(user);
 		System.out.println(article.toString());
 		articleService.addArticle(article);

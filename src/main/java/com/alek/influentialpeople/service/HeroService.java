@@ -25,6 +25,12 @@ public class HeroService {
 		heroRepository.save(person);
 	}
 
+	public String getImagePath(int id) {
+		String path=heroRepository.findProfileImagePathById(id);
+		System.out.println("This is path: "+path);
+		return path;
+	}
+
 	// napisz metode zwracajaca liste userow uzywajac spring jpa crudrepository
 
 //	public Topic getTopicByID(String id) {
