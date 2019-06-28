@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 
 public class InfluentialPeopleApplication {
@@ -19,5 +21,5 @@ public class InfluentialPeopleApplication {
 	public PasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+		
 }

@@ -15,9 +15,12 @@ import com.alek.influentialpeople.persistance.UserRepository;
 import com.alek.influentialpeople.persistence.entity.Article;
 import com.alek.influentialpeople.persistence.entity.ArticleComment;
 import com.alek.influentialpeople.persistence.entity.Hero;
+import com.alek.influentialpeople.persistence.entity.Link;
 import com.alek.influentialpeople.persistence.entity.User;
 import com.alek.influentialpeople.service.ArticleCommentService;
 import com.alek.influentialpeople.service.ArticleService;
+import com.alek.influentialpeople.service.LinkBuilder;
+import com.alek.influentialpeople.service.UrlBuilder;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
@@ -52,15 +55,32 @@ public class ArticleController {
 		return articleService.getAllArticles();
 	}
 
-	@JsonView(View.Public.class)
+//	@GetMapping("/students/{id}")
+//	public Resource<Student> retrieveStudent(@PathVariable long id) {
+//	  Optional<Student> student = studentRepository.findById(id);
+//
+//	  if (!student.isPresent())
+//	    throw new StudentNotFoundException("id-" + id);
+//
+//	  Resource<Student> resource = new Resource<Student>(student.get());
+//
+//	  ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllStudents());
+//
+//	  resource.add(linkTo.withRel("all-students"));
+//
+//	  return resource;
+//	}
+	
+	@JsonView(View.Private.class)
 	@RequestMapping(path = "/article/{id}", method = RequestMethod.GET)
 	public Article getArticle(@PathVariable String id,HttpServletRequest request) {
-
 		Article article = articleService.getArticle(Long.valueOf(id));
-//		User user = articleService.changeUser(article);
-//		Hero hero = articleService.changeHero(article);
-//		article.setHero(hero);
-//		article.setUser(user);
+		
+		// UrlBuilder.getUrl();  czyli potrzebny Link oraz url odpowiedni
+		// LinkBuilder.getLink("url","rel")
+		String url=UrlBuilder.buildUrlFromRequest(request);
+		Link link=LinkBuilder.buildLink(url, "rel");
+		article.add(link);
 		return article;
 	}
 

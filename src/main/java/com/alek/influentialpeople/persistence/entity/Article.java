@@ -17,9 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
-import com.alek.influentialpeople.controller.Link;
 import com.alek.influentialpeople.jsonview.View;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
@@ -29,7 +28,7 @@ public class Article implements Comparable<Article> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
 	@JsonView(View.Public.class)
-	private long id;
+	private Long id;
 	@Column(nullable = false, unique = true)
 	@JsonView(View.Public.class)
 	private String title;
@@ -50,8 +49,10 @@ public class Article implements Comparable<Article> {
 	@OneToMany(mappedBy = "article")
 	@JsonView(View.Private.class)
 	private List<ArticleComment> articleComments = new ArrayList<>();
-	@JsonInclude()
+
 	@Transient
+	@JsonProperty
+	@JsonView(View.Private.class)
 	private List<Link> links = new ArrayList<>();
 
 	@PrePersist
@@ -63,7 +64,7 @@ public class Article implements Comparable<Article> {
 		super();
 	}
 
-	public Article(long id, String title, String content, Long created_at, Hero person, User user) {
+	public Article(Long id, String title, String content, Long created_at, Hero person, User user) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -73,27 +74,16 @@ public class Article implements Comparable<Article> {
 		this.user = user;
 	}
 
-	public Article(long id) {
+	public Article(Long id) {
 		super();
 		this.id = id;
 	}
 
-	public void addLink(String url, String rel) {
-		Link link = new Link();
-		link.setLink(url);
-		link.setRel(rel);
+	public void add(Link link) {
 		links.add(link);
 	}
 
-	public List<Link> getLinks() {
-		return links;
-	}
-
-	public void setLinks(List<Link> links) {
-		this.links = links;
-	}
-
-	public long getId() {
+	public Long getRealId() {
 		return id;
 	}
 

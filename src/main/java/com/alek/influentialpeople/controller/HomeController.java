@@ -1,6 +1,9 @@
 package com.alek.influentialpeople.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,10 +25,11 @@ public class HomeController {
 	
 	@JsonView(View.Public.class)
 	@RequestMapping(path = "/home/article", method = RequestMethod.GET)
-	public List<Article> getNewestArticles() {
+	public List<Article> getNewestArticles(HttpServletRequest request) {
 		List<Article>articles=articleService.getNewestArticles(4);
 		
 		System.out.println(articles);
+		
 		
 		return articles;
 	}
