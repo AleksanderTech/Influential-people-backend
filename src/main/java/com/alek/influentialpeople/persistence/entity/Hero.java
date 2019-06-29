@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 import com.alek.influentialpeople.jsonview.View;
+import com.alek.influentialpeople.model.Link;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -45,7 +46,12 @@ public class Hero {
 	@JsonProperty
 	@JsonView(View.Public.class)
 	private long score;
-
+	@Transient
+	@JsonProperty
+	@JsonView(View.Public.class)
+	private List<Link> links = new ArrayList<>();
+	
+	
 	@PrePersist
 	private void onCreate() {
 		created_at = new Date().toInstant().getEpochSecond();
@@ -106,6 +112,10 @@ public class Hero {
 		this.created_at = created_at;
 	}
 
+	public void add(Link link) {
+		links.add(link);
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("Hero [id=%s, fullName=%s, created_at=%s, profileImagePath=%s]", id, fullName, created_at,
