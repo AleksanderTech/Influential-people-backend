@@ -29,7 +29,6 @@ public class ArticleService {
 		articles=articles.stream().sorted().collect(Collectors.toList());
 		articles=articles.subList(0, size);
 		
-		
 		return articles;
 	}
 	

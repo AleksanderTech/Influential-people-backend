@@ -3,7 +3,6 @@ package com.alek.influentialpeople.persistence.entity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
-
 import com.alek.influentialpeople.jsonview.View;
+import com.alek.influentialpeople.model.Link;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -52,7 +51,7 @@ public class Article implements Comparable<Article> {
 
 	@Transient
 	@JsonProperty
-	@JsonView(View.Private.class)
+	@JsonView(View.Public.class)
 	private List<Link> links = new ArrayList<>();
 
 	@PrePersist
@@ -81,6 +80,10 @@ public class Article implements Comparable<Article> {
 
 	public void add(Link link) {
 		links.add(link);
+	}
+
+	public List<Link> getLinks() {
+		return links;
 	}
 
 	public Long getRealId() {
