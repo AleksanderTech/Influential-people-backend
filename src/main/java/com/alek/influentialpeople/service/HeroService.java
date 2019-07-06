@@ -3,8 +3,10 @@ package com.alek.influentialpeople.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.alek.influentialpeople.persistance.HeroRepository;
 import com.alek.influentialpeople.persistence.entity.Hero;
 
@@ -26,7 +28,6 @@ public class HeroService {
 
 	public String getImagePath(int id) {
 		String path = heroRepository.findProfileImagePathById(id);
-		System.out.println("This is path: " + path);
 		return path;
 	}
 
@@ -60,5 +61,10 @@ public class HeroService {
 		heroes = heroes.subList(0, i);
 		return heroes;
 	}
+
+	public Hero getHeroById(Integer id) {
+		return heroRepository.findById(id).get();
+	}
+
 
 }

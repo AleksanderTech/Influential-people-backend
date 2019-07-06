@@ -43,7 +43,7 @@ public class HomeController {
 		}
 		return articles;
 	}
-	
+
 	@JsonView(View.Public.class)
 	@RequestMapping(path = "/home/hero", method = RequestMethod.GET)
 	public List<Hero> getTopHeroes(HttpServletRequest request) {
@@ -52,12 +52,16 @@ public class HomeController {
 
 		for (int i = 0; i < heroes.size(); i++) {
 			Hero hero = heroes.get(i);
+			int id=heroes.get(i).getId();
 			long score = heroService.getHeroesScore(hero);
 			hero.setScore(score);
-			String url = urlBuilder.requestRoot(request).slash().append(EndpointConstants.HERO).slash()
-					.append(String.valueOf(heroes.get(i).getId())).build();
-			Link link = linkFactory.getLink(url, EndpointConstants.SELF);
-			heroes.get(i).add(link);
+			String selfUrl = urlBuilder.requestRoot(request).slash().append(EndpointConstants.HERO).slash()
+					.append(String.valueOf(id)).build();
+			Link selfLink = linkFactory.getLink(selfUrl, EndpointConstants.SELF);
+			String imageUrl=urlBuilder.requestRoot(request).slash().append(EndpointConstants.HERO).slash().append(String.valueOf(id)).slash().append("profileImage").build();
+			Link imageLink=linkFactory.getLink(imageUrl, EndpointConstants.PROFILE_IMAGE);
+			heroes.get(i).add(selfLink);
+			heroes.get(i).add(imageLink);
 		}
 
 		return heroes;

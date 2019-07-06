@@ -3,6 +3,9 @@ package com.alek.influentialpeople.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +22,8 @@ import com.alek.influentialpeople.persistence.entity.Hero;
 import com.alek.influentialpeople.persistence.entity.User;
 import com.alek.influentialpeople.service.ArticleCommentService;
 import com.alek.influentialpeople.service.ArticleService;
-import com.alek.influentialpeople.service.LinkFactory;
 import com.alek.influentialpeople.service.EndpointConstants;
+import com.alek.influentialpeople.service.LinkFactory;
 import com.alek.influentialpeople.service.UrlBuilder;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -63,11 +66,18 @@ public class ArticleController {
 		return articleCommentService.getAllArticleComments(Long.valueOf(id));
 	}
 
-	@JsonView(View.Private.class)
+	@JsonView(View.Public.class)
 	@RequestMapping(path = "/article", method = RequestMethod.GET)
-	public List<Article> getAllArticles() {
-
+	public List<Article> getAllArticles(@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size) {
+		if (!(page == null && size == null)) {
+			Sort sort = Sort.by("created_at");
+			Pageable customPage = PageRequest.of(page, size, sort);
+			List<Article> allArticles = articleService.getAllArticles(customPage);
+			return allArticles;
+		}
 		return articleService.getAllArticles();
+
 	}
 
 	@JsonView(View.Private.class)

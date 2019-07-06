@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.alek.influentialpeople.persistance.ArticleRepository;
 import com.alek.influentialpeople.persistence.entity.Article;
@@ -14,8 +16,14 @@ import com.alek.influentialpeople.persistence.entity.User;
 public class ArticleService {
 
 	@Autowired
-	ArticleRepository articleRepository; // logic
+	private ArticleRepository articleRepository; // logic
 
+	public List<Article> getAllArticles(Pageable pageable) {
+		List<Article> articles = new ArrayList<>();
+		articleRepository.findAll(pageable).forEach(articles::add);
+		return articles;
+	}
+	
 	public List<Article> getAllArticles() {
 		List<Article> articles = new ArrayList<>();
 		articleRepository.findAll().forEach(articles::add);
@@ -39,7 +47,7 @@ public class ArticleService {
 	public List<Article> getHeroArticles(int id) {
 		List<Article> articles = new ArrayList<>();
 
-		articleRepository.findByHero(new Hero(id, "", 0L,"")).forEach(articles::add);
+		articleRepository.findByHero(new Hero(id, "", 0L,""),PageRequest.of(0, 3)).forEach(articles::add);
 		return articles;
 	}
 
@@ -49,7 +57,7 @@ public class ArticleService {
 
 	public List<Article> getUserArticles(long id) {
 		List<Article> articles = new ArrayList<>();
-		articleRepository.findByUser(new User(id)).forEach(articles::add);
+		articleRepository.findByUser(new User(id),PageRequest.of(0, 3)).forEach(articles::add);
 		return articles;
 	}
 

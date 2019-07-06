@@ -37,10 +37,9 @@ public class Hero {
 	@OneToMany(mappedBy = "hero")
 	private List<Quote> quotes = new ArrayList<>();
 	@OneToMany(mappedBy = "hero")
-	@JsonView(View.Private.class)
+	@JsonView(View.Profile.class)
 	private List<HeroCategory> heroCategories = new ArrayList<>();
 	@OneToMany(mappedBy = "hero")
-	@JsonView(View.Profile.class)
 	private List<HeroScore> heroScores = new ArrayList<>();
 	@Transient
 	@JsonProperty
