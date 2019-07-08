@@ -15,6 +15,8 @@ public class InfluentialPeopleApplication {
 
         //test
         SpringApplication.run(InfluentialPeopleApplication.class, args);
+        System.out.println("lalalla");
+
     }
 
     @Bean
