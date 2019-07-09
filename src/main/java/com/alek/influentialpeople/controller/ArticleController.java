@@ -21,7 +21,7 @@ import com.alek.influentialpeople.persistence.entity.ArticleComment;
 import com.alek.influentialpeople.persistence.entity.Hero;
 import com.alek.influentialpeople.persistence.entity.User;
 import com.alek.influentialpeople.service.ArticleCommentService;
-import com.alek.influentialpeople.service.ArticleService;
+import com.alek.influentialpeople.service.TheArticleService;
 import com.alek.influentialpeople.service.EndpointConstants;
 import com.alek.influentialpeople.service.LinkFactory;
 import com.alek.influentialpeople.service.UrlBuilder;
@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class ArticleController {
 
 	@Autowired
-	private ArticleService articleService;
+	private TheArticleService theArticleService;
 	@Autowired
 	private ArticleCommentService articleCommentService;
 	@Autowired
@@ -47,7 +47,7 @@ public class ArticleController {
 	@RequestMapping(path = "/article/hero/{id}", method = RequestMethod.GET)
 	public List<Article> getHeroArticles(@PathVariable String id, HttpServletRequest request) {
 
-		List<Article> articles = articleService.getHeroArticles(Integer.valueOf(id));
+		List<Article> articles = theArticleService.getHeroArticles(Integer.valueOf(id));
 		System.out.println(articles.size());
 		for (int i = 0; i < articles.size(); i++) {
 			String url = urlBuilder.requestSelfUrl(request).build();
@@ -73,10 +73,10 @@ public class ArticleController {
 		if (!(page == null && size == null)) {
 			Sort sort = Sort.by("created_at");
 			Pageable customPage = PageRequest.of(page, size, sort);
-			List<Article> allArticles = articleService.getAllArticles(customPage);
+			List<Article> allArticles = theArticleService.getAllArticles(customPage);
 			return allArticles;
 		}
-		return articleService.getAllArticles();
+		return theArticleService.getAllArticles();
 
 	}
 
@@ -84,7 +84,7 @@ public class ArticleController {
 	@RequestMapping(path = "/article/{id}", method = RequestMethod.GET)
 	public Article getArticle(@PathVariable String id, HttpServletRequest request) {
 
-		Article article = articleService.getArticle(Long.valueOf(id));
+		Article article = theArticleService.getArticle(Long.valueOf(id));
 
 		String url = urlBuilder.requestSelfUrl(request).build();
 		Link link = linkFactory.getLink(url, EndpointConstants.SELF);
@@ -102,7 +102,7 @@ public class ArticleController {
 	@RequestMapping(path = "/article/user/{id}", method = RequestMethod.GET)
 	public List<Article> getUserArticles(@PathVariable String id, HttpServletRequest request) {
 
-		List<Article> articles = articleService.getUserArticles(Integer.valueOf(id));
+		List<Article> articles = theArticleService.getUserArticles(Integer.valueOf(id));
 		for (int i = 0; i < articles.size(); i++) {
 			String url = urlBuilder.requestRoot(request).slash().append(EndpointConstants.ARTICLE).slash()
 					.append(String.valueOf(articles.get(i).getRealId())).build();
@@ -122,6 +122,6 @@ public class ArticleController {
 		article.setHero(hero);
 		article.setUser(user);
 		System.out.println(article.toString());
-		articleService.addArticle(article);
+		theArticleService.addArticle(article);
 	}
 }
