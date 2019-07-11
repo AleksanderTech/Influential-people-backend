@@ -25,18 +25,23 @@ public class HomeController {
 	@Autowired
 	private LinkFactory linkFactory;
 
+	public HomeController(HeroService heroService, ArticleService articleService) {
+		this.heroService=heroService;
+		this.theArticleService=articleService;
+	}
+
 	@JsonView(View.Public.class)
 	@RequestMapping(path = "/home/article", method = RequestMethod.GET)
 	public List<Article> getNewestArticles(HttpServletRequest request) {
 
 		List<Article> articles = theArticleService.getNewestArticles(4);
-		for (int i = 0; i < articles.size(); i++) {
-
-			String url = urlBuilder.requestRoot(request).slash().append(EndpointConstants.ARTICLE).slash()
-					.append(String.valueOf(articles.get(i).getRealId())).build();
-			Link link = linkFactory.getLink(url, EndpointConstants.SELF);
-			articles.get(i).add(link);
-		}
+//		for (int i = 0; i < articles.size(); i++) {
+//
+//			String url = urlBuilder.requestRoot(request).slash().append(EndpointConstants.ARTICLE).slash()
+//					.append(String.valueOf(articles.get(i).getRealId())).build();
+//			Link link = linkFactory.getLink(url, EndpointConstants.SELF);
+//			articles.get(i).add(link);
+//		}
 		return articles;
 	}
 
