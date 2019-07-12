@@ -2,6 +2,8 @@ package com.alek.influentialpeople.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
+import com.alek.influentialpeople.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,11 +22,6 @@ import com.alek.influentialpeople.persistence.entity.Article;
 import com.alek.influentialpeople.persistence.entity.ArticleComment;
 import com.alek.influentialpeople.persistence.entity.Hero;
 import com.alek.influentialpeople.persistence.entity.User;
-import com.alek.influentialpeople.service.ArticleCommentService;
-import com.alek.influentialpeople.service.TheArticleService;
-import com.alek.influentialpeople.service.EndpointConstants;
-import com.alek.influentialpeople.service.LinkFactory;
-import com.alek.influentialpeople.service.UrlBuilder;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
@@ -35,7 +32,7 @@ public class ArticleController {
 	@Autowired
 	private ArticleCommentService articleCommentService;
 	@Autowired
-	private UserRepository userRespository;
+	private UserService userService;
 	@Autowired
 	private HeroRepository heroRespository;
 	@Autowired
@@ -118,7 +115,7 @@ public class ArticleController {
 
 		int heroId = Integer.valueOf(id);
 		Hero hero = heroRespository.findById(heroId).get();
-		User user = userRespository.findByUsername(username);
+		User user = userService.getUserByName(username);
 		article.setHero(hero);
 		article.setUser(user);
 		System.out.println(article.toString());

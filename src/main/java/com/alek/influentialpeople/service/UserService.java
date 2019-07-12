@@ -12,12 +12,16 @@ import com.alek.influentialpeople.persistence.entity.User;
 public class UserService {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<>();
 		userRepository.findAll().forEach(users::add);
 		return users;
+	}
+
+	public User getUserByName(String name){
+	return userRepository.findByUsername(name);
 	}
 
 	public void addUser(User user) {
