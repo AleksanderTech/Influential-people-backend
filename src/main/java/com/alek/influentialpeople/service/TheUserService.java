@@ -9,7 +9,7 @@ import com.alek.influentialpeople.persistance.UserRepository;
 import com.alek.influentialpeople.persistence.entity.User;
 
 @Service
-public class UserService {
+public class TheUserService {
 
 	@Autowired
 	private UserRepository userRepository;

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.model.Link;
 import com.alek.influentialpeople.persistance.HeroRepository;
-import com.alek.influentialpeople.persistance.UserRepository;
 import com.alek.influentialpeople.persistence.entity.Article;
 import com.alek.influentialpeople.persistence.entity.ArticleComment;
 import com.alek.influentialpeople.persistence.entity.Hero;
@@ -32,7 +31,7 @@ public class ArticleController {
 	@Autowired
 	private ArticleCommentService articleCommentService;
 	@Autowired
-	private UserService userService;
+	private TheUserService theUserService;
 	@Autowired
 	private HeroRepository heroRespository;
 	@Autowired
@@ -115,7 +114,7 @@ public class ArticleController {
 
 		int heroId = Integer.valueOf(id);
 		Hero hero = heroRespository.findById(heroId).get();
-		User user = userService.getUserByName(username);
+		User user = theUserService.getUserByName(username);
 		article.setHero(hero);
 		article.setUser(user);
 		System.out.println(article.toString());

@@ -26,14 +26,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alek.influentialpeople.email.EmailService;
 import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.persistence.entity.User;
-import com.alek.influentialpeople.service.UserService;
+import com.alek.influentialpeople.service.TheUserService;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 public class UserController {
 
 	@Autowired
-	private UserService userService;
+	private TheUserService theUserService;
 	@Autowired
 	private EmailService emailService;
 
@@ -53,12 +53,12 @@ public class UserController {
 		System.out.println(headers.entrySet());
 //		validateRole(authentication);
 		if (id != null) {
-			return userService.getUsersForId(id);
+			return theUserService.getUsersForId(id);
 		} else if (start != null && size != null) {
-			return userService.getUsersPaginated(start, size);
+			return theUserService.getUsersPaginated(start, size);
 		}
 
-		return userService.getAllUsers();
+		return theUserService.getAllUsers();
 	}
 
 	@RequestMapping(value = "/user/{id}/uploadFile", method = RequestMethod.POST)
@@ -105,7 +105,7 @@ public class UserController {
 	@RequestMapping(path = "/user", method = RequestMethod.POST)
 	public void addUser(@RequestBody User user) {
 
-		userService.addUser(user);
+		theUserService.addUser(user);
 	}
 
 //	protected void validateRole(Authentication authentication) {
@@ -135,13 +135,13 @@ public class UserController {
 	@RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
 	public void updateUser(@RequestBody User user, @PathVariable String id) {
 
-		userService.updateUser(user);
+		theUserService.updateUser(user);
 	}
 
 	@RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
 	public User getUser(@PathVariable String id) {
 
-		return userService.getUser(Long.valueOf(id));
+		return theUserService.getUser(Long.valueOf(id));
 	}
 
 	@PostMapping("/user/sign-up")
@@ -159,7 +159,7 @@ public class UserController {
 		user.setActivation(1);
 		System.out.println(user.getUsername());
 		System.out.println(user.getPassword());
-		userService.addUser(user);
+		theUserService.addUser(user);
 	}
 
 }

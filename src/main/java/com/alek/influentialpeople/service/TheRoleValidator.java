@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TheRoleValidator implements RoleValidator {
 
 	@Autowired
-	UserService userService;
+    TheUserService theUserService;
 	
 	@Override
 	public boolean isPublisher() {
