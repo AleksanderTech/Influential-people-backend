@@ -19,14 +19,14 @@ public class HomeController {
 	@Autowired
 	private ArticleService theArticleService;
 	@Autowired
-	private HeroService heroService;
+	private TheHeroService theHeroService;
 	@Autowired
 	private UrlBuilder urlBuilder;
 	@Autowired
 	private LinkFactory linkFactory;
 
-	public HomeController(HeroService heroService, ArticleService articleService) {
-		this.heroService=heroService;
+	public HomeController(TheHeroService theHeroService, ArticleService articleService) {
+		this.theHeroService = theHeroService;
 		this.theArticleService=articleService;
 	}
 
@@ -49,12 +49,12 @@ public class HomeController {
 	@RequestMapping(path = "/home/hero", method = RequestMethod.GET)
 	public List<Hero> getTopHeroes(HttpServletRequest request) {
 
-		List<Hero> heroes = heroService.getTopHeroes(6);
+		List<Hero> heroes = theHeroService.getTopHeroes(6);
 
 		for (int i = 0; i < heroes.size(); i++) {
 			Hero hero = heroes.get(i);
 			int id=heroes.get(i).getId();
-			long score = heroService.getHeroesScore(hero);
+			long score = theHeroService.getHeroesScore(hero);
 			hero.setScore(score);
 			String selfUrl = urlBuilder.requestRoot(request).slash().append(EndpointConstants.HERO).slash()
 					.append(String.valueOf(id)).build();

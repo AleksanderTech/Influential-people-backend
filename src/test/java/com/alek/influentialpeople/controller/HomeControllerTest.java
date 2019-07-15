@@ -2,7 +2,7 @@ package com.alek.influentialpeople.controller;
 
 import com.alek.influentialpeople.persistence.entity.Article;
 import com.alek.influentialpeople.service.ArticleService;
-import com.alek.influentialpeople.service.HeroService;
+import com.alek.influentialpeople.service.TheHeroService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ public class HomeControllerTest {
 
     private MockMvc mockMvc;
     @Mock
-    private HeroService heroService;
+    private TheHeroService theHeroService;
     @Mock
     private ArticleService articleService;
 
@@ -46,7 +46,7 @@ public class HomeControllerTest {
 
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(new HomeController(heroService, articleService)).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(new HomeController(theHeroService, articleService)).build();
 
     }
 

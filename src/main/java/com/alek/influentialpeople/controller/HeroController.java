@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alek.influentialpeople.exception.NotFoundException;
 import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.persistence.entity.Hero;
-import com.alek.influentialpeople.service.HeroService;
+import com.alek.influentialpeople.service.TheHeroService;
 import com.alek.influentialpeople.service.ImageService;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -22,19 +22,19 @@ public class HeroController {
 	@Autowired
 	private ImageService imageService;
 	@Autowired
-	private HeroService heroService;
+	private TheHeroService theHeroService;
 // /influential-people/src/main/resources/static/storage/hero/1/profileImage/1.jpg
 	@JsonView(View.Public.class)
 	@RequestMapping(path = "/hero", method = RequestMethod.GET)
 	public List<Hero> getAllPersons() {
 
-		return heroService.getAllPersons();
+		return theHeroService.getAllPersons();
 	}
 
 	@RequestMapping(path = "/hero/{id}/profileImage", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getHeroImage(@PathVariable("id") int id) {
 
-		String heroImagePath = heroService.getImagePath(id);
+		String heroImagePath = theHeroService.getImagePath(id);
 		if (heroImagePath == null || heroImagePath.isEmpty()) {
 			throw new NotFoundException();
 		}
@@ -50,7 +50,7 @@ public class HeroController {
 	@RequestMapping(path = "/hero/{id}/profileImage", method = RequestMethod.PUT)
 	public ResponseEntity<byte[]> editAuthorImage(@PathVariable("id") int id) {
 
-		String heroImagePath = heroService.getImagePath(id);
+		String heroImagePath = theHeroService.getImagePath(id);
 		if (heroImagePath == null || heroImagePath.isEmpty()) {
 			throw new NotFoundException();
 		}
@@ -67,14 +67,14 @@ public class HeroController {
 	public void addPerson(@RequestBody Hero person) {
 		System.out.println(person.toString() + "  !!!!!!!!!!!!!!!!!!!!!");
 		System.out.println();
-		heroService.addPerson(person);
+		theHeroService.addPerson(person);
 	}
 
 	@JsonView(View.Profile.class)
 	@RequestMapping(path = "/hero/{id}", method = RequestMethod.GET)
 	public Hero getHero(@PathVariable Integer id) {
 
-		return heroService.getHeroById(id);
+		return theHeroService.getHeroById(id);
 	}
 
 }
