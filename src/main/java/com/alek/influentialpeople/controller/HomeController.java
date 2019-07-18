@@ -19,7 +19,7 @@ public class HomeController {
 	@Autowired
 	private ArticleService theArticleService;
 	@Autowired
-	private TheHeroService theHeroService;
+	private HeroService theHeroService;
 	@Autowired
 	private UrlBuilder urlBuilder;
 	@Autowired

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+
+import com.alek.influentialpeople.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class UserController {
 
 	@Autowired
-	private TheUserService theUserService;
+	private UserService theUserService;
 	@Autowired
 	private EmailService emailService;
 

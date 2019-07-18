@@ -1,6 +1,8 @@
 package com.alek.influentialpeople.controller;
 
 import java.util.List;
+
+import com.alek.influentialpeople.service.HeroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class HeroController {
 	@Autowired
 	private ImageService imageService;
 	@Autowired
-	private TheHeroService theHeroService;
+	private HeroService theHeroService;
 // /influential-people/src/main/resources/static/storage/hero/1/profileImage/1.jpg
 	@JsonView(View.Public.class)
 	@RequestMapping(path = "/hero", method = RequestMethod.GET)
