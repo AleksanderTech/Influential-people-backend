@@ -11,6 +11,8 @@ import com.alek.influentialpeople.persistence.entity.User;
 @Service
 public class TheUserService implements UserService {
 
+	private static final String LONG_TO_INT_MESSAGE=" cannot be cast to int without changing its value.";
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -60,12 +62,12 @@ public class TheUserService implements UserService {
 		return users;
 	}
 
-	public static int safeLongToInt(long l) {
-	    if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+	public static int safeLongToInt(long longType) {
+	    if (longType < Integer.MIN_VALUE || longType > Integer.MAX_VALUE) {
 	        throw new IllegalArgumentException
-	            (l + " cannot be cast to int without changing its value.");
+	            (longType + LONG_TO_INT_MESSAGE);
 	    }
-	    return (int) l;
+	    return (int) longType;
 	}
 
 }
