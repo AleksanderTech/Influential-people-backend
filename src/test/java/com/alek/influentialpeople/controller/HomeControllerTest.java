@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.controller;
 
-import com.alek.influentialpeople.persistence.entity.Article;
-import com.alek.influentialpeople.service.ArticleService;
+import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.article.service.ArticleService;
 import com.alek.influentialpeople.service.TheHeroService;
 import org.junit.Before;
 import org.junit.Test;

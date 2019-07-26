@@ -1,17 +1,18 @@
-package com.alek.influentialpeople.service;
+package com.alek.influentialpeople.article.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.alek.influentialpeople.article.domain.ArticleComment;
+import com.alek.influentialpeople.article.repository.ArticleCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.alek.influentialpeople.persistance.ArticleCommentRepository;
-import com.alek.influentialpeople.persistence.entity.Article;
-import com.alek.influentialpeople.persistence.entity.ArticleComment;
+import com.alek.influentialpeople.article.domain.Article;
 
 @Service
 public class ArticleCommentService {
 
-	@Autowired	
+	@Autowired
 	ArticleCommentRepository articleCommentRepository;
 
 	public List<ArticleComment> getAllArticleComments(long id) {

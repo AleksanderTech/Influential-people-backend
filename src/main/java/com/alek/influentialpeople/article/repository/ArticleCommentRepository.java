@@ -1,11 +1,10 @@
-package com.alek.influentialpeople.persistance;
+package com.alek.influentialpeople.article.repository;
 
 import java.util.List;
 
+import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.article.domain.ArticleComment;
 import org.springframework.data.repository.CrudRepository;
-
-import com.alek.influentialpeople.persistence.entity.Article;
-import com.alek.influentialpeople.persistence.entity.ArticleComment;
 
 
 public interface ArticleCommentRepository extends CrudRepository<ArticleComment, Long>{

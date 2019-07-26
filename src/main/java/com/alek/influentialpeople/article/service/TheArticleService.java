@@ -1,15 +1,15 @@
-package com.alek.influentialpeople.service;
+package com.alek.influentialpeople.article.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.article.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.alek.influentialpeople.persistance.ArticleRepository;
-import com.alek.influentialpeople.persistence.entity.Article;
 import com.alek.influentialpeople.persistence.entity.Hero;
 import com.alek.influentialpeople.persistence.entity.User;
 

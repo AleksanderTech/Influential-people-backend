@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
+
+import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.model.Link;
 import com.fasterxml.jackson.annotation.JsonProperty;

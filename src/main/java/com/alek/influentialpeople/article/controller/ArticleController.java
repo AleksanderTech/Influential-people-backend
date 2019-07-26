@@ -1,8 +1,12 @@
-package com.alek.influentialpeople.controller;
+package com.alek.influentialpeople.article.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
+import com.alek.influentialpeople.article.service.ArticleCommentService;
+import com.alek.influentialpeople.article.service.TheArticleService;
+import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.article.domain.ArticleComment;
 import com.alek.influentialpeople.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -17,8 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.model.Link;
 import com.alek.influentialpeople.persistance.HeroRepository;
-import com.alek.influentialpeople.persistence.entity.Article;
-import com.alek.influentialpeople.persistence.entity.ArticleComment;
 import com.alek.influentialpeople.persistence.entity.Hero;
 import com.alek.influentialpeople.persistence.entity.User;
 import com.fasterxml.jackson.annotation.JsonView;

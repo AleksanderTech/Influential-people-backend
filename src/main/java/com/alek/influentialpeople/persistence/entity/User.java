@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+
+import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.article.domain.ArticleComment;
 import com.alek.influentialpeople.jsonview.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
