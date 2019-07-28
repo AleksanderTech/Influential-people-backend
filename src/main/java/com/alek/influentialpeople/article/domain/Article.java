@@ -18,8 +18,8 @@ import javax.persistence.Transient;
 
 import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.model.Link;
-import com.alek.influentialpeople.persistence.entity.Hero;
-import com.alek.influentialpeople.persistence.entity.User;
+import com.alek.influentialpeople.hero.Hero;
+import com.alek.influentialpeople.user.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 

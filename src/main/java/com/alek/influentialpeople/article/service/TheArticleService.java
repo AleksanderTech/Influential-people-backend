@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.alek.influentialpeople.persistence.entity.Hero;
-import com.alek.influentialpeople.persistence.entity.User;
+import com.alek.influentialpeople.hero.Hero;
+import com.alek.influentialpeople.user.User;
 
 @Service
 public class TheArticleService implements ArticleService {

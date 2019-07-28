@@ -1,8 +1,9 @@
 package com.alek.influentialpeople.controller;
 
+import com.alek.influentialpeople.home.HomeController;
 import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.article.service.ArticleService;
-import com.alek.influentialpeople.service.TheHeroService;
+import com.alek.influentialpeople.hero.TheHeroService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

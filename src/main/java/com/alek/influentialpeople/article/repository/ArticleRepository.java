@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.alek.influentialpeople.persistence.entity.Hero;
-import com.alek.influentialpeople.persistence.entity.User;
+import com.alek.influentialpeople.hero.Hero;
+import com.alek.influentialpeople.user.User;
 
 @Repository
 public interface ArticleRepository extends PagingAndSortingRepository<Article, Long>{

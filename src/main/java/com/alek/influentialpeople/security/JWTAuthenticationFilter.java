@@ -36,8 +36,8 @@
 //		
 //		System.out.println("attemt in JWTAUTHENTI");
 //		try {
-//			com.alek.influentialpeople.persistence.entity.User creds = new ObjectMapper() 
-//					.readValue(req.getInputStream(), com.alek.influentialpeople.persistence.entity.User.class);
+//			com.alek.influentialpeople.user.User creds = new ObjectMapper()
+//					.readValue(req.getInputStream(), com.alek.influentialpeople.user.User.class);
 //
 //			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
 //					creds.getPassword(), new ArrayList<>()));

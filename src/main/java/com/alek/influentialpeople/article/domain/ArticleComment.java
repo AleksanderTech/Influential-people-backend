@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.article.domain;
 
-import com.alek.influentialpeople.persistence.entity.User;
+import com.alek.influentialpeople.user.User;
 
 import javax.persistence.*;
 import java.util.Date;
