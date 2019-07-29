@@ -10,7 +10,6 @@ import com.alek.influentialpeople.article.domain.ArticleComment;
 import com.alek.influentialpeople.home.service.EndpointConstants;
 import com.alek.influentialpeople.home.service.LinkFactory;
 import com.alek.influentialpeople.home.service.UrlBuilder;
-import com.alek.influentialpeople.service.*;
 import com.alek.influentialpeople.user.TheUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.model.Link;
 import com.alek.influentialpeople.hero.HeroRepository;
 import com.alek.influentialpeople.hero.Hero;
@@ -45,7 +43,6 @@ public class ArticleController {
 	@Autowired
 	private LinkFactory linkFactory;
 
-	@JsonView(View.Private.class)
 	@RequestMapping(path = "/article/hero/{id}", method = RequestMethod.GET)
 	public List<Article> getHeroArticles(@PathVariable String id, HttpServletRequest request) {
 
@@ -68,7 +65,6 @@ public class ArticleController {
 		return articleCommentService.getAllArticleComments(Long.valueOf(id));
 	}
 
-	@JsonView(View.Public.class)
 	@RequestMapping(path = "/article", method = RequestMethod.GET)
 	public List<Article> getAllArticles(@RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size) {
@@ -82,7 +78,6 @@ public class ArticleController {
 
 	}
 
-	@JsonView(View.Private.class)
 	@RequestMapping(path = "/article/{id}", method = RequestMethod.GET)
 	public Article getArticle(@PathVariable String id, HttpServletRequest request) {
 
@@ -100,7 +95,6 @@ public class ArticleController {
 		articleCommentService.addArticleComment(comment);
 	}
 
-	@JsonView(View.Private.class)
 	@RequestMapping(path = "/article/user/{id}", method = RequestMethod.GET)
 	public List<Article> getUserArticles(@PathVariable String id, HttpServletRequest request) {
 
@@ -114,7 +108,6 @@ public class ArticleController {
 		return articles;
 	}
 
-	@JsonView(View.Private.class)
 	@RequestMapping(path = "/hero/{id}/article", method = RequestMethod.POST)
 	public void addArticle(@RequestBody Article article, @RequestParam String username, @PathVariable String id) {
 

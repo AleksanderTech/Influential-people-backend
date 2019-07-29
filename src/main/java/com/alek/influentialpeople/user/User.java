@@ -14,9 +14,7 @@ import javax.persistence.PrePersist;
 import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.article.domain.ArticleComment;
 import com.alek.influentialpeople.hero.HeroScore;
-import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.quote.Quote;
-import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 public class User {
@@ -24,24 +22,18 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
-	@JsonView(View.Public.class)
 	private long id;
 	@Column(nullable = false, unique = true)
-	@JsonView(View.Public.class)
 	private String username;
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
-	@JsonView(View.Profile.class)
 	private String email;
 	@Column(nullable = false)
-	@JsonView(View.Profile.class)
 	private String role;
 	@Column(columnDefinition = "int default 0")
-	@JsonView(View.Private.class)
 	private int activation;
 	@Column(updatable = false, nullable = false)
-	@JsonView(View.Profile.class)
 	private Long created_at;
 	@Column(nullable = true)
 	private String profileImagePath;

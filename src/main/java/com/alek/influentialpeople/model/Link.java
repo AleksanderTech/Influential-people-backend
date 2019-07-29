@@ -1,13 +1,10 @@
 package com.alek.influentialpeople.model;
 
-import com.alek.influentialpeople.jsonview.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 public class Link {
 
-	@JsonView({View.Public.class})
 	private String link;
-	@JsonView({View.Public.class})
 	private String rel;
 
 	public Link(String link, String rel) {

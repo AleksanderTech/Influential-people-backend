@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alek.influentialpeople.email.EmailService;
-import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.user.User;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -44,7 +43,6 @@ public class UserController {
 	public UserController(PasswordEncoder bCryptPasswordEncoder) {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
-	@JsonView(View.Public.class)
 	@RequestMapping(path = "/user", method = RequestMethod.GET)
 	public List<User> getAllUsers(@RequestParam(value = "id", required = false) Long id,
 			@RequestParam(value = "start", required = false) Long start,

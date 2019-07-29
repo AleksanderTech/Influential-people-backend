@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.alek.influentialpeople.exception.NotFoundException;
-import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.home.service.ImageService;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -23,7 +22,6 @@ public class HeroController {
 	@Autowired
 	private HeroService theHeroService;
 // /influential-people/src/main/resources/static/storage/hero/1/profileImage/1.jpg
-	@JsonView(View.Public.class)
 	@RequestMapping(path = "/hero", method = RequestMethod.GET)
 	public List<Hero> getAllPersons() {
 
@@ -69,7 +67,6 @@ public class HeroController {
 		theHeroService.addPerson(person);
 	}
 
-	@JsonView(View.Profile.class)
 	@RequestMapping(path = "/hero/{id}", method = RequestMethod.GET)
 	public Hero getHero(@PathVariable Integer id) {
 

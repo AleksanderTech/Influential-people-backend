@@ -13,7 +13,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.alek.influentialpeople.article.domain.Article;
-import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.model.Link;
 import com.alek.influentialpeople.quote.Quote;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,13 +24,10 @@ public class Hero {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
-	@JsonView(View.Public.class)
 	private int id;
 	@Column(nullable = false, unique = true)
-	@JsonView(View.Public.class)
 	private String fullName;
 	@Column(updatable = false, nullable = false)
-	@JsonView(View.Private.class)
 	private Long created_at;
 	@Column(nullable = true)
 	private String profileImagePath;
@@ -40,17 +36,14 @@ public class Hero {
 	@OneToMany(mappedBy = "hero")
 	private List<Quote> quotes = new ArrayList<>();
 	@OneToMany(mappedBy = "hero")
-	@JsonView(View.Profile.class)
 	private List<HeroCategory> heroCategories = new ArrayList<>();
 	@OneToMany(mappedBy = "hero")
 	private List<HeroScore> heroScores = new ArrayList<>();
 	@Transient
 	@JsonProperty
-	@JsonView(View.Public.class)
 	private long score;
 	@Transient
 	@JsonProperty
-	@JsonView(View.Public.class)
 	private List<Link> links = new ArrayList<>();
 	
 	

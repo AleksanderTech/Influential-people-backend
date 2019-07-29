@@ -8,9 +8,7 @@ import com.alek.influentialpeople.hero.TheHeroService;
 import com.alek.influentialpeople.home.service.EndpointConstants;
 import com.alek.influentialpeople.home.service.LinkFactory;
 import com.alek.influentialpeople.home.service.UrlBuilder;
-import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.model.Link;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,7 +34,6 @@ public class HomeController {
 		this.theArticleService=articleService;
 	}
 
-	@JsonView(View.Public.class)
 	@RequestMapping(path = "/home/article", method = RequestMethod.GET)
 	public List<Article> getNewestArticles(HttpServletRequest request) {
 
@@ -51,7 +48,6 @@ public class HomeController {
 		return articles;
 	}
 
-	@JsonView(View.Public.class)
 	@RequestMapping(path = "/home/hero", method = RequestMethod.GET)
 	public List<Hero> getTopHeroes(HttpServletRequest request) {
 

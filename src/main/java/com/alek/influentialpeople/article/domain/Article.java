@@ -16,12 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
-import com.alek.influentialpeople.jsonview.View;
 import com.alek.influentialpeople.model.Link;
 import com.alek.influentialpeople.hero.Hero;
 import com.alek.influentialpeople.user.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 public class Article implements Comparable<Article> {
@@ -29,32 +27,24 @@ public class Article implements Comparable<Article> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
-	@JsonView(View.Public.class)
 	private Long id;
 	@Column(nullable = false, unique = true)
-	@JsonView(View.Public.class)
 	private String title;
 	@Column(nullable = false, columnDefinition = "TEXT")
-	@JsonView(View.Private.class)
 	private String content;
 	@Column(updatable = false, nullable = false)
-	@JsonView(View.Public.class)
 	private Long created_at;
 	@ManyToOne(cascade = CascadeType.ALL) // change
 	@JoinColumn(name = "hero_id", referencedColumnName = "id", nullable = false)
-	@JsonView(View.Public.class)
 	private Hero hero;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // change
 	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-	@JsonView(View.Public.class)
 	private User user;
 	@OneToMany(mappedBy = "article")
-	@JsonView(View.Private.class)
 	private List<ArticleComment> articleComments = new ArrayList<>();
 
 	@Transient
 	@JsonProperty
-	@JsonView(View.Public.class)
 	private List<Link> links = new ArrayList<>();
 
 	@PrePersist
