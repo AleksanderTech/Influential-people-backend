@@ -13,9 +13,7 @@ public class InfluentialPeopleApplication {
 
     public static void main(String[] args) {
 
-        //test
         SpringApplication.run(InfluentialPeopleApplication.class, args);
-        System.out.println("lalalla");
 
     }
 
