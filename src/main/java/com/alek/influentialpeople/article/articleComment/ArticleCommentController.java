@@ -1,9 +1,7 @@
-package com.alek.influentialpeople.article.controller;
+package com.alek.influentialpeople.article.articleComment;
 
 import java.util.List;
 
-import com.alek.influentialpeople.article.service.ArticleCommentService;
-import com.alek.influentialpeople.article.domain.ArticleComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

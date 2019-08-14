@@ -3,10 +3,10 @@ package com.alek.influentialpeople.article.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-import com.alek.influentialpeople.article.service.ArticleCommentService;
+import com.alek.influentialpeople.article.articleComment.ArticleCommentService;
 import com.alek.influentialpeople.article.service.TheArticleService;
 import com.alek.influentialpeople.article.domain.Article;
-import com.alek.influentialpeople.article.domain.ArticleComment;
+import com.alek.influentialpeople.article.articleComment.ArticleComment;
 import com.alek.influentialpeople.home.service.EndpointConstants;
 import com.alek.influentialpeople.home.service.LinkFactory;
 import com.alek.influentialpeople.home.service.UrlBuilder;
@@ -25,7 +25,6 @@ import com.alek.influentialpeople.model.Link;
 import com.alek.influentialpeople.hero.HeroRepository;
 import com.alek.influentialpeople.hero.Hero;
 import com.alek.influentialpeople.user.User;
-import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 public class ArticleController {

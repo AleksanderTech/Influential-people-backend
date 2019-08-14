@@ -1,5 +1,6 @@
-package com.alek.influentialpeople.article.domain;
+package com.alek.influentialpeople.article.articleComment;
 
+import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.user.User;
 
 import javax.persistence.*;

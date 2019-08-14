@@ -1,10 +1,10 @@
-package com.alek.influentialpeople.article.service;
+package com.alek.influentialpeople.article.articleComment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alek.influentialpeople.article.domain.ArticleComment;
-import com.alek.influentialpeople.article.repository.ArticleCommentRepository;
+import com.alek.influentialpeople.article.articleComment.ArticleComment;
+import com.alek.influentialpeople.article.articleComment.ArticleCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.alek.influentialpeople.article.domain.Article;
