@@ -1,7 +1,5 @@
 package com.alek.influentialpeople.user;
 
-import com.alek.influentialpeople.user.User;
-
 import java.util.List;
 
 public interface UserService {
@@ -14,9 +12,9 @@ public interface UserService {
 
     void updateUser(User user);
 
-    User getUser(long id);
-
     List<User> getUsersForId(Long id);
 
     List<User> getUsersPaginated(Long start, Long size);
+
+    User getUser(String username);
 }

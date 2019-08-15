@@ -1,15 +1,26 @@
 package com.alek.influentialpeople.article.domain;
 
-import com.alek.influentialpeople.article.articleComment.ArticleComment;
-import com.alek.influentialpeople.hero.Hero;
-import com.alek.influentialpeople.model.Link;
-import com.alek.influentialpeople.user.User;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Transient;
+
+import com.alek.influentialpeople.article.articleComment.ArticleComment;
+import com.alek.influentialpeople.model.Link;
+import com.alek.influentialpeople.hero.Hero;
+import com.alek.influentialpeople.user.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Article implements Comparable<Article> {
@@ -24,11 +35,11 @@ public class Article implements Comparable<Article> {
 	private String content;
 	@Column(updatable = false, nullable = false)
 	private Long created_at;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL) // change
 	@JoinColumn(name = "hero_id", referencedColumnName = "id", nullable = false)
 	private Hero hero;
 	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 	@OneToMany(mappedBy = "article")
 	private List<ArticleComment> articleComments = new ArrayList<>();

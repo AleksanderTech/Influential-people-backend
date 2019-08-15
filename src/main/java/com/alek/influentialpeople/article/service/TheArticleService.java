@@ -65,7 +65,7 @@ public class TheArticleService implements ArticleService {
     @Override
     public List<Article> getUserArticles(long id) {
         List<Article> articles = new ArrayList<>();
-        articleRepository.findByUser(new User(id), PageRequest.of(0, 3)).forEach(articles::add);
+//        articleRepository.findByUser(new User(id), PageRequest.of(0, 3)).forEach(articles::add);
         return articles;
     }
 
@@ -78,9 +78,9 @@ public class TheArticleService implements ArticleService {
 
     @Override
     public User changeUser(Article article) {
-        User user = new User(article.getUser().getUsername());
+//        User user = new User(article.getUser().getUsername());
 
-        return user;
+        return null;
     }
 
 }

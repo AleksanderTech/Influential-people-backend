@@ -15,18 +15,18 @@ public class ArticleCommentController {
 	@Autowired
 	ArticleCommentService articleCommentService;
 
-
-	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.GET)
-	public List<ArticleComment> getCommentsOfArticle(@PathVariable String id) {
-
-		return articleCommentService.getAllArticleComments(Long.valueOf(id));
-	}
-
-
-
-	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.POST)
-	public void addUser(@RequestBody ArticleComment articleComment) { // deserializacja
-		articleCommentService.addArticleComment(articleComment);
-	}
+//
+//	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.GET)
+//	public List<ArticleComment> getCommentsOfArticle(@PathVariable String id) {
+//
+//		return articleCommentService.getAllArticleComments(Long.valueOf(id));
+//	}
+//
+//
+//
+//	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.POST)
+//	public void addUser(@RequestBody ArticleComment articleComment) { // deserializacja
+//		articleCommentService.addArticleComment(articleComment);
+//	}
 
 }

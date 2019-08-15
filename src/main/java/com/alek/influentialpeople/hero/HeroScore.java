@@ -2,12 +2,7 @@ package com.alek.influentialpeople.hero;
 
 import com.alek.influentialpeople.user.User;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 
 @Entity
 public class HeroScore {
@@ -17,15 +12,14 @@ public class HeroScore {
 	
 	@ManyToOne
 	@MapsId("hero_id")
-	@JoinColumn(name="hero_id")
+	@JoinColumn(name="hero_id",referencedColumnName = "id")
 	private Hero hero;
 	
 	@ManyToOne
-	@MapsId("user_id")
-	@JoinColumn(name="user_id")
+	@MapsId("username")
+	@JoinColumn(name="username",referencedColumnName = "username")
 	private User user;
-	
-	@Column(updatable=false,nullable = false)
+
 	private long points;
 
 	public HeroScore() {
