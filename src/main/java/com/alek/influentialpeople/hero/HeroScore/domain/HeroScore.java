@@ -1,6 +1,7 @@
-package com.alek.influentialpeople.hero;
+package com.alek.influentialpeople.hero.HeroScore.domain;
 
-import com.alek.influentialpeople.user.User;
+import com.alek.influentialpeople.hero.domain.Hero;
+import com.alek.influentialpeople.user.domain.User;
 
 import javax.persistence.*;
 
@@ -24,6 +25,13 @@ public class HeroScore {
 
 	public HeroScore() {
 		super();
+	}
+
+	public HeroScore(HeroScoreKey id, Hero hero, User user, long points) {
+		this.id = id;
+		this.hero = hero;
+		this.user = user;
+		this.points = points;
 	}
 
 	public HeroScore(HeroScoreKey id, long points) {

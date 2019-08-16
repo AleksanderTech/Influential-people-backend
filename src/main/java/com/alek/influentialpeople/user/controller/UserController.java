@@ -1,15 +1,11 @@
-package com.alek.influentialpeople.user;
+package com.alek.influentialpeople.user.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import com.alek.influentialpeople.user.UserService;
+import com.alek.influentialpeople.user.domain.User;
+import com.alek.influentialpeople.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.MultiValueMap;
@@ -23,11 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.alek.influentialpeople.email.EmailService;
-import com.alek.influentialpeople.user.User;
-import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 public class UserController {

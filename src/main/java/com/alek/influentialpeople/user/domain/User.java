@@ -1,8 +1,8 @@
-package com.alek.influentialpeople.user;
+package com.alek.influentialpeople.user.domain;
 
 import com.alek.influentialpeople.article.articleComment.ArticleComment;
 import com.alek.influentialpeople.article.domain.Article;
-import com.alek.influentialpeople.hero.HeroScore;
+import com.alek.influentialpeople.hero.HeroScore.domain.HeroScore;
 import com.alek.influentialpeople.quote.Quote;
 import com.alek.influentialpeople.user.role.Role;
 
@@ -19,7 +19,6 @@ public class User {
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
     private String email;
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "username", referencedColumnName = "username")}
@@ -37,6 +36,15 @@ public class User {
     private Set<HeroScore> heroScores;
 
     public User() {
+    }
+
+    public User(String username) {
+        this.username = username;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {

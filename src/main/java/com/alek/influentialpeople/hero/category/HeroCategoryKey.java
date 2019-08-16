@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.hero;
+package com.alek.influentialpeople.hero.category;
 
 import java.io.Serializable;
 

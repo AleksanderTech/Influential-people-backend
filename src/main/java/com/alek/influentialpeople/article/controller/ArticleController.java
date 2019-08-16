@@ -10,7 +10,7 @@ import com.alek.influentialpeople.article.articleComment.ArticleComment;
 import com.alek.influentialpeople.home.service.EndpointConstants;
 import com.alek.influentialpeople.home.service.LinkFactory;
 import com.alek.influentialpeople.home.service.UrlBuilder;
-import com.alek.influentialpeople.user.TheUserService;
+import com.alek.influentialpeople.user.service.TheUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.alek.influentialpeople.model.Link;
-import com.alek.influentialpeople.hero.HeroRepository;
-import com.alek.influentialpeople.hero.Hero;
-import com.alek.influentialpeople.user.User;
+import com.alek.influentialpeople.hero.persistence.HeroRepository;
+import com.alek.influentialpeople.hero.domain.Hero;
+import com.alek.influentialpeople.user.domain.User;
 
 @RestController
 public class ArticleController {

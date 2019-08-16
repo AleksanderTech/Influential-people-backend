@@ -1,11 +1,12 @@
-package com.alek.influentialpeople.user;
+package com.alek.influentialpeople.user.service;
 
+import com.alek.influentialpeople.user.domain.User;
+import com.alek.influentialpeople.user.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TheUserService implements UserService {

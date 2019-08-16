@@ -2,9 +2,9 @@ package com.alek.influentialpeople.home;
 
 import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.article.service.ArticleService;
-import com.alek.influentialpeople.hero.Hero;
-import com.alek.influentialpeople.hero.HeroService;
-import com.alek.influentialpeople.hero.TheHeroService;
+import com.alek.influentialpeople.hero.domain.Hero;
+import com.alek.influentialpeople.hero.service.HeroService;
+import com.alek.influentialpeople.hero.service.TheHeroService;
 import com.alek.influentialpeople.home.service.EndpointConstants;
 import com.alek.influentialpeople.home.service.LinkFactory;
 import com.alek.influentialpeople.home.service.UrlBuilder;
