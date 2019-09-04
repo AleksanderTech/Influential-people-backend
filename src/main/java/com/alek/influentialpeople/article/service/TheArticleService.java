@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.alek.influentialpeople.hero.Hero;
-import com.alek.influentialpeople.user.User;
+import com.alek.influentialpeople.user.domain.User;
 
 @Service
 public class TheArticleService implements ArticleService {

@@ -2,7 +2,7 @@ package com.alek.influentialpeople.article.service;
 
 import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.hero.Hero;
-import com.alek.influentialpeople.user.User;
+import com.alek.influentialpeople.user.domain.User;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.alek.influentialpeople.user;
+package com.alek.influentialpeople.user.service;
 
-import com.alek.influentialpeople.user.User;
+import com.alek.influentialpeople.user.domain.User;
 
 import java.util.List;
 

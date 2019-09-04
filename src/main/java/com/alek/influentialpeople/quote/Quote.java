@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.quote;
 
 import com.alek.influentialpeople.hero.Hero;
-import com.alek.influentialpeople.user.User;
+import com.alek.influentialpeople.user.domain.User;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

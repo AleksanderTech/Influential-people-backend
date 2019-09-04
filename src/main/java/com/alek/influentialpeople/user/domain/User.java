@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.user;
+package com.alek.influentialpeople.user.domain;
 
 import java.util.ArrayList;
 import java.util.Date;

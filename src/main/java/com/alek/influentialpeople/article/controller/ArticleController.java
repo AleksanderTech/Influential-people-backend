@@ -6,11 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import com.alek.influentialpeople.article.service.ArticleCommentService;
 import com.alek.influentialpeople.article.service.TheArticleService;
 import com.alek.influentialpeople.article.domain.Article;
-import com.alek.influentialpeople.article.domain.ArticleComment;
 import com.alek.influentialpeople.home.service.EndpointConstants;
 import com.alek.influentialpeople.home.service.LinkFactory;
 import com.alek.influentialpeople.home.service.UrlBuilder;
-import com.alek.influentialpeople.user.TheUserService;
+import com.alek.influentialpeople.user.service.TheUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alek.influentialpeople.model.Link;
 import com.alek.influentialpeople.hero.HeroRepository;
 import com.alek.influentialpeople.hero.Hero;
-import com.alek.influentialpeople.user.User;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.alek.influentialpeople.user.domain.User;
 
 @RestController
 public class ArticleController {
@@ -59,11 +57,11 @@ public class ArticleController {
 		return articles;
 	}
 
-	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.GET)
-	public List<ArticleComment> getAllComments(@PathVariable String id) {
-
-		return articleCommentService.getAllArticleComments(Long.valueOf(id));
-	}
+//	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.GET)
+//	public List<ArticleComment> getAllComments(@PathVariable String id) {
+//
+//		return articleCommentService.getAllArticleComments(Long.valueOf(id));
+//	}
 
 	@RequestMapping(path = "/article", method = RequestMethod.GET)
 	public List<Article> getAllArticles(@RequestParam(required = false) Integer page,
@@ -89,11 +87,11 @@ public class ArticleController {
 
 		return article;
 	}
-
-	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.POST)
-	public void addCommnent(@RequestBody ArticleComment comment) {
-		articleCommentService.addArticleComment(comment);
-	}
+//
+//	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.POST)
+//	public void addCommnent(@RequestBody ArticleComment comment) {
+//		articleCommentService.addArticleComment(comment);
+//	}
 
 	@RequestMapping(path = "/article/user/{id}", method = RequestMethod.GET)
 	public List<Article> getUserArticles(@PathVariable String id, HttpServletRequest request) {

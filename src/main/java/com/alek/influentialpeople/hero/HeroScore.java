@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.hero;
 
-import com.alek.influentialpeople.user.User;
+import com.alek.influentialpeople.user.domain.User;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
