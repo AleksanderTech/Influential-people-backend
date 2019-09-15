@@ -1,22 +1,16 @@
 package com.alek.influentialpeople.user.service;
 
 import com.alek.influentialpeople.user.domain.User;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-    List<User> getAllUsers();
+    Page<User> findAll(Pageable pageable);
 
-    User getUserByName(String name);
+    User createUser(User user);
 
-    void addUser(User user);
+    User findUser(String username);
 
-    void updateUser(User user);
-
-    List<User> getUsersForId(Long id);
-
-    List<User> getUsersPaginated(Long start, Long size);
-
-    User getUser(String username);
+    void deleteUser(String username);
 }
