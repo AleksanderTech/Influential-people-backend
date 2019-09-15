@@ -22,11 +22,11 @@ public class HeroScoreController {
 
     @RequestMapping(path = "/hero/score", method = RequestMethod.POST)
     public void vote(@RequestParam(name = "username") String username, @RequestParam(name = "heroId") Integer id, @RequestParam Integer points) {
-        HeroScore heroScore = new HeroScore(new HeroScoreKey(username, id), new Hero(id), new User(username), points);
-        heroScoreRepository.save(heroScore);
-        Hero hero = heroRepository.findById(id).get();
-        hero.setScore(hero.getScore()+points);
-        heroRepository.save(hero);
+//        HeroScore heroScore = new HeroScore(new HeroScoreKey(username, id), new Hero(id), new User(username), points);
+//        heroScoreRepository.save(heroScore);
+//        Hero hero = heroRepository.findById(id).get();
+//        hero.setScore(hero.getScore()+points);
+//        heroRepository.save(hero);
     }
 
     @RequestMapping(path = "/hero/score", method = RequestMethod.GET)

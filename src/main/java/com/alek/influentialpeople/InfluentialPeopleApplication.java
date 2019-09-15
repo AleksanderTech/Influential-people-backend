@@ -7,12 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class InfluentialPeopleApplication {
 
-
     public static void main(String[] args) {
 
         SpringApplication.run(InfluentialPeopleApplication.class, args);
 
     }
-
-
 }

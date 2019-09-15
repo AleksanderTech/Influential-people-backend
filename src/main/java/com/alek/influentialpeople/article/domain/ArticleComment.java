@@ -20,7 +20,7 @@ public class ArticleComment {
 	@JoinColumn(name = "article_id", referencedColumnName = "id",nullable = false)
 	private Article article;
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id", referencedColumnName = "id",nullable = false)
+	@JoinColumn(name = "user_username", referencedColumnName = "username",nullable = false)
 	private User user;
 
 	@PrePersist

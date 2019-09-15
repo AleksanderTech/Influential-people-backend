@@ -1,51 +1,26 @@
 package com.alek.influentialpeople.user.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
-
+import com.alek.influentialpeople.user.domain.User;
 import com.alek.influentialpeople.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
-import com.alek.influentialpeople.user.domain.User;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alek.influentialpeople.email.EmailService;
-import com.alek.influentialpeople.user.domain.User;
-
-import com.alek.influentialpeople.email.EmailService;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class UserController {
 
     @Autowired
     private UserService theUserService;
-    @Autowired
-    private EmailService emailService;
-
-    private PasswordEncoder bCryptPasswordEncoder;
-    private User user;
-
-    public UserController(PasswordEncoder bCryptPasswordEncoder) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
 
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     public List<User> getAllUsers(@RequestParam(value = "id", required = false) Long id,
@@ -62,6 +37,18 @@ public class UserController {
         }
 
         return theUserService.getAllUsers();
+    }
+
+    @RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
+    public void updateUser(@RequestBody User user, @PathVariable String id) {
+
+        theUserService.updateUser(user);
+    }
+
+    @RequestMapping(path = "/user/{username}", method = RequestMethod.GET)
+    public User getUser(@PathVariable String username) {
+
+        return theUserService.getUser(username);
     }
 
     @RequestMapping(value = "/user/{id}/uploadFile", method = RequestMethod.POST)
@@ -85,7 +72,6 @@ public class UserController {
     public void file(@RequestBody byte[] image) {
 
         System.out.println(image.length);
-
 
 
     }
@@ -186,35 +172,24 @@ public class UserController {
 //		return false;
 //	}
 
-    @RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
-    public void updateUser(@RequestBody User user, @PathVariable String id) {
 
-        theUserService.updateUser(user);
-    }
-
-
-    @RequestMapping(path = "/user/{username}", method = RequestMethod.GET)
-    public User getUser(@PathVariable String username) {
-
-        return theUserService.getUser(username);
-    }
-
-    @PostMapping("/user/sign-up")
-    public void sendEmail(@RequestBody User user) throws IOException {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        System.out.println("sending email ...");
-        this.user = user;
-        System.out.println(user.getUsername());
-        emailService.sendMail(user.getUsername());
-    }
-
-    @GetMapping("/user/sign-up")
-    public void signUp(@RequestParam(name = "username") String username) {
-        System.out.println(user.getPassword());
-        user.setActivation(1);
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        theUserService.addUser(user);
-    }
+//
+//    @PostMapping("/user/sign-up")
+//    public void sendEmail(@RequestBody User user) throws IOException {
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        System.out.println("sending email ...");
+//        this.user = user;
+//        System.out.println(user.getUsername());
+//        emailService.sendMail(user.getUsername());
+//    }
+//
+//    @GetMapping("/user/sign-up")
+//    public void signUp(@RequestParam(name = "username") String username) {
+//        System.out.println(user.getPassword());
+////        user.setActivation(1);
+//        System.out.println(user.getUsername());
+//        System.out.println(user.getPassword());
+//        theUserService.addUser(user);
+//    }
 
 }
