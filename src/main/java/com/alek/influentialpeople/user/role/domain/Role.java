@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.user.role;
+package com.alek.influentialpeople.user.role.domain;
 
 import lombok.*;
 

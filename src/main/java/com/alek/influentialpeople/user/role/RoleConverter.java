@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.user.role.other;
+package com.alek.influentialpeople.user.role;
 
 import com.alek.influentialpeople.user.role.domain.Role;
 

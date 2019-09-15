@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.user.domain;
 
-import com.alek.influentialpeople.user.role.Role;
+import com.alek.influentialpeople.user.role.domain.Role;
 import lombok.*;
 
 import javax.persistence.Column;
