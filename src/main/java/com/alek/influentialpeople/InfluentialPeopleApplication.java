@@ -2,13 +2,8 @@ package com.alek.influentialpeople;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-
+@SpringBootApplication
 public class InfluentialPeopleApplication {
 
     public static void main(String[] args) {
@@ -16,10 +11,4 @@ public class InfluentialPeopleApplication {
         SpringApplication.run(InfluentialPeopleApplication.class, args);
 
     }
-
-    @Bean
-    public PasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 }
