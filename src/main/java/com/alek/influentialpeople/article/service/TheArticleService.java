@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.alek.influentialpeople.hero.Hero;
+import com.alek.influentialpeople.hero.domain.Hero;
 import com.alek.influentialpeople.user.domain.User;
 
 @Service
@@ -65,7 +65,7 @@ public class TheArticleService implements ArticleService {
     @Override
     public List<Article> getUserArticles(long id) {
         List<Article> articles = new ArrayList<>();
-        articleRepository.findByUser(new User(id), PageRequest.of(0, 3)).forEach(articles::add);
+//        articleRepository.findByUser(new User(id), PageRequest.of(0, 3)).forEach(articles::add);
         return articles;
     }
 
@@ -78,9 +78,9 @@ public class TheArticleService implements ArticleService {
 
     @Override
     public User changeUser(Article article) {
-        User user = new User(article.getUser().getUsername());
+//        User user = new User(article.getUser().getUsername());
 
-        return user;
+        return null;
     }
 
 }

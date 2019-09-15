@@ -1,13 +1,12 @@
 package com.alek.influentialpeople.user.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.alek.influentialpeople.user.domain.User;
+import com.alek.influentialpeople.user.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.alek.influentialpeople.user.persistence.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TheUserService implements UserService {
@@ -26,7 +25,7 @@ public class TheUserService implements UserService {
 
 	@Override
 	public User getUserByName(String name){
-	return userRepository.findByUsername(name);
+	return userRepository.findById(name).get();
 	}
 
 	@Override
@@ -40,16 +39,13 @@ public class TheUserService implements UserService {
 		
 	}
 
-	@Override
-	public User getUser(long id) {
-		return userRepository.findById(id).get();
-	}
+
 
 	@Override
 	public List<User> getUsersForId(Long id) {
 		List<User>users=new ArrayList<>();
 		userRepository.findAll().forEach(users::add);
-		users=users.stream().filter(e->{return e.getId()>=id;}).collect(Collectors.toList());
+//		users=users.stream().filter(e->{return e.getId()>=id;}).collect(Collectors.toList());
 		return users;
 	}
 
@@ -61,6 +57,11 @@ public class TheUserService implements UserService {
 		users=users.subList(safeLongToInt(start), safeLongToInt(start+size));
 		}
 		return users;
+	}
+
+	@Override
+	public User getUser(String username) {
+		return userRepository.findById(username).get();
 	}
 
 	public static int safeLongToInt(long longType) {

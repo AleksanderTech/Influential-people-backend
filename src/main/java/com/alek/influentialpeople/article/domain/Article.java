@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,8 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import com.alek.influentialpeople.article.articleComment.ArticleComment;
 import com.alek.influentialpeople.model.Link;
-import com.alek.influentialpeople.hero.Hero;
+import com.alek.influentialpeople.hero.domain.Hero;
 import com.alek.influentialpeople.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -37,8 +37,8 @@ public class Article implements Comparable<Article> {
 	@ManyToOne(cascade = CascadeType.ALL) // change
 	@JoinColumn(name = "hero_id", referencedColumnName = "id", nullable = false)
 	private Hero hero;
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // change
-	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 	@OneToMany(mappedBy = "article")
 	private List<ArticleComment> articleComments = new ArrayList<>();

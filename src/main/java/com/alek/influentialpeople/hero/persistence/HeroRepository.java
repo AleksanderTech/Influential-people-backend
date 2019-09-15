@@ -1,8 +1,8 @@
-package com.alek.influentialpeople.hero;
+package com.alek.influentialpeople.hero.persistence;
 
+import com.alek.influentialpeople.hero.domain.Hero;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface HeroRepository extends JpaRepository<Hero, Integer> {
@@ -11,7 +11,5 @@ public interface HeroRepository extends JpaRepository<Hero, Integer> {
 
 	@Query("SELECT hero.profileImagePath FROM Hero hero where hero.id = :id")
 	String findProfileImagePathById(@Param("id") Integer id);
-
-	
 
 }

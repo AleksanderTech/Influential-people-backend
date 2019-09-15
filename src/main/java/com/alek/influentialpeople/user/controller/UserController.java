@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
+import com.alek.influentialpeople.user.domain.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.MultiValueMap;
@@ -27,6 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alek.influentialpeople.email.EmailService;
 import com.alek.influentialpeople.user.domain.User;
+
+import com.alek.influentialpeople.email.EmailService;
 
 @RestController
 public class UserController {
@@ -111,6 +115,46 @@ public class UserController {
 
         return new ResponseEntity<Object>("All file Uplaoded succesfully", HttpStatus.OK);
     }
+//	@RequestMapping(value = "/user/{id}/uploadFile", method = RequestMethod.POST)
+//	public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable String id) {
+//
+//		File uploadedFile = new File("static/storage/user/image/", file.getOriginalFilename() + id);
+//
+//		try {
+//			uploadedFile.createNewFile();
+//			FileOutputStream fileOutputStream = new FileOutputStream(uploadedFile);
+//			fileOutputStream.write(file.getBytes());
+//			fileOutputStream.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return new ResponseEntity<Object>("file Uplaoded succesfully", HttpStatus.OK);
+//	}
+//
+//	@RequestMapping(value = "/user/{id}/uploadmultipleFiles", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//	public ResponseEntity<Object> uploadmultipleFile(@RequestParam("files") MultipartFile[] files,
+//			@PathVariable String id) {
+//		FileOutputStream fileOutputStream = null;
+//		System.out.println("hae");
+//		System.out.println(files);
+//		for (MultipartFile multipartFile : files) {
+//			File uploadedFile = new File("src/main/resources/static/storage/user/image",
+//					multipartFile.getOriginalFilename() + id);
+//			System.out.println("hae2");
+//			try {
+//				System.out.println("hae3");
+//				uploadedFile.createNewFile();
+//				fileOutputStream = new FileOutputStream(uploadedFile);
+//				fileOutputStream.write(multipartFile.getBytes());
+//				fileOutputStream.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//
+//		}
+//
+//		return new ResponseEntity<Object>("All file Uplaoded succesfully", HttpStatus.OK);
+//	}
 
     @RequestMapping(path = "/user", method = RequestMethod.POST)
     public void addUser(@RequestBody User user) {
@@ -148,10 +192,11 @@ public class UserController {
         theUserService.updateUser(user);
     }
 
-    @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
-    public User getUser(@PathVariable String id) {
 
-        return theUserService.getUser(Long.valueOf(id));
+    @RequestMapping(path = "/user/{username}", method = RequestMethod.GET)
+    public User getUser(@PathVariable String username) {
+
+        return theUserService.getUser(username);
     }
 
     @PostMapping("/user/sign-up")

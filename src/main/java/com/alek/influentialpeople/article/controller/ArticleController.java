@@ -3,7 +3,7 @@ package com.alek.influentialpeople.article.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-import com.alek.influentialpeople.article.service.ArticleCommentService;
+import com.alek.influentialpeople.article.articleComment.ArticleCommentService;
 import com.alek.influentialpeople.article.service.TheArticleService;
 import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.home.service.EndpointConstants;
@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.alek.influentialpeople.model.Link;
-import com.alek.influentialpeople.hero.HeroRepository;
-import com.alek.influentialpeople.hero.Hero;
+import com.alek.influentialpeople.hero.persistence.HeroRepository;
+import com.alek.influentialpeople.hero.domain.Hero;
 import com.alek.influentialpeople.user.domain.User;
 
 @RestController

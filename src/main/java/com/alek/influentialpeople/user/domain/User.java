@@ -13,7 +13,7 @@ import javax.persistence.PrePersist;
 
 import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.article.domain.ArticleComment;
-import com.alek.influentialpeople.hero.HeroScore;
+import com.alek.influentialpeople.hero.HeroScore.domain.HeroScore;
 import com.alek.influentialpeople.quote.Quote;
 
 @Entity

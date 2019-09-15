@@ -1,6 +1,4 @@
-package com.alek.influentialpeople.category;
-
-import com.alek.influentialpeople.hero.HeroCategory;
+package com.alek.influentialpeople.hero.category;
 
 import java.util.ArrayList;
 import java.util.List;

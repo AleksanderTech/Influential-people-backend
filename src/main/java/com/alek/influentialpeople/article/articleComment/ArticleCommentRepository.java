@@ -1,11 +1,9 @@
-package com.alek.influentialpeople.article.repository;
-
-import java.util.List;
+package com.alek.influentialpeople.article.articleComment;
 
 import com.alek.influentialpeople.article.domain.Article;
-import com.alek.influentialpeople.article.domain.ArticleComment;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 
 public interface ArticleCommentRepository extends JpaRepository<ArticleComment, Long> {

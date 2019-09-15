@@ -1,15 +1,15 @@
-package com.alek.influentialpeople.hero;
+package com.alek.influentialpeople.hero.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.alek.influentialpeople.hero.HeroService;
+import com.alek.influentialpeople.hero.persistence.HeroRepository;
+import com.alek.influentialpeople.hero.service.HeroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alek.influentialpeople.hero.HeroRepository;
-import com.alek.influentialpeople.hero.Hero;
+import com.alek.influentialpeople.hero.domain.Hero;
 
 @Service
 public class TheHeroService implements HeroService {
@@ -19,8 +19,8 @@ public class TheHeroService implements HeroService {
 
 	public List<Hero> getAllPersons() {
 		List<Hero> persons = new ArrayList<>();
-		heroRepository.findAll().forEach(persons::add);
-		return persons;
+		return heroRepository.findAll();
+
 	}
 
 	public void addPerson(Hero person) {

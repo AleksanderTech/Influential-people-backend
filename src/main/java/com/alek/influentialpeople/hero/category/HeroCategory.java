@@ -1,6 +1,6 @@
-package com.alek.influentialpeople.hero;
+package com.alek.influentialpeople.hero.category;
 
-import com.alek.influentialpeople.category.Category;
+import com.alek.influentialpeople.hero.domain.Hero;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;

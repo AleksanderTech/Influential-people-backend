@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.hero;
+package com.alek.influentialpeople.hero.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,10 +13,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.hero.category.HeroCategory;
+import com.alek.influentialpeople.hero.HeroScore.domain.HeroScore;
 import com.alek.influentialpeople.model.Link;
 import com.alek.influentialpeople.quote.Quote;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 public class Hero {
@@ -39,8 +40,7 @@ public class Hero {
 	private List<HeroCategory> heroCategories = new ArrayList<>();
 	@OneToMany(mappedBy = "hero")
 	private List<HeroScore> heroScores = new ArrayList<>();
-	@Transient
-	@JsonProperty
+
 	private long score;
 	@Transient
 	@JsonProperty
@@ -54,7 +54,13 @@ public class Hero {
 
 	public Hero() {
 	}
-	
+
+	public Hero(String fullName, List<HeroScore> heroScores, long score) {
+		this.fullName = fullName;
+		this.heroScores = heroScores;
+		this.score = score;
+	}
+
 	public Hero(int id, String fullName, Long created_at, String profileImagePath) {
 		super();
 		this.id = id;
@@ -66,7 +72,11 @@ public class Hero {
 	public Hero(String fullName) {
 		this.fullName = fullName;
 	}
-	
+
+	public Hero(int id) {
+		this.id = id;
+	}
+
 	public long getScore() {
 		return score;
 	}

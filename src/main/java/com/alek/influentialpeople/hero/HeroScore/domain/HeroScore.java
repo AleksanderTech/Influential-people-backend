@@ -1,13 +1,9 @@
-package com.alek.influentialpeople.hero;
+package com.alek.influentialpeople.hero.HeroScore.domain;
 
+import com.alek.influentialpeople.hero.domain.Hero;
 import com.alek.influentialpeople.user.domain.User;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 
 @Entity
 public class HeroScore {
@@ -17,19 +13,25 @@ public class HeroScore {
 	
 	@ManyToOne
 	@MapsId("hero_id")
-	@JoinColumn(name="hero_id")
+	@JoinColumn(name="hero_id",referencedColumnName = "id")
 	private Hero hero;
 	
 	@ManyToOne
-	@MapsId("user_id")
-	@JoinColumn(name="user_id")
+	@MapsId("username")
+	@JoinColumn(name="username",referencedColumnName = "username")
 	private User user;
-	
-	@Column(updatable=false,nullable = false)
+
 	private long points;
 
 	public HeroScore() {
 		super();
+	}
+
+	public HeroScore(HeroScoreKey id, Hero hero, User user, long points) {
+		this.id = id;
+		this.hero = hero;
+		this.user = user;
+		this.points = points;
 	}
 
 	public HeroScore(HeroScoreKey id, long points) {
