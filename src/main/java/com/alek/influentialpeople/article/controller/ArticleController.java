@@ -1,29 +1,22 @@
 package com.alek.influentialpeople.article.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-
 import com.alek.influentialpeople.article.articleComment.ArticleCommentService;
-import com.alek.influentialpeople.article.service.TheArticleService;
 import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.article.service.TheArticleService;
+import com.alek.influentialpeople.hero.persistence.HeroRepository;
 import com.alek.influentialpeople.home.service.EndpointConstants;
 import com.alek.influentialpeople.home.service.LinkFactory;
 import com.alek.influentialpeople.home.service.UrlBuilder;
+import com.alek.influentialpeople.model.Link;
 import com.alek.influentialpeople.user.service.TheUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import com.alek.influentialpeople.model.Link;
-import com.alek.influentialpeople.hero.persistence.HeroRepository;
-import com.alek.influentialpeople.hero.domain.Hero;
-import com.alek.influentialpeople.user.domain.User;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 public class ArticleController {
@@ -109,12 +102,12 @@ public class ArticleController {
 	@RequestMapping(path = "/hero/{id}/article", method = RequestMethod.POST)
 	public void addArticle(@RequestBody Article article, @RequestParam String username, @PathVariable String id) {
 
-		int heroId = Integer.valueOf(id);
-		Hero hero = heroRespository.findById(heroId).get();
-		User user = theUserService.getUserByName(username);
-		article.setHero(hero);
-		article.setUser(user);
-		System.out.println(article.toString());
-		theArticleService.addArticle(article);
+//		int heroId = Integer.valueOf(id);
+//		Hero hero = heroRespository.findById(heroId).get();
+//		User user = theUserService.getUserByName(username);
+//		article.setHero(hero);
+//		article.setUser(user);
+//		System.out.println(article.toString());
+//		theArticleService.addArticle(article);
 	}
 }
