@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private static final String ROLE_PREFIX = "ROLE_";
-
     private final UserRepository userRepository;
 
     @Autowired
@@ -24,10 +22,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         return userRepository.findById(username)
                 .map(user -> CurrentUser.builder().username(user.getUsername())
                         .password(user.getPassword())
-                        .role(ROLE_PREFIX + user.getRole().name())
+                        .roles(user.getRoles())
                         .build())
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }

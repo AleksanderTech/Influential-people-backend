@@ -1,5 +1,6 @@
 package com.alek.influentialpeople.user.controller;
 
+import com.alek.influentialpeople.user.controller.dto.UserResponse;
 import com.alek.influentialpeople.user.domain.User;
 import com.alek.influentialpeople.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,9 @@ public class UserController {
     private UserService theUserService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<User> findAll(Pageable pageable) {
+    public Page<UserResponse> findAll(Pageable pageable) {
 
-        return theUserService.findAll(pageable);
+        return theUserService.findAll(pageable).map(user -> new UserResponse(user));
     }
 
     @RequestMapping(path = "/{username}", method = RequestMethod.DELETE)
@@ -30,9 +31,9 @@ public class UserController {
     }
 
     @RequestMapping(path = "/{username}", method = RequestMethod.GET)
-    public User findUser(@PathVariable String username) {
+    public UserResponse findUser(@PathVariable String username) {
 
-        return theUserService.findUser(username);
+        return new UserResponse(theUserService.findUser(username));
     }
 
     @RequestMapping(method = RequestMethod.POST)

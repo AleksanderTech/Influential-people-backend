@@ -1,19 +1,33 @@
 package com.alek.influentialpeople.user.role.domain;
 
-import lombok.*;
+import com.alek.influentialpeople.user.domain.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Role {
 
     @Id
-    private Roles role;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
+    private String role;
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    private Set<User> users;
 
     public enum Roles {
-        USER, ADMIN
+        ROLE_USER, ROLE_ADMIN
+    }
+
+    public Role(String name) {
+        this.role = name;
     }
 }
