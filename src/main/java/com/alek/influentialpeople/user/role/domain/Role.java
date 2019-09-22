@@ -16,10 +16,7 @@ import java.util.Set;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
-    private String role;
+    private String name;
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Set<User> users;
 
@@ -27,7 +24,7 @@ public class Role {
         ROLE_USER, ROLE_ADMIN
     }
 
-    public Role(String name) {
-        this.role = name;
+    public Role(Role.Roles role) {
+        this.name = role.name();
     }
 }

@@ -1,17 +1,12 @@
 package com.alek.influentialpeople.security.model;
 
 
-import com.alek.influentialpeople.user.role.domain.Role;
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 @Builder
 public class CurrentUser implements UserDetails {
@@ -23,20 +18,12 @@ public class CurrentUser implements UserDetails {
     private String password;
 
     @NotNull
-    private Set<Role> roles;
+    private Collection<? extends GrantedAuthority> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return getGrantedAuthorities(roles);
-    }
-
-    private List<GrantedAuthority> getGrantedAuthorities(Set<Role> roles) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getRole()));
-        }
-        return authorities;
+        return roles;
     }
 
     @Override

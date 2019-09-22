@@ -32,6 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        http.headers().frameOptions().sameOrigin(); // for the h2 console purpose
+
         http.csrf().disable();
         http.httpBasic();
         http.authorizeRequests()
