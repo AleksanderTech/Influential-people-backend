@@ -48,26 +48,26 @@ public class HomeController {
 		return articles;
 	}
 
-	@RequestMapping(path = "/home/hero", method = RequestMethod.GET)
-	public List<Hero> getTopHeroes(HttpServletRequest request) {
-
-		List<Hero> heroes = theHeroService.getTopHeroes(6);
-
-		for (int i = 0; i < heroes.size(); i++) {
-			Hero hero = heroes.get(i);
-			int id=heroes.get(i).getId();
-			long score = theHeroService.getHeroesScore(hero);
-			hero.setScore(score);
-			String selfUrl = urlBuilder.requestRoot(request).slash().append(EndpointConstants.HERO).slash()
-					.append(String.valueOf(id)).build();
-			Link selfLink = linkFactory.getLink(selfUrl, EndpointConstants.SELF);
-			String imageUrl=urlBuilder.requestRoot(request).slash().append(EndpointConstants.HERO).slash().append(String.valueOf(id)).slash().append("profileImage").build();
-			Link imageLink=linkFactory.getLink(imageUrl, EndpointConstants.PROFILE_IMAGE);
-			heroes.get(i).add(selfLink);
-			heroes.get(i).add(imageLink);
-		}
-
-		return heroes;
-	}
+//	@RequestMapping(path = "/home/hero", method = RequestMethod.GET)
+//	public List<Hero> getTopHeroes(HttpServletRequest request) {
+//
+//		List<Hero> heroes = theHeroService.getTopHeroes(6);
+//
+//		for (int i = 0; i < heroes.size(); i++) {
+//			Hero hero = heroes.get(i);
+//			int id=heroes.get(i).getId();
+//			long score = theHeroService.getHeroesScore(hero);
+//			hero.setScore(score);
+//			String selfUrl = urlBuilder.requestRoot(request).slash().append(EndpointConstants.HERO).slash()
+//					.append(String.valueOf(id)).build();
+//			Link selfLink = linkFactory.getLink(selfUrl, EndpointConstants.SELF);
+//			String imageUrl=urlBuilder.requestRoot(request).slash().append(EndpointConstants.HERO).slash().append(String.valueOf(id)).slash().append("profileImage").build();
+//			Link imageLink=linkFactory.getLink(imageUrl, EndpointConstants.PROFILE_IMAGE);
+//			heroes.get(i).add(selfLink);
+//			heroes.get(i).add(imageLink);
+//		}
+//
+//		return heroes;
+//	}
 
 }

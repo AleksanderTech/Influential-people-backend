@@ -51,10 +51,11 @@ public class TheArticleService implements ArticleService {
 
     @Override
     public List<Article> getHeroArticles(int id) {
-        List<Article> articles = new ArrayList<>();
-
-        articleRepository.findByHero(new Hero(id, "", 0L, ""), PageRequest.of(0, 3)).forEach(articles::add);
-        return articles;
+//        List<Article> articles = new ArrayList<>();
+//
+//        articleRepository.findByHero(new Hero(id, "", 0L, ""), PageRequest.of(0, 3)).forEach(articles::add);
+//        return articles;
+        return null;
     }
 
     @Override
@@ -71,9 +72,10 @@ public class TheArticleService implements ArticleService {
 
     @Override
     public Hero changeHero(Article article) {
-        Hero hero = new Hero(article.getHero().getFullName());
-
-        return hero;
+//        Hero hero = new Hero(article.getHero().getFullName());
+//
+//        return hero;
+        return null;
     }
 
     @Override

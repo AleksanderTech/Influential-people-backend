@@ -2,71 +2,36 @@ package com.alek.influentialpeople.hero.controller;
 
 import com.alek.influentialpeople.hero.domain.Hero;
 import com.alek.influentialpeople.hero.service.HeroService;
-import com.alek.influentialpeople.home.service.ImageService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 public class HeroController {
 
-    @Autowired
-    private ImageService imageService;
-    @Autowired
-    private HeroService theHeroService;
+    private HeroService heroService;
+
+    public HeroController(final HeroService theHeroService) {
+        this.heroService = theHeroService;
+    }
 
     @RequestMapping(path = "/hero", method = RequestMethod.GET)
-    public ResponseEntity<List<Hero>> getAllPersons() {
+    public ResponseEntity<Page<Hero>> findAllHeroes(Pageable pageable) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(theHeroService.getAllPersons());
+        return ResponseEntity.status(HttpStatus.OK).body(heroService.findAllHeroes());
     }
 
     @RequestMapping(path = "/hero", method = RequestMethod.POST)
-    public void addPerson(@RequestBody Hero person) {
+    public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
 
-        theHeroService.addPerson(person);
+        return ResponseEntity.status(HttpStatus.OK).body(heroService.createHero(hero));
     }
 
-    @RequestMapping(path = "/hero/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Hero> getHero(@PathVariable Integer id) {
+    @RequestMapping(path = "/hero/{fullName}", method = RequestMethod.GET)
+    public ResponseEntity<Hero> findHero(@PathVariable String fullName) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(theHeroService.getHeroById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(heroService.findHero(fullName));
     }
-
-//	@RequestMapping(path = "/hero/{id}/profileImage", method = RequestMethod.GET)
-//	public ResponseEntity<byte[]> getHeroImage(@PathVariable("id") int id) {
-//
-//		String heroImagePath = theHeroService.getImagePath(id);
-//		if (heroImagePath == null || heroImagePath.isEmpty()) {
-//			throw new NotFoundException();
-//		}
-//		byte[] heroImage = imageService.getImageBytes(heroImagePath); // bytes of image
-//		if (heroImage == null || heroImage.length < 1) {
-//			throw new NotFoundException();
-//		}
-//
-//		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-//				.header(HttpHeaders.CONTENT_LENGTH, String.valueOf(heroImage.length)).body(heroImage);
-//	}
-//
-//	@RequestMapping(path = "/hero/{id}/profileImage", method = RequestMethod.PUT)
-//	public ResponseEntity<byte[]> editAuthorImage(@PathVariable("id") int id) {
-//
-//		String heroImagePath = theHeroService.getImagePath(id);
-//		if (heroImagePath == null || heroImagePath.isEmpty()) {
-//			throw new NotFoundException();
-//		}
-//		byte[] heroImage = imageService.getImageBytes(heroImagePath);
-//		if (heroImage == null || heroImage.length < 1) {
-//			throw new NotFoundException();
-//		}
-//
-//		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-//				.header(HttpHeaders.CONTENT_LENGTH, String.valueOf(heroImage.length)).body(heroImage);
-//	}
-
-
 }

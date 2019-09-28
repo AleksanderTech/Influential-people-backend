@@ -13,7 +13,7 @@ public class HeroScore {
 	
 	@ManyToOne
 	@MapsId("hero_id")
-	@JoinColumn(name="hero_id",referencedColumnName = "id")
+	@JoinColumn(name="hero_id",referencedColumnName = "fullName")
 	private Hero hero;
 	
 	@ManyToOne

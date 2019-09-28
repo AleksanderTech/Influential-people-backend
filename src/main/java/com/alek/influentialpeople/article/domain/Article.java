@@ -35,7 +35,7 @@ public class Article implements Comparable<Article> {
 	@Column(updatable = false, nullable = false)
 	private Long created_at;
 	@ManyToOne(cascade = CascadeType.ALL) // change
-	@JoinColumn(name = "hero_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "hero_full_name", referencedColumnName = "fullName", nullable = false)
 	private Hero hero;
 	@ManyToOne
 	@JoinColumn(name = "username", referencedColumnName = "username")
