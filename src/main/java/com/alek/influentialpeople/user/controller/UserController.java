@@ -12,8 +12,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/users")
-@PreAuthorize("hasAnyRole('ADMIN','USER')")
 public class UserController {
 
     @Autowired
@@ -34,6 +34,7 @@ public class UserController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @RequestMapping(path = "/{username}", method = RequestMethod.GET)
     public UserResponseDto findUser(@PathVariable String username) {
 
