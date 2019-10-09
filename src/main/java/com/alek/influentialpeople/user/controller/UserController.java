@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.user.controller;
 
-import com.alek.influentialpeople.user.controller.dto.UserResponseDto;
 import com.alek.influentialpeople.user.domain.User;
+import com.alek.influentialpeople.user.model.UserResponse;
 import com.alek.influentialpeople.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public Page<UserResponseDto> findAll(Pageable pageable) {
+    public Page<UserResponse> findAll(Pageable pageable) {
 
         return theUserService.findAll(pageable);
     }
@@ -36,9 +36,9 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @RequestMapping(path = "/{username}", method = RequestMethod.GET)
-    public UserResponseDto findUser(@PathVariable String username) {
+    public UserResponse findUser(@PathVariable String username) {
 
-        return new UserResponseDto(theUserService.findUser(username));
+        return new UserResponse(theUserService.findUser(username));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

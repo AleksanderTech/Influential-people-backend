@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.user.controller.dto;
+package com.alek.influentialpeople.user.model;
 
 import com.alek.influentialpeople.user.domain.User;
 import lombok.AllArgsConstructor;
@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @ToString
-public class UserResponseDto {
+public class UserResponse {
 
     private String username;
     private List<String> roles;
 
-    public UserResponseDto(User user) {
+    public UserResponse(User user) {
         username = user.getUsername();
         roles = user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toList());
     }
