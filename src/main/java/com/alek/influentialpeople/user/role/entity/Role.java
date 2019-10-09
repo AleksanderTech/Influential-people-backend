@@ -1,6 +1,6 @@
-package com.alek.influentialpeople.user.role.domain;
+package com.alek.influentialpeople.user.role.entity;
 
-import com.alek.influentialpeople.user.domain.User;
+import com.alek.influentialpeople.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.article.articleComment;
 
 import com.alek.influentialpeople.article.domain.Article;
-import com.alek.influentialpeople.user.domain.User;
+import com.alek.influentialpeople.user.entity.User;
 
 import javax.persistence.*;
 import java.util.Date;

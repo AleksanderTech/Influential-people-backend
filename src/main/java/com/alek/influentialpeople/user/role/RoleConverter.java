@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.user.role;
 
-import com.alek.influentialpeople.user.role.domain.Role;
+import com.alek.influentialpeople.user.role.entity.Role;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

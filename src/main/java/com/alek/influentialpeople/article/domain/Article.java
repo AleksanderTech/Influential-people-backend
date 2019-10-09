@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 import com.alek.influentialpeople.article.articleComment.ArticleComment;
 import com.alek.influentialpeople.model.Link;
 import com.alek.influentialpeople.hero.domain.Hero;
-import com.alek.influentialpeople.user.domain.User;
+import com.alek.influentialpeople.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity

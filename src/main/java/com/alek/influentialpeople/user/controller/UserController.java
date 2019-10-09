@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.user.controller;
 
-import com.alek.influentialpeople.user.domain.User;
+import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserResponse;
 import com.alek.influentialpeople.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
