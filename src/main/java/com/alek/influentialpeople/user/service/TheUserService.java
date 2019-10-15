@@ -24,17 +24,17 @@ public class TheUserService implements UserService {
     }
 
     @Override
-    public User findUser(String name) {
+    public User findUser(String name, boolean inSecureWay) {
         return userRepository.findById(name).get();
     }
 
     @Override
-    public void deleteUser(String username) {
+    public void deleteUser(String username, boolean inSecureWay) {
         userRepository.deleteById(username);
     }
 
     @Override
-    public User createUser(User user) {
+    public User createUser(User user, boolean inSecureWay) {
         return userRepository.save(user);
     }
 }

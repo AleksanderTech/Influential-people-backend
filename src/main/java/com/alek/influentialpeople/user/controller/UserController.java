@@ -29,7 +29,7 @@ public class UserController {
     @RequestMapping(path = "/{username}", method = RequestMethod.DELETE)
     public ResponseEntity deleteUser(@PathVariable String username) {
 
-        theUserService.deleteUser(username);
+        theUserService.deleteUser(username,true);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -37,13 +37,13 @@ public class UserController {
     @RequestMapping(path = "/{username}", method = RequestMethod.GET)
     public UserResponse findUser(@PathVariable String username) {
 
-        return new UserResponse(theUserService.findUser(username));
+        return new UserResponse(theUserService.findUser(username,true));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public User createUser(@RequestBody User user) {
 
-        return theUserService.createUser(user);
+        return theUserService.createUser(user,true);
     }
 }

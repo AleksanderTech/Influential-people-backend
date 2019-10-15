@@ -9,9 +9,9 @@ public interface UserService {
 
     Page<UserResponse> findAll(Pageable pageable);
 
-    User createUser(User user);
+    User createUser(User user,boolean inSecureWay);
 
-    User findUser(String username);
+    User findUser(String username,boolean inSecureWay);
 
-    void deleteUser(String username);
+    void deleteUser(String username,boolean inSecureWay);
 }
