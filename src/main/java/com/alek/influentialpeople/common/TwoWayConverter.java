@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.security.service;
+package com.alek.influentialpeople.common;
 
 import java.util.Collection;
 import java.util.List;

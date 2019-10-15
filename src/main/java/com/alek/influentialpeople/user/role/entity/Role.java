@@ -24,6 +24,10 @@ public class Role {
         ROLE_USER, ROLE_ADMIN
     }
 
+    public Role(String name) {
+        this.name = name;
+    }
+
     public Role(Role.Roles role) {
         this.name = role.name();
     }

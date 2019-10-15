@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.user.service;
 
-import com.alek.influentialpeople.security.service.TwoWayConverter;
+import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserResponse;
 import com.alek.influentialpeople.user.role.entity.Role;
