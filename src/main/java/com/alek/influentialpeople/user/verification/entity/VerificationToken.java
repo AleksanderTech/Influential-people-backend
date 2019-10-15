@@ -1,5 +1,6 @@
-package com.alek.influentialpeople.user.entity;
+package com.alek.influentialpeople.user.verification.entity;
 
+import com.alek.influentialpeople.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
