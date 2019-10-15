@@ -17,7 +17,9 @@ public class UserInitializer {
     public UserInitializer(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         User admin = User.builder().username("admin")
-                .password(passwordEncoder.encode("admin")).email("email@email.com")
+                .password(passwordEncoder.encode("admin"))
+                .email("email@email.com")
+                .enabled(true)
                 .roles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_ADMIN), new Role(Role.Roles.ROLE_USER))))
                 .build();
 

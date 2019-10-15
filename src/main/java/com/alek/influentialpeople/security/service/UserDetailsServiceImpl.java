@@ -30,6 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .map(user -> CurrentUser.builder().username(user.getUsername())
                         .password(user.getPassword())
                         .roles(getAuthorities(user))
+                        .isEnabled(user.isEnabled())
                         .build())
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }

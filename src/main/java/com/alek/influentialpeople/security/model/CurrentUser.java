@@ -18,6 +18,9 @@ public class CurrentUser implements UserDetails {
     private String password;
 
     @NotNull
+    private boolean isEnabled;
+
+    @NotNull
     private Collection<? extends GrantedAuthority> roles;
 
     @Override
@@ -53,6 +56,6 @@ public class CurrentUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 }

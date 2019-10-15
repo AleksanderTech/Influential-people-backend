@@ -19,4 +19,8 @@ public class AuthService {
     public void signUp(UserRegistration userRegistration) {
         userService.createUser(converter.convert(userRegistration), true);
     }
+
+    public void confirm() {
+
+    }
 }
