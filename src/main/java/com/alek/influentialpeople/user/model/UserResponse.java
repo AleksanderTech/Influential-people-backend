@@ -1,19 +1,17 @@
 package com.alek.influentialpeople.user.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserResponse {
 
     private String username;
-    private List<String> roles;
+    private Set<String> roles;
 
 }

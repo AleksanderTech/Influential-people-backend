@@ -2,10 +2,12 @@ package com.alek.influentialpeople.security.model;
 
 import lombok.*;
 
-@NoArgsConstructor
+
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRegistration {
 
     private String username;
