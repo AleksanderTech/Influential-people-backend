@@ -20,7 +20,7 @@ public class AuthController {
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     public ResponseEntity<UserResponse> signUp(@RequestBody UserRegistration userRegistration) {
 
-        return new ResponseEntity(null, HttpStatus.CREATED);
+        return new ResponseEntity(authService.signUp(userRegistration), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)

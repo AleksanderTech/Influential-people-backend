@@ -1,12 +1,11 @@
 package com.alek.influentialpeople.email;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
 public class Email {
 
     private String recipient;

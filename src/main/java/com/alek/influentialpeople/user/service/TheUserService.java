@@ -7,6 +7,7 @@ import com.alek.influentialpeople.user.persistence.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -16,10 +17,12 @@ public class TheUserService implements UserService {
 
     private UserRepository userRepository;
     private TwoWayConverter<User, UserResponse> converter;
+    private PasswordEncoder passwordEncoder;
 
-    public TheUserService(UserRepository userRepository, TwoWayConverter<User, UserResponse> converter) {
+    public TheUserService(UserRepository userRepository, TwoWayConverter<User, UserResponse> converter, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.converter = converter;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -40,6 +43,7 @@ public class TheUserService implements UserService {
 
     @Override
     public UserResponse createUser(User user, boolean inSecureWay) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return converter.convert(userRepository.save(user));
     }
 }
