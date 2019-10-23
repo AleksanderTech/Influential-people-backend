@@ -4,12 +4,15 @@ import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserResponse;
 import com.alek.influentialpeople.user.persistence.UserRepository;
+import com.alek.influentialpeople.user.role.entity.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +46,12 @@ public class TheUserService implements UserService {
 
     @Override
     public UserResponse createUser(User user, boolean inSecureWay) {
+        if (!inSecureWay) {
+            user.setEnabled(true);
+        } else {
+            user.setEnabled(false);
+            user.setRoles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_USER))));
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return converter.convert(userRepository.save(user));
     }

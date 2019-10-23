@@ -39,7 +39,8 @@ public class AuthService {
         User user = uRegistrationConverter.convert(userRegistration);
         userService.createUser(user, true);
         tokenRepository.save(makeToken(user));
-        emailSender.sendEmail(new Email("molekulaula@gmail.com", "molekulaula@gmail.com", "molekulaula@gmail.com", properties.getConfig("email.verification.message")));
+
+        emailSender.sendEmail(new Email(userRegistration.getEmail(), properties.getConfig("spring.mail.username"), properties.getConfig("email.verification.subject"), properties.getConfig("email.verification.message")));
         return uResponseConverter.convert(user);
     }
 

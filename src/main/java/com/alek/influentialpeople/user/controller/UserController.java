@@ -44,6 +44,6 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public UserResponse createUser(@RequestBody User user) {
 
-        return theUserService.createUser(user, true);
+        return theUserService.createUser(user, false);
     }
 }
