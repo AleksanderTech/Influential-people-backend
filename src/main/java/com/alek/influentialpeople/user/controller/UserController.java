@@ -22,9 +22,9 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public Page<UserResponse> findAll(Pageable pageable) {
+    public ResponseEntity<Page<UserResponse>> findAll(Pageable pageable) {
 
-        return userService.findAll(pageable);
+        return new ResponseEntity(userService.findAll(pageable), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -37,15 +37,15 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @RequestMapping(path = "/{username}", method = RequestMethod.GET)
-    public UserResponse findUser(@PathVariable String username) {
+    public ResponseEntity<UserResponse> findUser(@PathVariable String username) {
 
-        return userService.findUser(username, true);
+        return new ResponseEntity(userService.findUser(username, true), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
-    public UserResponse createUser(@RequestBody User user) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody User user) {
 
-        return userService.createUser(user, false);
+        return new ResponseEntity(userService.createUser(user, false), HttpStatus.CREATED);
     }
 }
