@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.user.controller;
 
-import com.alek.influentialpeople.user.entity.User;
+import com.alek.influentialpeople.user.model.UserAccount;
 import com.alek.influentialpeople.user.model.UserResponse;
 import com.alek.influentialpeople.user.service.UserService;
 import org.springframework.data.domain.Page;
@@ -44,7 +44,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<UserResponse> createUser(@RequestBody User user) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserAccount user) {
 
         return new ResponseEntity(userService.createUser(user, false), HttpStatus.CREATED);
     }

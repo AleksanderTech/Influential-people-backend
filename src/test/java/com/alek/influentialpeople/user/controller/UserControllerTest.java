@@ -1,9 +1,13 @@
 package com.alek.influentialpeople.user.controller;
 
+import com.alek.influentialpeople.TestUtils;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
+import com.alek.influentialpeople.user.entity.User;
+import com.alek.influentialpeople.user.model.UserAccount;
 import com.alek.influentialpeople.user.model.UserResponse;
 import com.alek.influentialpeople.user.role.entity.Role;
 import com.alek.influentialpeople.user.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.Sets;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -28,6 +32,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -110,25 +115,24 @@ public class UserControllerTest {
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8));
     }
 
-//    @PreAuthorize("hasAnyRole('ADMIN','USER')")
-//    @RequestMapping(path = "/{username}", method = RequestMethod.GET)
-//    public ResponseEntity<UserResponse> findUser(@PathVariable String username) {
-//
-//        return new ResponseEntity(userService.findUser(username, true), HttpStatus.OK);
-//    }
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @RequestMapping(path = "/{username}", method = RequestMethod.DELETE)
-//    public ResponseEntity deleteUser(@PathVariable String username) {
-//
-//        userService.deleteUser(username, true);
-//        return new ResponseEntity(HttpStatus.NO_CONTENT);
-//    }
-//
-//
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @RequestMapping(method = RequestMethod.POST)
-//    public ResponseEntity<UserResponse> createUser(@RequestBody User user) {
-//
-//        return new ResponseEntity(userService.createUser(user, false), HttpStatus.CREATED);
-//    }
+    @Test
+    public void createUser_userDoesNotExist_shouldReturnStatus201() throws Exception {
+
+        UserResponse user1 = UserResponse.builder().username("user1").email("email1@email.com").roles(Sets.newHashSet(Role.Roles.ROLE_USER.name())).build();
+
+        when(userService.createUser(any(UserAccount.class), any(Boolean.class)))
+                .thenReturn(user1);
+        mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8)
+                .content(TestUtils.stringify(user1)))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.username").value(user1.getUsername()))
+                .andExpect(jsonPath("$.email").value(user1.getEmail()))
+                .andExpect(jsonPath("$.roles.[*]").value(Lists.newArrayList(user1.getRoles())));
+        verify(userService, Mockito.times(1)).createUser(any(UserAccount.class), any(Boolean.class));
+    }
+
+    @Test
+    public void createUser_userAlreadyExists_shouldReturnStatus409() {
+    }
 }
