@@ -4,11 +4,9 @@ import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserAccount;
 import com.alek.influentialpeople.user.role.entity.Role;
-import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
-@Component
 public class UserAccountConverter extends TwoWayConverter<UserAccount, User> {
 
     @Override

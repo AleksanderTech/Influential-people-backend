@@ -2,6 +2,8 @@ package com.alek.influentialpeople.exception.controller;
 
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.ExceptionResponse;
+import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
+import com.alek.influentialpeople.exception.exceptions.StateConflictException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -22,5 +24,15 @@ public class ExceptionController {
     @ExceptionHandler({UsernameNotFoundException.class})
     public ResponseEntity<ExceptionResponse> usernameNotFoundHandler(UsernameNotFoundException ex) {
         return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(), ExceptionMessages.NOT_FOUND_USER_MESSAGE), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({EntityExistsException.class})
+    public ResponseEntity<ExceptionResponse> entityExistsHandler(EntityExistsException ex) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.CONFLICT.value(), ExceptionMessages.USER_ALREADY_EXIST_MESSAGE), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler({StateConflictException.class})
+    public ResponseEntity<ExceptionResponse> stateConflictHandler(StateConflictException ex) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.CONFLICT.value(), ExceptionMessages.STATE_CONFLICT_MESSAGE), HttpStatus.CONFLICT);
     }
 }

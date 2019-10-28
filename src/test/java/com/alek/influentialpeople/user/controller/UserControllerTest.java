@@ -1,13 +1,14 @@
 package com.alek.influentialpeople.user.controller;
 
 import com.alek.influentialpeople.TestUtils;
+import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
-import com.alek.influentialpeople.user.entity.User;
+import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
+import com.alek.influentialpeople.exception.exceptions.StateConflictException;
 import com.alek.influentialpeople.user.model.UserAccount;
 import com.alek.influentialpeople.user.model.UserResponse;
 import com.alek.influentialpeople.user.role.entity.Role;
 import com.alek.influentialpeople.user.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.Sets;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -28,11 +29,9 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -40,6 +39,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerTest {
 
     private MockMvc mockMvc;
+    private UserResponse user1;
+    private UserResponse user2;
 
     @InjectMocks
     private UserController userController;
@@ -49,14 +50,13 @@ public class UserControllerTest {
 
     @Before
     public void setUp() {
+        UserResponse user1 = UserResponse.builder().username("user1").email("email1@email.com").roles(Sets.newHashSet(Role.Roles.ROLE_USER.name())).build();
+        UserResponse user2 = UserResponse.builder().username("user2").email("email2@email.com").roles(Sets.newHashSet(Role.Roles.ROLE_USER.name())).build();
         mockMvc = MockMvcBuilders.standaloneSetup(userController).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).setControllerAdvice(new ExceptionController()).build();
     }
 
     @Test
     public void findAll_usersFound_shouldReturnUsersAndStatus200() throws Exception {
-
-        UserResponse user1 = UserResponse.builder().username("user1").email("email1@email.com").roles(Sets.newHashSet(Role.Roles.ROLE_USER.name())).build();
-        UserResponse user2 = UserResponse.builder().username("user2").email("email2@email.com").roles(Sets.newHashSet(Role.Roles.ROLE_USER.name())).build();
 
         when(userService.findAll(any(Pageable.class)))
                 .thenReturn(new PageImpl<>(Lists.list(user1, user2)));
@@ -90,8 +90,6 @@ public class UserControllerTest {
     @Test
     public void findUser_userFound_shouldReturnUserAndSatus200() throws Exception {
 
-        UserResponse user1 = UserResponse.builder().username("user1").email("email1@email.com").roles(Sets.newHashSet(Role.Roles.ROLE_USER.name())).build();
-
         when(userService.findUser(eq(user1.getUsername()), eq(true)))
                 .thenReturn(user1);
 
@@ -112,13 +110,13 @@ public class UserControllerTest {
 
         mockMvc.perform(get("/users/" + "notExistingUsername"))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8));
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.message").value(ExceptionMessages.NOT_FOUND_USER_MESSAGE));
+        verify(userService, Mockito.times(1)).findUser(any(String.class), any(Boolean.class));
     }
 
     @Test
     public void createUser_userDoesNotExist_shouldReturnStatus201() throws Exception {
-
-        UserResponse user1 = UserResponse.builder().username("user1").email("email1@email.com").roles(Sets.newHashSet(Role.Roles.ROLE_USER.name())).build();
 
         when(userService.createUser(any(UserAccount.class), any(Boolean.class)))
                 .thenReturn(user1);
@@ -129,10 +127,42 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.username").value(user1.getUsername()))
                 .andExpect(jsonPath("$.email").value(user1.getEmail()))
                 .andExpect(jsonPath("$.roles.[*]").value(Lists.newArrayList(user1.getRoles())));
+
         verify(userService, Mockito.times(1)).createUser(any(UserAccount.class), any(Boolean.class));
     }
 
     @Test
-    public void createUser_userAlreadyExists_shouldReturnStatus409() {
+    public void createUser_userAlreadyExists_shouldReturnStatus409() throws Exception {
+
+        when(userService.createUser(any(UserAccount.class), any(Boolean.class)))
+                .thenThrow(new EntityExistsException(ExceptionMessages.ENTITY_ALREADY_EXIST_MESSAGE));
+        mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8)
+                .content(TestUtils.stringify(user1)))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.message").value(ExceptionMessages.USER_ALREADY_EXIST_MESSAGE));
+
+        verify(userService, Mockito.times(1)).createUser(any(UserAccount.class), any(Boolean.class));
+    }
+
+    @Test
+    public void deleteUser_deletesAnotherUser_shouldReturnStatus204() throws Exception {
+
+        mockMvc.perform(delete("/users/" + user1.getUsername()).contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isNoContent());
+
+        verify(userService, Mockito.times(1)).deleteUser(any(String.class), any(Boolean.class));
+    }
+
+    @Test
+    public void deleteUser_userDeletesHimself_shouldReturnStatus409() throws Exception {
+
+        doThrow(StateConflictException.class).when(userService).deleteUser(any(String.class), any(Boolean.class));
+
+        mockMvc.perform(delete("/users/" + user1.getUsername()).contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value(ExceptionMessages.STATE_CONFLICT_MESSAGE));
+
+        verify(userService, Mockito.times(1)).deleteUser(any(String.class), any(Boolean.class));
     }
 }
