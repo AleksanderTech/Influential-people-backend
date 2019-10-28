@@ -1,5 +1,6 @@
 package com.alek.influentialpeople.user.service;
 
+import com.alek.influentialpeople.common.ConvertersFactory;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.exceptions.StateConflictException;
@@ -23,15 +24,11 @@ import java.util.stream.Collectors;
 public class TheUserService implements UserService {
 
     private UserRepository userRepository;
-    private TwoWayConverter<User, UserResponse> responseConverter;
-    private TwoWayConverter<UserAccount, User> accountConverter;
     private PasswordEncoder passwordEncoder;
     private CurrentUserHolder userHolder;
 
-    public TheUserService(UserRepository userRepository, TwoWayConverter<User, UserResponse> responseConverter, TwoWayConverter<UserAccount, User> accountConverter, PasswordEncoder passwordEncoder, CurrentUserHolder userHolder) {
+    public TheUserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CurrentUserHolder userHolder) {
         this.userRepository = userRepository;
-        this.responseConverter = responseConverter;
-        this.accountConverter = accountConverter;
         this.passwordEncoder = passwordEncoder;
         this.userHolder = userHolder;
     }
@@ -39,21 +36,22 @@ public class TheUserService implements UserService {
     @Override
     public Page<UserResponse> findAll(Pageable pageable) {
         Page<User> page = userRepository.findAll(pageable);
-        return new PageImpl(page.getContent().stream().map(user -> responseConverter.convert(user)).collect(Collectors.toList()), pageable, page.getTotalElements());
+        return new PageImpl(page.getContent().stream().map(user -> ConvertersFactory.<User, UserResponse>getConverter(ConvertersFactory.ConverterType.USER_TO_USER_RESPONSE).convert(user)).collect(Collectors.toList()), pageable, page.getTotalElements());
     }
 
     @Override
     public UserResponse findUser(String username, boolean inSecureWay) {
+        TwoWayConverter<User, UserResponse> converter = ConvertersFactory.<User, UserResponse>getConverter(ConvertersFactory.ConverterType.USER_TO_USER_RESPONSE);
         User user = userRepository.findById(username).orElse(null);
         if (user == null) {
             throw new UsernameNotFoundException(ExceptionMessages.NOT_FOUND_USER_MESSAGE);
         }
         if (inSecureWay) {
             if (isAllowed(username)) {
-                return responseConverter.convert(userRepository.findById(username).get());
+                return converter.convert(userRepository.findById(username).get());
             }
         }
-        return responseConverter.convert(user);
+        return converter.convert(user);
     }
 
     @Override
@@ -79,7 +77,7 @@ public class TheUserService implements UserService {
             user.setRoles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_USER))));
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return responseConverter.convert(userRepository.save(accountConverter.convert(user)));
+        return ConvertersFactory.<User, UserResponse>getConverter(ConvertersFactory.ConverterType.USER_TO_USER_RESPONSE).convert(userRepository.save(ConvertersFactory.<User, UserAccount>getConverter(ConvertersFactory.ConverterType.USER_TO_USER_ACCOUNT).convertBack(user)));
     }
 
     private boolean isAllowed(String username) {

@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.security.service;
 
+import com.alek.influentialpeople.common.ConvertersFactory;
 import com.alek.influentialpeople.common.Properties;
-import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.email.Email;
 import com.alek.influentialpeople.email.EmailSender;
 import com.alek.influentialpeople.security.model.UserRegistration;
@@ -20,18 +20,12 @@ import java.util.UUID;
 public class AuthService {
 
     private UserService userService;
-    private TwoWayConverter<UserRegistration, User> uRegistrationConverter;
-    private TwoWayConverter<User, UserResponse> uResponseConverter;
-    private TwoWayConverter<UserAccount, User> uAccountConverter;
     private VerificationTokenRepository tokenRepository;
     private EmailSender emailSender;
     private Properties properties;
 
-    public AuthService(UserService userService, TwoWayConverter<UserRegistration, User> uRegistrationConverter, TwoWayConverter<User, UserResponse> uResponseConverter, TwoWayConverter<UserAccount, User> uAccountConverter, VerificationTokenRepository tokenRepository, EmailSender emailSender, Properties properties) {
+    public AuthService(UserService userService, VerificationTokenRepository tokenRepository, EmailSender emailSender, Properties properties) {
         this.userService = userService;
-        this.uRegistrationConverter = uRegistrationConverter;
-        this.uResponseConverter = uResponseConverter;
-        this.uAccountConverter = uAccountConverter;
         this.tokenRepository = tokenRepository;
         this.emailSender = emailSender;
         this.properties = properties;
@@ -39,12 +33,11 @@ public class AuthService {
 
     public UserResponse signUp(UserRegistration userRegistration) {
 
-        User user = uRegistrationConverter.convert(userRegistration);
-        userService.createUser(uAccountConverter.convertBack(user), true);
+        User user = ConvertersFactory.<UserRegistration, User>getConverter(ConvertersFactory.ConverterType.USER_REGISTRATION_TO_USER).convert(userRegistration);
+        userService.createUser(ConvertersFactory.<User, UserAccount>getConverter(ConvertersFactory.ConverterType.USER_TO_USER_ACCOUNT).convert(user), true);
         tokenRepository.save(makeToken(user));
-
         emailSender.sendEmail(new Email(userRegistration.getEmail(), properties.getConfig("spring.mail.username"), properties.getConfig("email.verification.subject"), properties.getConfig("email.verification.message")));
-        return uResponseConverter.convert(user);
+        return ConvertersFactory.<User, UserResponse>getConverter(ConvertersFactory.ConverterType.USER_TO_USER_RESPONSE).convert(user);
     }
 
     private VerificationToken makeToken(User user) {
