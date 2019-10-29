@@ -13,6 +13,7 @@ import java.util.Date;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class VerificationToken {
 
     public static final int VALIDITY_TIME = 24 * 60 * 60 * 1000;
@@ -23,7 +24,7 @@ public class VerificationToken {
 
     private String value;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "username", referencedColumnName = "username")
     private User user;
 

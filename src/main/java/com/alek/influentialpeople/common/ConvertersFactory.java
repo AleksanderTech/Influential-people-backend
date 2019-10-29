@@ -10,20 +10,20 @@ public class ConvertersFactory {
     public static <E, M> TwoWayConverter<E, M> getConverter(ConverterType converterType) {
         TwoWayConverter converter = null;
         switch (converterType) {
-            case USER_TO_USER_ACCOUNT:
-                converter = new UserAccountConverter();
+            case USER_ACCOUNT_TO_USER:
+                converter = new <E,M>UserAccountConverter();
                 break;
             case USER_TO_USER_RESPONSE:
-                converter = new UserResponseConverter();
+                converter = new <E,M>UserResponseConverter();
                 break;
             case USER_REGISTRATION_TO_USER:
-                converter = new UserRegistrationConverter();
+                converter = new <E,M>UserRegistrationConverter();
                 break;
         }
         return converter;
     }
 
    public enum ConverterType {
-        USER_TO_USER_RESPONSE, USER_REGISTRATION_TO_USER, USER_TO_USER_ACCOUNT
+        USER_TO_USER_RESPONSE, USER_REGISTRATION_TO_USER, USER_ACCOUNT_TO_USER
     }
 }

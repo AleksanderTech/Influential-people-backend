@@ -12,6 +12,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Builder
+@ToString
 @AllArgsConstructor
 public class User {
 

@@ -1,10 +1,13 @@
 package com.alek.influentialpeople.user.controller;
 
 import com.alek.influentialpeople.TestUtils;
+import com.alek.influentialpeople.common.ConvertersFactory;
+import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
 import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
 import com.alek.influentialpeople.exception.exceptions.StateConflictException;
+import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserAccount;
 import com.alek.influentialpeople.user.model.UserResponse;
 import com.alek.influentialpeople.user.role.entity.Role;
@@ -25,6 +28,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,9 +45,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
 
+    private TwoWayConverter<UserAccount, User> converterA = getConverter(ConvertersFactory.ConverterType.USER_ACCOUNT_TO_USER);
     private MockMvc mockMvc;
-    private UserResponse user1;
-    private UserResponse user2;
+    private User user1;
+    private User user2;
 
     @InjectMocks
     private UserController userController;
@@ -50,8 +58,8 @@ public class UserControllerTest {
 
     @Before
     public void setUp() {
-        UserResponse user1 = UserResponse.builder().username("user1").email("email1@email.com").roles(Sets.newHashSet(Role.Roles.ROLE_USER.name())).build();
-        UserResponse user2 = UserResponse.builder().username("user2").email("email2@email.com").roles(Sets.newHashSet(Role.Roles.ROLE_USER.name())).build();
+        user1 = User.builder().username("user1").email("email1@email.com").roles(Sets.newHashSet(new Role(Role.Roles.ROLE_USER))).build();
+        user2 = User.builder().username("user2").email("email2@email.com").roles(Sets.newHashSet(new Role(Role.Roles.ROLE_USER))).build();
         mockMvc = MockMvcBuilders.standaloneSetup(userController).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).setControllerAdvice(new ExceptionController()).build();
     }
 
@@ -90,7 +98,7 @@ public class UserControllerTest {
     @Test
     public void findUser_userFound_shouldReturnUserAndSatus200() throws Exception {
 
-        when(userService.findUser(eq(user1.getUsername()), eq(true)))
+        when(userService.findUser(eq(user1.getUsername())))
                 .thenReturn(user1);
 
         mockMvc.perform(get("/users/" + user1.getUsername()))
@@ -98,51 +106,51 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(user1.getUsername()))
                 .andExpect(jsonPath("$.email").value(user1.getEmail()))
-                .andExpect(jsonPath("$.roles.[*]").value(Lists.newArrayList(user1.getRoles())));
-        verify(userService, Mockito.times(1)).findUser(any(String.class), any(Boolean.class));
+                .andExpect(jsonPath("$.roles.[*]").value(user1.getRoles().stream().map(role->role.getName()).collect(Collectors.toList())));
+        verify(userService, Mockito.times(1)).findUser(any(String.class));
     }
 
     @Test
     public void findUser_userNotFound_shouldReturnStatus404() throws Exception {
 
-        when(userService.findUser(any(String.class), any(Boolean.class)))
+        when(userService.findUser(any(String.class)))
                 .thenThrow(UsernameNotFoundException.class);
 
         mockMvc.perform(get("/users/" + "notExistingUsername"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.message").value(ExceptionMessages.NOT_FOUND_USER_MESSAGE));
-        verify(userService, Mockito.times(1)).findUser(any(String.class), any(Boolean.class));
+        verify(userService, Mockito.times(1)).findUser(any(String.class));
     }
 
     @Test
     public void createUser_userDoesNotExist_shouldReturnStatus201() throws Exception {
 
-        when(userService.createUser(any(UserAccount.class), any(Boolean.class)))
+        when(userService.createUser(any(User.class)))
                 .thenReturn(user1);
         mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8)
-                .content(TestUtils.stringify(user1)))
+                .content(TestUtils.stringify(converterA.convertBack(user1))))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.username").value(user1.getUsername()))
                 .andExpect(jsonPath("$.email").value(user1.getEmail()))
-                .andExpect(jsonPath("$.roles.[*]").value(Lists.newArrayList(user1.getRoles())));
+                .andExpect(jsonPath("$.roles.[*]").value(user1.getRoles().stream().map(role->role.getName()).collect(Collectors.toList())));
 
-        verify(userService, Mockito.times(1)).createUser(any(UserAccount.class), any(Boolean.class));
+        verify(userService, Mockito.times(1)).createUser(any(User.class));
     }
 
     @Test
     public void createUser_userAlreadyExists_shouldReturnStatus409() throws Exception {
 
-        when(userService.createUser(any(UserAccount.class), any(Boolean.class)))
+        when(userService.createUser(any(User.class)))
                 .thenThrow(new EntityExistsException(ExceptionMessages.ENTITY_ALREADY_EXIST_MESSAGE));
         mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8)
-                .content(TestUtils.stringify(user1)))
+                .content(TestUtils.stringify(converterA.convertBack(user1))))
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.message").value(ExceptionMessages.USER_ALREADY_EXIST_MESSAGE));
 
-        verify(userService, Mockito.times(1)).createUser(any(UserAccount.class), any(Boolean.class));
+        verify(userService, Mockito.times(1)).createUser(any(User.class));
     }
 
     @Test
@@ -151,18 +159,18 @@ public class UserControllerTest {
         mockMvc.perform(delete("/users/" + user1.getUsername()).contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
 
-        verify(userService, Mockito.times(1)).deleteUser(any(String.class), any(Boolean.class));
+        verify(userService, Mockito.times(1)).deleteUser(any(String.class));
     }
 
     @Test
     public void deleteUser_userDeletesHimself_shouldReturnStatus409() throws Exception {
 
-        doThrow(StateConflictException.class).when(userService).deleteUser(any(String.class), any(Boolean.class));
+        doThrow(StateConflictException.class).when(userService).deleteUser(any(String.class));
 
         mockMvc.perform(delete("/users/" + user1.getUsername()).contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message").value(ExceptionMessages.STATE_CONFLICT_MESSAGE));
 
-        verify(userService, Mockito.times(1)).deleteUser(any(String.class), any(Boolean.class));
+        verify(userService, Mockito.times(1)).deleteUser(any(String.class));
     }
 }

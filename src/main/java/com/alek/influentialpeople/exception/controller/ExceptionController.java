@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityNotFoundException;
+
 @ControllerAdvice
 @RestController
 public class ExceptionController {
@@ -25,6 +27,11 @@ public class ExceptionController {
     public ResponseEntity<ExceptionResponse> usernameNotFoundHandler(UsernameNotFoundException ex) {
         return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(), ExceptionMessages.NOT_FOUND_USER_MESSAGE), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler({EntityNotFoundException.class})
+       public ResponseEntity<ExceptionResponse> entityNotFoundHandler(EntityNotFoundException ex) {
+           return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(), ExceptionMessages.NOT_FOUND_ENTITY_MESSAGE), HttpStatus.NOT_FOUND);
+       }
 
     @ExceptionHandler({EntityExistsException.class})
     public ResponseEntity<ExceptionResponse> entityExistsHandler(EntityExistsException ex) {

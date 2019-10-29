@@ -33,6 +33,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             User user = new ObjectMapper()
                     .readValue(req.getInputStream(), User.class);
+            System.out.println(user);
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getUsername(),
@@ -49,7 +50,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) {
-
+        System.out.println(auth.getPrincipal());
         String token = tokenService.generateToken(CurrentUser.builder().username(auth.getName()).roles(auth.getAuthorities()).build());
         res.addHeader(SecurityConstants.ACCESS_CONTROL_EXPOSE_HEADERS, SecurityConstants.AUTHORIZATION);
         res.addHeader(SecurityConstants.AUTHORIZATION, SecurityConstants.TOKEN_PREFIX + token);

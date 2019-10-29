@@ -1,17 +1,18 @@
 package com.alek.influentialpeople.user.service;
 
-import com.alek.influentialpeople.user.model.UserAccount;
-import com.alek.influentialpeople.user.model.UserResponse;
+import com.alek.influentialpeople.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-    Page<UserResponse> findAll(Pageable pageable);
+    Page<User> findAll(Pageable pageable);
 
-    UserResponse createUser(UserAccount user, boolean inSecureWay);
+    User createUser(User user);
 
-    UserResponse findUser(String username,boolean inSecureWay);
+    User saveUser(User user);
 
-    void deleteUser(String username,boolean inSecureWay);
+    User findUser(String username);
+
+    void deleteUser(String username);
 }

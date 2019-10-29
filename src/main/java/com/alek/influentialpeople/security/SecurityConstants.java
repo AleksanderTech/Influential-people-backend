@@ -13,6 +13,7 @@ public class SecurityConstants {
             "/webjars/**",
             "/v2/api-docs",
             "/sign-up",
+            "/confirm",
             "/h2-console/**"
     };
 }
