@@ -1,55 +1,24 @@
 package com.alek.influentialpeople.hero.category;
 
-import com.alek.influentialpeople.hero.domain.Hero;
+import com.alek.influentialpeople.hero.entity.Hero;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 
 @Entity
+@Table
 public class HeroCategory {
 
-	@EmbeddedId
-	private HeroCategoryKey id;
+    @EmbeddedId
+    private HeroCategoryId id;
 
-	@ManyToOne
-	@MapsId("id") 
-	@JoinColumn(name = "hero_id")
-    Hero hero;
+    @ManyToOne
+    @MapsId("id")
+    @JoinColumn(name = "hero_id", referencedColumnName = "fullName")
+    private Hero hero;
 
-	@ManyToOne
-	@MapsId("id")
-	@JoinColumn(name = "category_id")
-    Category category;
-
-	public HeroCategory() {
-		super();
-	}
-
-	public HeroCategoryKey getId() {
-		return id;
-	}
-
-	public void setId(HeroCategoryKey id) {
-		this.id = id;
-	}
-
-	public Hero getHero() {
-		return hero;
-	}
-
-	public void setHero(Hero hero) {
-		this.hero = hero;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
+    @ManyToOne
+    @MapsId("id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
 
 }

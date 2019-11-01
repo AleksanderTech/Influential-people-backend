@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.hero.HeroScore.domain;
+package com.alek.influentialpeople.hero.score.domain;
 
 import java.io.Serializable;
 import java.util.Objects;

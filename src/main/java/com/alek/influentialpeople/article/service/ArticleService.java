@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.article.service;
 
 import com.alek.influentialpeople.article.domain.Article;
-import com.alek.influentialpeople.hero.domain.Hero;
+import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.user.entity.User;
 import org.springframework.data.domain.Pageable;
 

@@ -9,7 +9,7 @@ import com.alek.influentialpeople.article.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.alek.influentialpeople.hero.domain.Hero;
+import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.user.entity.User;
 
 @Service

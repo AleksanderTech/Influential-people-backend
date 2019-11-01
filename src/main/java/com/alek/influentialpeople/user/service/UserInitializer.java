@@ -1,5 +1,7 @@
 package com.alek.influentialpeople.user.service;
 
+import com.alek.influentialpeople.hero.entity.Hero;
+import com.alek.influentialpeople.hero.persistence.HeroRepository;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.persistence.UserRepository;
 import com.alek.influentialpeople.user.role.entity.Role;
@@ -14,8 +16,11 @@ import java.util.HashSet;
 public class UserInitializer {
 
     @Autowired
-    public UserInitializer(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-
+    public UserInitializer(HeroRepository heroRepository,UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        Hero edison = Hero.builder().fullName("Edison").build();
+        Hero stalin = Hero.builder().fullName("Stalin").build();
+        heroRepository.save(edison);
+        heroRepository.save(stalin);
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))
                 .email("email@email.com")

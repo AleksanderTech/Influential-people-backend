@@ -9,7 +9,6 @@ import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
 import com.alek.influentialpeople.exception.exceptions.StateConflictException;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserAccount;
-import com.alek.influentialpeople.user.model.UserResponse;
 import com.alek.influentialpeople.user.role.entity.Role;
 import com.alek.influentialpeople.user.service.UserService;
 import com.google.common.collect.Sets;
@@ -28,7 +27,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
