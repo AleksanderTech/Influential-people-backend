@@ -30,20 +30,20 @@ public class HomeController {
 		this.theHeroService = theHeroService;
 		this.theArticleService=articleService;
 	}
-
-	@RequestMapping(path = "/home/article", method = RequestMethod.GET)
-	public List<Article> getNewestArticles(HttpServletRequest request) {
-
-		List<Article> articles = theArticleService.getNewestArticles(4);
-//		for (int i = 0; i < articles.size(); i++) {
 //
-//			String url = urlBuilder.requestRoot(request).slash().append(EndpointConstants.ARTICLE).slash()
-//					.append(String.valueOf(articles.get(i).getRealId())).build();
-//			Link link = linkFactory.getLink(url, EndpointConstants.SELF);
-//			articles.get(i).add(link);
-//		}
-		return articles;
-	}
+//	@RequestMapping(path = "/home/article", method = RequestMethod.GET)
+//	public List<Article> getNewestArticles(HttpServletRequest request) {
+//
+////		List<Article> articles = theArticleService.getNewestArticles(4);
+////		for (int i = 0; i < articles.size(); i++) {
+////
+////			String url = urlBuilder.requestRoot(request).slash().append(EndpointConstants.ARTICLE).slash()
+////					.append(String.valueOf(articles.get(i).getRealId())).build();
+////			Link link = linkFactory.getLink(url, EndpointConstants.SELF);
+////			articles.get(i).add(link);
+////		}
+//		return articles;
+//	}
 
 //	@RequestMapping(path = "/home/hero", method = RequestMethod.GET)
 //	public List<Hero> getTopHeroes(HttpServletRequest request) {

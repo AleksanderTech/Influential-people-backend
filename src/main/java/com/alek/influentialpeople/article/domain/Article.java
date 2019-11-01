@@ -1,12 +1,21 @@
 package com.alek.influentialpeople.article.domain;
 
+import com.alek.influentialpeople.article.model.ArticleResponse;
 import com.alek.influentialpeople.hero.entity.Hero;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Table
 @Entity
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
 public class Article {
 
     @Id
@@ -49,6 +58,10 @@ public class Article {
     public Article(Long id) {
         super();
         this.id = id;
+    }
+
+    public ArticleResponse toArticleResponse() {
+        return ArticleResponse.builder().title(this.title).content(this.content).createdAt(this.created_at).build();
     }
 
 }

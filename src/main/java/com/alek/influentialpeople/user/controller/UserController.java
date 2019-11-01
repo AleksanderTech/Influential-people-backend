@@ -1,5 +1,6 @@
 package com.alek.influentialpeople.user.controller;
 
+import com.alek.influentialpeople.article.service.ArticleService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserAccount;
@@ -22,6 +23,7 @@ public class UserController {
     private TwoWayConverter<UserAccount, User> accConverter = getConverter(ConverterType.USER_ACCOUNT_TO_USER);
     private TwoWayConverter<User, UserResponse> resConverter = getConverter(ConverterType.USER_TO_USER_RESPONSE);
     private UserService userService;
+    private ArticleService articleService;
 
     public UserController(UserService userService) {
         this.userService = userService;
