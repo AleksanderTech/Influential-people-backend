@@ -1,9 +1,11 @@
 package com.alek.influentialpeople.hero.controller;
 
 import com.alek.influentialpeople.article.domain.Article;
-import com.alek.influentialpeople.article.model.ArticleResponse;
+import com.alek.influentialpeople.article.model.ArticleHeader;
 import com.alek.influentialpeople.article.service.ArticleService;
+import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.entity.Hero;
+import com.alek.influentialpeople.hero.model.HeroRequest;
 import com.alek.influentialpeople.hero.model.HeroResponse;
 import com.alek.influentialpeople.hero.service.HeroService;
 import org.springframework.data.domain.Page;
@@ -12,12 +14,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.HERO_REQUEST_TO_HERO;
+import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.HERO_TO_HERO_RESPONSE;
+import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
+
 @RestController
 @RequestMapping("/heroes")
 public class HeroController {
 
     private final HeroService heroService;
     private final ArticleService articleService;
+
+    private TwoWayConverter<HeroRequest, Hero> heroRequestConverter = getConverter(HERO_REQUEST_TO_HERO);
+    private TwoWayConverter<Hero, HeroResponse> heroResponseConverter = getConverter(HERO_TO_HERO_RESPONSE);
 
     public HeroController(final HeroService theHeroService, final ArticleService articleService) {
         this.heroService = theHeroService;
@@ -32,15 +41,16 @@ public class HeroController {
     }
 
     @RequestMapping(path = "/{fullName}/articles", method = RequestMethod.GET)
-    public ResponseEntity<Page<ArticleResponse>> findHeroArticles(@PathVariable String fullName, Pageable pageable) {
+    public ResponseEntity<Page<ArticleHeader>> findHeroArticles(@PathVariable String fullName, Pageable pageable) {
 
         return ResponseEntity.status(HttpStatus.OK).body(articleService.findHeroArticles(fullName, pageable).map(Article::toArticleResponse));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
+    public ResponseEntity<HeroResponse> createHero(@RequestBody HeroRequest heroRequest) {
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(heroService.createHero(hero));
+        Hero hero = heroService.createHero(heroRequestConverter.convert(heroRequest));
+        return new ResponseEntity<HeroResponse>(heroResponseConverter.convert(hero), HttpStatus.CREATED);
     }
 
     @RequestMapping(path = "/{fullName}", method = RequestMethod.GET)

@@ -9,10 +9,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ArticleResponse {
+public class ArticleHeader {
 
+    private long id;
     private String title;
-    private String content;
     private long createdAt;
 
 }

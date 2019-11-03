@@ -7,18 +7,18 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class HeroScoreKey implements Serializable {
+public class HeroScoreId implements Serializable {
 
     @Column(name = "username")
     private String username;
     @Column(name = "hero_id")
     private int heroId;
 
-    public HeroScoreKey() {
+    public HeroScoreId() {
         super();
     }
 
-    public HeroScoreKey(String username, int heroId) {
+    public HeroScoreId(String username, int heroId) {
         this.username = username;
         this.heroId = heroId;
     }
@@ -27,7 +27,7 @@ public class HeroScoreKey implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        HeroScoreKey that = (HeroScoreKey) o;
+        HeroScoreId that = (HeroScoreId) o;
         return heroId == that.heroId &&
                 Objects.equals(username, that.username);
     }

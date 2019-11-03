@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.article.domain;
 
-import com.alek.influentialpeople.article.model.ArticleResponse;
+import com.alek.influentialpeople.article.model.ArticleHeader;
 import com.alek.influentialpeople.hero.entity.Hero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,8 +60,8 @@ public class Article {
         this.id = id;
     }
 
-    public ArticleResponse toArticleResponse() {
-        return ArticleResponse.builder().title(this.title).content(this.content).createdAt(this.created_at).build();
+    public ArticleHeader toArticleResponse() {
+        return ArticleHeader.builder().id(this.id).title(this.title).createdAt(this.created_at).build();
     }
 
 }

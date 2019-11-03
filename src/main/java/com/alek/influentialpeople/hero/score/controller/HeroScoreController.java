@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.hero.score.controller;
 
 import com.alek.influentialpeople.hero.score.domain.HeroScore;
-import com.alek.influentialpeople.hero.score.domain.HeroScoreKey;
+import com.alek.influentialpeople.hero.score.domain.HeroScoreId;
 import com.alek.influentialpeople.hero.score.persistence.HeroScoreRepository;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class HeroScoreController {
 
     @RequestMapping(path = "/hero/score", method = RequestMethod.POST)
     public void vote(@RequestParam(name = "username") String username, @RequestParam(name = "heroId") Integer id, @RequestParam Integer points) {
-//        score heroScore = new score(new HeroScoreKey(username, id), new Hero(id), new User(username), points);
+//        score heroScore = new score(new HeroScoreId(username, id), new Hero(id), new User(username), points);
 //        heroScoreRepository.save(heroScore);
 //        Hero hero = heroRepository.findById(id).get();
 //        hero.setScore(hero.getScore()+points);
@@ -29,7 +29,7 @@ public class HeroScoreController {
     }
 
     @RequestMapping(path = "/hero/score", method = RequestMethod.GET)
-    public List<HeroScore> getScores(@RequestBody HeroScoreKey key) {
+    public List<HeroScore> getScores(@RequestBody HeroScoreId key) {
 
         return heroScoreRepository.findAll();
     }

@@ -1,6 +1,8 @@
 package com.alek.influentialpeople.hero.entity;
 
 import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.hero.category.HeroCategory;
+import com.alek.influentialpeople.hero.model.HeroRequest;
 import com.alek.influentialpeople.hero.model.HeroResponse;
 import lombok.*;
 
@@ -20,12 +22,12 @@ public class Hero {
     private String fullName;
     @OneToMany(mappedBy = "hero", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Article> articles;
-
-//    @OneToMany(mappedBy = "hero", fetch = FetchType.LAZY)
-//    private List<HeroCategory> heroCategories;
+    @OneToMany(mappedBy = "hero", fetch = FetchType.LAZY)
+    private List<HeroCategory> heroCategories;
+    private String avatarImagePath;
+    private int score;
 
     public HeroResponse toHeroResponse() {
-        return new HeroResponse(this.fullName);
+        return HeroResponse.builder().fullName(this.fullName).profileImageUrl(this.avatarImagePath).score(this.score).build();
     }
-
 }

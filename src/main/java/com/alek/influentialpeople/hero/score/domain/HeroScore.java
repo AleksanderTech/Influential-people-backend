@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class HeroScore {
 
 	@EmbeddedId
-	private HeroScoreKey id;
+	private HeroScoreId id;
 	
 	@ManyToOne
 	@MapsId("hero_id")
@@ -27,24 +27,24 @@ public class HeroScore {
 		super();
 	}
 
-	public HeroScore(HeroScoreKey id, Hero hero, User user, long points) {
+	public HeroScore(HeroScoreId id, Hero hero, User user, long points) {
 		this.id = id;
 		this.hero = hero;
 		this.user = user;
 		this.points = points;
 	}
 
-	public HeroScore(HeroScoreKey id, long points) {
+	public HeroScore(HeroScoreId id, long points) {
 		super();
 		this.id = id;
 		this.points = points;
 	}
 
-	public HeroScoreKey getId() {
+	public HeroScoreId getId() {
 		return id;
 	}
 
-	public void setId(HeroScoreKey id) {
+	public void setId(HeroScoreId id) {
 		this.id = id;
 	}
 
