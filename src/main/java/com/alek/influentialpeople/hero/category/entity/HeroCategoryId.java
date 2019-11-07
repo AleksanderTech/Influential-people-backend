@@ -16,6 +16,6 @@ public class HeroCategoryId implements Serializable {
     @Column(name = "hero_id")
     private String heroId;
     @Column(name = "category_id")
-    private int categoryId;
+    private String categoryId;
 
 }

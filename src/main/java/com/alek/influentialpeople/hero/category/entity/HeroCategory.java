@@ -22,7 +22,7 @@ public class HeroCategory {
 
     @ManyToOne
     @MapsId("id")
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JoinColumn(name = "category_id", referencedColumnName = "name")
     private Category category;
 
     public HeroCategory(Category category) {
