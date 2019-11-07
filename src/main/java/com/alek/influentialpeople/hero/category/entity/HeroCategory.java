@@ -1,8 +1,7 @@
 package com.alek.influentialpeople.hero.category.entity;
 
 import com.alek.influentialpeople.hero.entity.Hero;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,6 +9,9 @@ import javax.persistence.*;
 @Table
 @Builder
 @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class HeroCategory {
 
     @EmbeddedId

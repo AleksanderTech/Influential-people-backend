@@ -2,7 +2,7 @@ package com.alek.influentialpeople.hero.category.controller;
 
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.model.CategoryRest;
-import com.alek.influentialpeople.hero.category.service.CategoryService;
+import com.alek.influentialpeople.hero.category.service.HeroCategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/categories")
 public class CategoryController {
 
-    private final CategoryService categoryService;
+    private final HeroCategoryService categoryService;
 
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(HeroCategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

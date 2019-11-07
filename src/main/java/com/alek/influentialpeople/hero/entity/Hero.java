@@ -21,7 +21,7 @@ public class Hero {
     private String fullName;
     @OneToMany(mappedBy = "hero", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Article> articles;
-    @OneToMany(mappedBy = "hero", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hero", fetch = FetchType.EAGER)
     private List<HeroCategory> heroCategories;
     private String avatarImagePath;
     private int score;
