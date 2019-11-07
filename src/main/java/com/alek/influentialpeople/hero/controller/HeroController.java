@@ -24,7 +24,7 @@ import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
-@RequestMapping("/heroes")
+@RequestMapping("/hero")
 public class HeroController {
 
     private final HeroService heroService;
@@ -47,7 +47,7 @@ public class HeroController {
         return ResponseEntity.status(HttpStatus.OK).body(heroResponses);
     }
 
-    @RequestMapping(path = "/{fullName}/articles", method = RequestMethod.GET)
+    @RequestMapping(path = "/{fullName}/article", method = RequestMethod.GET)
     public ResponseEntity<Page<ArticleHeader>> findHeroArticles(@PathVariable String fullName, Pageable pageable) {
 
         return ResponseEntity.status(HttpStatus.OK).body(articleService.findHeroArticles(fullName, pageable).map(Article::toArticleResponse));

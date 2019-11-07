@@ -1,8 +1,6 @@
 package com.alek.influentialpeople.hero.category.service;
 
 import com.alek.influentialpeople.hero.category.entity.Category;
-import com.alek.influentialpeople.hero.category.entity.HeroCategory;
-import com.alek.influentialpeople.hero.category.entity.HeroCategoryId;
 import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
 import com.alek.influentialpeople.hero.category.persistence.HeroCategoryRepository;
 import org.springframework.stereotype.Service;
@@ -27,13 +25,6 @@ public class TheHeroCategoryService implements HeroCategoryService {
     public Category createCategory(Category category) {
         return categoryRepository.save(category);
     }
-
-    //    @Override
-//    public void addCategory(Hero hero, Category category) {
-//        HeroCategoryId heroCategoryId = HeroCategoryId.builder().heroId(hero.getFullName()).categoryId(category.getName()).build();
-//        HeroCategory heroCategory = HeroCategory.builder().category(category).hero(hero).id(heroCategoryId).build();
-//        repository.save(heroCategory);
-//    }
 
     @Override
     public void addCategory(String heroName, String categoryName) {

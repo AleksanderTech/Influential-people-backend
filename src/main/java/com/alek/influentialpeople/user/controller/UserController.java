@@ -17,7 +17,7 @@ import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType;
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     private TwoWayConverter<UserAccount, User> accConverter = getConverter(ConverterType.USER_ACCOUNT_TO_USER);
