@@ -1,6 +1,7 @@
 package com.alek.influentialpeople.hero.category.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -9,6 +10,7 @@ import java.io.Serializable;
 
 @Embeddable
 @AllArgsConstructor
+@Builder
 public class HeroCategoryId implements Serializable {
 
     private static final long serialVersionUID = 1434151397030649812L;

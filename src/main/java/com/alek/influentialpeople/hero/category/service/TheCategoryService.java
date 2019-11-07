@@ -2,7 +2,9 @@ package com.alek.influentialpeople.hero.category.service;
 
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TheCategoryService implements CategoryService {
 
     private final CategoryRepository categoryRepository;

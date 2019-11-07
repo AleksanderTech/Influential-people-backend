@@ -59,4 +59,12 @@ public class HeroController {
         HeroResponse heroResponse = heroService.findHero(fullName).toHeroResponse();
         return ResponseEntity.status(HttpStatus.OK).body(heroResponse);
     }
+
+    @RequestMapping(path = "/{fullName}", method = RequestMethod.GET)
+    public ResponseEntity<HeroResponse> addCategoryHero(@PathVariable String fullName) {
+
+        HeroResponse heroResponse = heroService.findHero(fullName).toHeroResponse();
+        return ResponseEntity.status(HttpStatus.OK).body(heroResponse);
+    }
+
 }
