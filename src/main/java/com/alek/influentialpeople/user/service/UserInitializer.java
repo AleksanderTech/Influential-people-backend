@@ -2,10 +2,8 @@ package com.alek.influentialpeople.user.service;
 
 import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.article.repository.ArticleRepository;
-import com.alek.influentialpeople.hero.category.Category;
-import com.alek.influentialpeople.hero.category.CategoryRepository;
-import com.alek.influentialpeople.hero.category.HeroCategory;
-import com.alek.influentialpeople.hero.category.HeroCategoryRepository;
+import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
+import com.alek.influentialpeople.hero.category.persistence.HeroCategoryRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
 import com.alek.influentialpeople.user.entity.User;

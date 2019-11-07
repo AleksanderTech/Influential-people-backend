@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.hero.category;
+package com.alek.influentialpeople.hero.category.entity;
 
 import com.alek.influentialpeople.hero.entity.Hero;
 import lombok.AllArgsConstructor;

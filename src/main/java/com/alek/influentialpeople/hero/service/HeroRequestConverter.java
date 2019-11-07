@@ -1,8 +1,8 @@
 package com.alek.influentialpeople.hero.service;
 
 import com.alek.influentialpeople.common.TwoWayConverter;
-import com.alek.influentialpeople.hero.category.Category;
-import com.alek.influentialpeople.hero.category.HeroCategory;
+import com.alek.influentialpeople.hero.category.entity.Category;
+import com.alek.influentialpeople.hero.category.entity.HeroCategory;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.model.HeroRequest;
 
