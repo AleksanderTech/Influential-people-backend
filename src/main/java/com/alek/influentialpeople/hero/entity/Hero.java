@@ -30,4 +30,8 @@ public class Hero {
     public HeroResponse toHeroResponse() {
         return HeroResponse.builder().fullName(this.fullName).profileImageUrl(this.avatarImagePath).score(this.score).build();
     }
+
+    public Hero(String fullName) {
+        this.fullName = fullName;
+    }
 }

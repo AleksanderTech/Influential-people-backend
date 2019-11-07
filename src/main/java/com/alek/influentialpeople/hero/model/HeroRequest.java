@@ -2,6 +2,8 @@ package com.alek.influentialpeople.hero.model;
 
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Builder
@@ -10,5 +12,6 @@ import lombok.*;
 public class HeroRequest {
 
     private String fullName;
+    private Set<String> categories;
 
 }

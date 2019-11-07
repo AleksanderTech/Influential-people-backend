@@ -1,11 +1,15 @@
 package com.alek.influentialpeople.hero.category;
 
 import com.alek.influentialpeople.hero.entity.Hero;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import javax.persistence.*;
 
 @Entity
 @Table
+@Builder
+@AllArgsConstructor
 public class HeroCategory {
 
     @EmbeddedId
@@ -21,4 +25,7 @@ public class HeroCategory {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
+    public HeroCategory(Category category) {
+        this.category = category;
+    }
 }
