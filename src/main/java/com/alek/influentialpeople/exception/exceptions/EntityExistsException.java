@@ -5,5 +5,4 @@ public class EntityExistsException extends RuntimeException {
     public EntityExistsException(String entityAlreadyExistsMessage) {
         super(entityAlreadyExistsMessage);
     }
-
 }

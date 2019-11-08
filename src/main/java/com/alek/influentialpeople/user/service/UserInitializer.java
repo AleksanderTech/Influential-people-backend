@@ -23,7 +23,7 @@ public class UserInitializer {
     public UserInitializer(HeroCategoryRepository heroCategoryRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         Hero edison = Hero.builder().fullName("Edison").build();
-        Hero stalin = Hero.builder().fullName("Stalin").build();
+        Hero stalin = Hero.builder().fullName("Joseph Stalin").avatarImagePath("storage/images/heroes/Joseph_Stalin/avatar/Joseph_Stalin.jpg").build();
 
         Article edisonArticle = Article.builder().title("Edison the rich man").content("Edison whas not only genius in science field but ... ").hero(edison).build();
         Article edisonArticle2 = Article.builder().title("Edison and his filosophy").content("Edison whas not only genius in science field but ... ").hero(edison).build();

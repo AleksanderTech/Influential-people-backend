@@ -2,8 +2,10 @@ package com.alek.influentialpeople.exception.controller;
 
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.ExceptionResponse;
+import com.alek.influentialpeople.exception.exceptions.EmptyFileException;
 import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
 import com.alek.influentialpeople.exception.exceptions.StateConflictException;
+import com.alek.influentialpeople.exception.exceptions.StorageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -29,9 +31,9 @@ public class ExceptionController {
     }
 
     @ExceptionHandler({EntityNotFoundException.class})
-       public ResponseEntity<ExceptionResponse> entityNotFoundHandler(EntityNotFoundException ex) {
-           return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(), ExceptionMessages.NOT_FOUND_ENTITY_MESSAGE), HttpStatus.NOT_FOUND);
-       }
+    public ResponseEntity<ExceptionResponse> entityNotFoundHandler(EntityNotFoundException ex) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(), ExceptionMessages.NOT_FOUND_ENTITY_MESSAGE), HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler({EntityExistsException.class})
     public ResponseEntity<ExceptionResponse> entityExistsHandler(EntityExistsException ex) {
@@ -41,5 +43,15 @@ public class ExceptionController {
     @ExceptionHandler({StateConflictException.class})
     public ResponseEntity<ExceptionResponse> stateConflictHandler(StateConflictException ex) {
         return new ResponseEntity<>(new ExceptionResponse(HttpStatus.CONFLICT.value(), ExceptionMessages.STATE_CONFLICT_MESSAGE), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler({StorageException.class})
+    public ResponseEntity<ExceptionResponse> storageHandler(StorageException ex) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(), ExceptionMessages.FILE_STORAGE_FAIL_MESSAGE), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({EmptyFileException.class})
+    public ResponseEntity<ExceptionResponse> emptyFileHandler(EmptyFileException ex) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.BAD_REQUEST.value(), ExceptionMessages.EMPTY_FILE_EXCEPTION), HttpStatus.BAD_REQUEST);
     }
 }
