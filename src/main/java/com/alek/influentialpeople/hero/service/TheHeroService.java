@@ -3,6 +3,7 @@ package com.alek.influentialpeople.hero.service;
 import com.alek.influentialpeople.common.ImageService;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.exceptions.EmptyFileException;
+import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
 import com.alek.influentialpeople.exception.exceptions.StorageException;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
@@ -11,6 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.persistence.EntityNotFoundException;
+import java.io.File;
 
 @Service
 public class TheHeroService implements HeroService {
@@ -52,26 +56,25 @@ public class TheHeroService implements HeroService {
 
         String path = findAvatarPath(fullName);
         if (path == null || path.equals("")) {
-            throw new StorageException(ExceptionMessages.FILE_STORAGE_FAIL_MESSAGE);
+            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_IMAGE_MESSAGE);
         }
-        byte[] image = imageService.getImage(path);
+        byte[] image = imageService.getImage(path );
         return image;
     }
 
     @Override
     public String storeHeroImage(String fullName, MultipartFile image) {
-        String url = null;
 
+        String url = null;
         String path = findAvatarPath(fullName);
+        System.out.println(path);
         if (path == null) {
             path = imageService.createHeroAvatarPath(fullName);
+            heroRepository.updateImagePath(imageService.appendImageName(fullName, path), fullName);
             imageService.storeImage(fullName, image);
         } else {
-            imageService.storeImage(path,fullName, image);
+            imageService.storeImage(path, fullName, image);
         }
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                      .path(path)
-                      .toUriString();
+        return imageService.createHeroAvatarUrl(fullName);
     }
-
 }

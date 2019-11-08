@@ -4,7 +4,8 @@ public class ExceptionMessages {
 
 
     public static final String NOT_FOUND_USER_MESSAGE = "The User with given username does not exist";
-    public static final String NOT_FOUND_ENTITY_MESSAGE = "Searching entity does not exist";
+    public static final String NOT_FOUND_IMAGE_MESSAGE = "Searching image does not exist";
+    public static final String NOT_FOUND_VERIFICATION_TOKEN_MESSAGE = "Searching image does not exist";
     public static final String ACCESS_DENIED_MESSAGE = "You are not allowed to this resources";
     public static final String ENTITY_ALREADY_EXIST_MESSAGE = "Entity already exists";
     public static final String EMPTY_FILE_EXCEPTION = "File is empty !";

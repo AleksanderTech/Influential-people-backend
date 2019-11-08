@@ -1,15 +1,10 @@
 package com.alek.influentialpeople.security.service;
 
-import com.alek.influentialpeople.common.ConvertersFactory;
 import com.alek.influentialpeople.common.Properties;
-import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.email.Email;
 import com.alek.influentialpeople.email.EmailSender;
 import com.alek.influentialpeople.exception.ExceptionMessages;
-import com.alek.influentialpeople.security.model.UserRegistration;
 import com.alek.influentialpeople.user.entity.User;
-import com.alek.influentialpeople.user.model.UserAccount;
-import com.alek.influentialpeople.user.model.UserResponse;
 import com.alek.influentialpeople.user.service.UserService;
 import com.alek.influentialpeople.user.verification.entity.VerificationToken;
 import com.alek.influentialpeople.user.verification.persistence.VerificationTokenRepository;
@@ -59,7 +54,7 @@ public class AuthService {
 
         VerificationToken verificationToken = tokenRepository.findByValue(tokenValue);
         if (verificationToken == null) {
-            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_ENTITY_MESSAGE);
+            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_VERIFICATION_TOKEN_MESSAGE);
         }
         User user = verificationToken.getUser();
         if (verificationToken.getExpireDate().after(new Date())) {

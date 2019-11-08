@@ -3,7 +3,6 @@ package com.alek.influentialpeople.hero.controller;
 import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.article.model.ArticleHeader;
 import com.alek.influentialpeople.article.service.ArticleService;
-import com.alek.influentialpeople.common.ImageService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.category.model.CategoryRest;
 import com.alek.influentialpeople.hero.category.service.HeroCategoryService;
@@ -73,20 +72,19 @@ public class HeroController {
 
     @RequestMapping(path = "/{fullName}/category", method = RequestMethod.POST)
     public ResponseEntity addCategory(@PathVariable String fullName, @RequestBody CategoryRest category) {
+
         heroCategoryService.addCategory(fullName, category.getName());
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-
     @RequestMapping(path = "/{fullName}/image", method = RequestMethod.PUT)
-    public ResponseEntity uploadAvatarImage(@PathVariable String fullName, @RequestPart(value = "image",required = false) MultipartFile image) {
-
-        heroService.storeHeroImage(fullName,image);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity uploadAvatarImage(@PathVariable String fullName, @RequestPart(value = "image", required = false) MultipartFile image) {
+        heroService.storeHeroImage(fullName, image);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{fullName}/image", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> getImage(@PathVariable String fullName) {
+    public ResponseEntity<byte[]> getAvatarImage(@PathVariable String fullName) {
 
         byte[] image = heroService.getHeroImage(fullName);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);

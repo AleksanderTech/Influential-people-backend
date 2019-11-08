@@ -32,7 +32,7 @@ public class ExceptionController {
 
     @ExceptionHandler({EntityNotFoundException.class})
     public ResponseEntity<ExceptionResponse> entityNotFoundHandler(EntityNotFoundException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(), ExceptionMessages.NOT_FOUND_ENTITY_MESSAGE), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({EntityExistsException.class})

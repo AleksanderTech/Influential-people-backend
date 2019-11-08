@@ -53,7 +53,7 @@ public class ImageService {
 
     public void storeImage(String fullName, MultipartFile image) {
 
-        if (image == null) {
+        if (image.isEmpty()) {
             throw new EmptyFileException(ExceptionMessages.EMPTY_FILE_EXCEPTION);
         }
         String path = createHeroAvatarPath(fullName);
@@ -78,7 +78,7 @@ public class ImageService {
         return path;
     }
 
-    private String createHeroAvatarName(String fullName) {
+    public String createHeroAvatarName(String fullName) {
 
         return fullName.replace(" ", "_") + "." + IMAGE_FORMAT;
     }
@@ -102,5 +102,9 @@ public class ImageService {
         String hostOrigin = properties.getConfig("host.origin");
         String url = hostOrigin + Urls.USER + File.separatorChar + username + Urls.IMAGE;
         return url;
+    }
+
+    public String appendImageName(String name, String path) {
+        return path + File.separatorChar + createHeroAvatarName(name);
     }
 }
