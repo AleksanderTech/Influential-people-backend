@@ -13,8 +13,6 @@ public interface HeroService {
 
     Hero findHero(String fullName);
 
-    String findAvatarPath(String fullName);
-
     byte[] getHeroImage(String fullName);
 
     String  storeHeroImage(String fullName, MultipartFile image);

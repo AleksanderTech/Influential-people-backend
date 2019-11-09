@@ -1,6 +1,7 @@
 package com.alek.influentialpeople.security.service;
 
 import com.alek.influentialpeople.common.Properties;
+import com.alek.influentialpeople.common.Urls;
 import com.alek.influentialpeople.email.Email;
 import com.alek.influentialpeople.email.EmailSender;
 import com.alek.influentialpeople.exception.ExceptionMessages;
@@ -47,7 +48,7 @@ public class AuthService {
 
     private String makeConfirmationUrl(String token) {
 
-        return properties.getConfig("host.origin") + "/confirm?token=" + token;
+        return Urls.ROOT_URL+ "/confirm?token=" + token;
     }
 
     public String confirm(String tokenValue) {

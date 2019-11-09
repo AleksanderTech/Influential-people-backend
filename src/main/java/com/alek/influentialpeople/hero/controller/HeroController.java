@@ -19,10 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.stream.Collectors;
-
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.HERO_REQUEST_TO_HERO;
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.HERO_TO_HERO_RESPONSE;
+import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.*;
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
@@ -35,6 +32,7 @@ public class HeroController {
 
     private TwoWayConverter<HeroRequest, Hero> heroRequestConverter = getConverter(HERO_REQUEST_TO_HERO);
     private TwoWayConverter<Hero, HeroResponse> heroResponseConverter = getConverter(HERO_TO_HERO_RESPONSE);
+    private TwoWayConverter<Hero, HeroDetail> heroDetailConverter = getConverter(HERO_TO_HERO_DETAIL);
 
     public HeroController(final HeroService theHeroService, final ArticleService articleService, final HeroCategoryService heroCategoryService) {
         this.heroService = theHeroService;
@@ -66,8 +64,7 @@ public class HeroController {
     public ResponseEntity<HeroDetail> findHero(@PathVariable String fullName) {
 
         Hero hero = heroService.findHero(fullName);
-        HeroDetail heroDetail = HeroDetail.builder().fullName(hero.getFullName()).avatarImageUrl(hero.getAvatarImagePath()).categories(hero.getHeroCategories().stream().map(category -> category.getCategory().getName()).collect(Collectors.toSet())).build();
-        return ResponseEntity.status(HttpStatus.OK).body(heroDetail);
+        return ResponseEntity.status(HttpStatus.OK).body(heroDetailConverter.convert(hero));
     }
 
     @RequestMapping(path = "/{fullName}/category", method = RequestMethod.POST)
@@ -79,6 +76,7 @@ public class HeroController {
 
     @RequestMapping(path = "/{fullName}/image", method = RequestMethod.PUT)
     public ResponseEntity uploadAvatarImage(@PathVariable String fullName, @RequestPart(value = "image", required = false) MultipartFile image) {
+
         heroService.storeHeroImage(fullName, image);
         return new ResponseEntity<>(HttpStatus.OK);
     }

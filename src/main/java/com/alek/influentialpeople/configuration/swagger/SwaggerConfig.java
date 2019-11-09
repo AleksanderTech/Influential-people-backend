@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.configuration.swagger;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.alek.influentialpeople.common.Urls;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -14,9 +14,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     @Bean
-    public Docket api(@Value("${host.origin}") String hostOrigin) {
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host(hostOrigin)
+                .host(Urls.ROOT_URL)
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())

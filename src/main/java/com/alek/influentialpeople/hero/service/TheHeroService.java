@@ -2,16 +2,12 @@ package com.alek.influentialpeople.hero.service;
 
 import com.alek.influentialpeople.common.ImageService;
 import com.alek.influentialpeople.exception.ExceptionMessages;
-import com.alek.influentialpeople.exception.exceptions.EmptyFileException;
-import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
-import com.alek.influentialpeople.exception.exceptions.StorageException;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.File;
@@ -46,19 +42,14 @@ public class TheHeroService implements HeroService {
     }
 
     @Override
-    public String findAvatarPath(String fullName) {
-
-        return heroRepository.findAvatarPath(fullName);
-    }
-
-    @Override
     public byte[] getHeroImage(String fullName) {
 
-        String path = findAvatarPath(fullName);
-        if (path == null || path.equals("")) {
+        String path = heroRepository.findAvatarPath(fullName);
+        if (path == null || !new File(path).exists()) {
             throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_IMAGE_MESSAGE);
         }
-        byte[] image = imageService.getImage(path );
+        File directory = new File(path);
+        byte[] image = imageService.getImage(path);
         return image;
     }
 
@@ -66,8 +57,7 @@ public class TheHeroService implements HeroService {
     public String storeHeroImage(String fullName, MultipartFile image) {
 
         String url = null;
-        String path = findAvatarPath(fullName);
-        System.out.println(path);
+        String path = heroRepository.findAvatarPath(fullName);
         if (path == null) {
             path = imageService.createHeroAvatarPath(fullName);
             heroRepository.updateImagePath(imageService.appendImageName(fullName, path), fullName);

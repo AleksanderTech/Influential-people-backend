@@ -1,5 +1,6 @@
 package com.alek.influentialpeople.common;
 
+import com.alek.influentialpeople.hero.service.HeroDetailConverter;
 import com.alek.influentialpeople.hero.service.HeroRequestConverter;
 import com.alek.influentialpeople.hero.service.HeroResponseConverter;
 import com.alek.influentialpeople.security.service.UserRegistrationConverter;
@@ -27,12 +28,15 @@ public class ConvertersFactory {
             case HERO_TO_HERO_RESPONSE:
                 converter = new <E, M>HeroResponseConverter();
                 break;
+            case HERO_TO_HERO_DETAIL:
+                converter = new <E, M>HeroDetailConverter();
+                break;
         }
         return converter;
     }
 
     public enum ConverterType {
         USER_TO_USER_RESPONSE, USER_REGISTRATION_TO_USER, USER_ACCOUNT_TO_USER,
-        HERO_REQUEST_TO_HERO, HERO_TO_HERO_RESPONSE
+        HERO_REQUEST_TO_HERO, HERO_TO_HERO_RESPONSE,HERO_TO_HERO_DETAIL
     }
 }

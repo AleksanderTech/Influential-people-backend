@@ -92,15 +92,14 @@ public class ImageService {
 
     public String createHeroAvatarUrl(String fullName) {
 
-        String hostOrigin = properties.getConfig("host.origin");
-        String url = hostOrigin + Urls.HERO + File.separatorChar + fullName + Urls.IMAGE;
+        String url = Urls.ROOT_URL + Urls.HERO + File.separatorChar + fullName + Urls.IMAGE;
+        System.out.println(url);
         return url;
     }
 
-    public String createUserProfileUrl(String username) {
+    public String createUserAvatarUrl(String username) {
 
-        String hostOrigin = properties.getConfig("host.origin");
-        String url = hostOrigin + Urls.USER + File.separatorChar + username + Urls.IMAGE;
+        String url = Urls.ROOT_URL + Urls.USER + File.separatorChar + username + Urls.IMAGE;
         return url;
     }
 
