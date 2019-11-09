@@ -1,7 +1,6 @@
 HELP.md
 /target/
-storage/images/heroes/
-storage/images/users/
+storage/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

@@ -58,7 +58,7 @@ public class TheHeroService implements HeroService {
 
         String url = null;
         String path = heroRepository.findAvatarPath(fullName);
-        if (path == null) {
+        if (path == null || !new File(path).exists()) {
             path = imageService.createHeroAvatarPath(fullName);
             heroRepository.updateImagePath(imageService.appendImageName(fullName, path), fullName);
             imageService.storeImage(fullName, image);
