@@ -29,6 +29,12 @@ public class TheHeroCategoryService implements HeroCategoryService {
     @Override
     public void addCategory(String heroName, String categoryName) {
 
-        repository.addCategoryforHero(heroName, categoryName);
+        repository.addCategory(heroName, categoryName);
+    }
+
+    @Override
+    public void deleteCategory(String heroName, String categoryName) {
+
+        repository.deleteCategory(heroName, categoryName);
     }
 }

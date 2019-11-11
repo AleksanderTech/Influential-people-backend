@@ -15,5 +15,10 @@ public interface HeroCategoryRepository extends JpaRepository<HeroCategory, Hero
     @Modifying
     @Transactional
     @Query(value = "insert into hero_category(hero_id,category_id) values(:heroName, :categoryName)", nativeQuery = true)
-    void addCategoryforHero(@Param("heroName") String heroName, @Param("categoryName") String categoryName);
+    void addCategory(@Param("heroName") String heroName, @Param("categoryName") String categoryName);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from hero_category where hero_id = :heroName and category_id = :categoryName)", nativeQuery = true)
+    void deleteCategory(@Param("heroName") String heroName, @Param("categoryName") String categoryName);
 }

@@ -6,6 +6,8 @@ public interface HeroCategoryService {
 
     void addCategory(String heroName, String categoryName);
 
+    void deleteCategory(String heroName, String categoryName);
+
     Category findCategory(String name);
 
     Category createCategory(Category category);
