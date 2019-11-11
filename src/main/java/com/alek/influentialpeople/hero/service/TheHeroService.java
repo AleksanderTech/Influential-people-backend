@@ -45,7 +45,7 @@ public class TheHeroService implements HeroService {
     public byte[] getHeroImage(String fullName) {
 
         String path = heroRepository.findAvatarPath(fullName);
-        if (path == null || !new File(path).exists()) {
+        if (path == null || !(new File(path).exists())) {
             throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_IMAGE_MESSAGE);
         }
         File directory = new File(path);
@@ -57,6 +57,10 @@ public class TheHeroService implements HeroService {
     public String storeHeroImage(String fullName, MultipartFile image) {
 
         String url = null;
+        boolean exists = heroRepository.existsById(fullName);
+        if (!exists) {
+            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_HERO_MESSAGE);
+        }
         String path = heroRepository.findAvatarPath(fullName);
         if (path == null || !new File(path).exists()) {
             path = imageService.createHeroAvatarPath(fullName);

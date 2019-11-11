@@ -53,7 +53,7 @@ public class ImageService {
 
     public void storeImage(String fullName, MultipartFile image) {
 
-        if (image.isEmpty()) {
+        if (image == null) {
             throw new EmptyFileException(ExceptionMessages.EMPTY_FILE_EXCEPTION);
         }
         String path = createHeroAvatarPath(fullName);
@@ -93,7 +93,6 @@ public class ImageService {
     public String createHeroAvatarUrl(String fullName) {
 
         String url = Urls.ROOT_URL + Urls.HERO + File.separatorChar + fullName + Urls.IMAGE;
-        System.out.println(url);
         return url;
     }
 

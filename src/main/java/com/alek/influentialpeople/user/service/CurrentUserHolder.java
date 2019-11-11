@@ -22,6 +22,11 @@ public class CurrentUserHolder implements UserDataHolder<User> {
     }
 
     @Override
+    public String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+    }
+
+    @Override
     public boolean isUserAdmin(User user) {
         return user.getRoles().contains(Role.Roles.ROLE_ADMIN.name());
     }

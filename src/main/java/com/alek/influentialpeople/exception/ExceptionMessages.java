@@ -4,6 +4,7 @@ public class ExceptionMessages {
 
 
     public static final String NOT_FOUND_USER_MESSAGE = "The User with given username does not exist";
+    public static final String NOT_FOUND_HERO_MESSAGE = "The Hero with given name does not exist";
     public static final String NOT_FOUND_IMAGE_MESSAGE = "Searching image does not exist";
     public static final String NOT_FOUND_VERIFICATION_TOKEN_MESSAGE = "Searching image does not exist";
     public static final String ACCESS_DENIED_MESSAGE = "You are not allowed to this resources";

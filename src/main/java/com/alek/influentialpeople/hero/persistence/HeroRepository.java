@@ -16,4 +16,9 @@ public interface HeroRepository extends JpaRepository<Hero, String> {
     @Modifying
     @Query(value = "update hero set hero.avatar_image_path = :path where hero.full_name = :fullName", nativeQuery = true)
     void updateImagePath(@Param("path") String path, @Param("fullName") String fullName);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update hero set hero.score = (select sum(points) from hero_score where hero_id = :fullName) where full_name = :fullName", nativeQuery = true)
+    void updateScore(@Param("fullName") String fullName);
 }

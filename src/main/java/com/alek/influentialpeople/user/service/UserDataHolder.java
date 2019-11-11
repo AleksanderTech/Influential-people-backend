@@ -4,6 +4,8 @@ public interface UserDataHolder<T> {
 
     T getUser();
 
+    String getUsername();
+
     boolean isUserAdmin(T user);
 
 }
