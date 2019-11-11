@@ -12,6 +12,11 @@ public interface HeroScoreRepository extends JpaRepository<HeroScore, HeroScoreI
 
     @Transactional
     @Modifying
-    @Query(value = "insert into hero_score values(:heroName,:username,:points)",nativeQuery = true)
-    void vote(@Param("username") String username, @Param("heroName") String heroName, @Param("points") Integer points);
+    @Query(value = "insert into hero_score values(:heroName,:username,:points)", nativeQuery = true)
+    void vote(@Param("username") String username, @Param("heroName") String heroName, @Param("points") int points);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update hero_score set points = :points where hero_id = :heroName and user_id = :username ", nativeQuery = true)
+    void updateVote(@Param("points") int points, @Param("heroName") String heroName, @Param("username") String username);
 }

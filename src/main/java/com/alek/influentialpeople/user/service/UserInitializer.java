@@ -36,7 +36,14 @@ public class UserInitializer {
                 .enabled(true)
                 .roles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_ADMIN), new Role(Role.Roles.ROLE_USER))))
                 .build();
+        User user = User.builder().username("user")
+                .password(passwordEncoder.encode("user"))
+                .email("email@email.com")
+                .enabled(true)
+                .roles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_USER))))
+                .build();
 
         userRepository.save(admin);
+        userRepository.save(user);
     }
 }

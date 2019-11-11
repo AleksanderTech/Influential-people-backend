@@ -6,6 +6,7 @@ import com.alek.influentialpeople.exception.exceptions.EmptyFileException;
 import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
 import com.alek.influentialpeople.exception.exceptions.StateConflictException;
 import com.alek.influentialpeople.exception.exceptions.StorageException;
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -54,4 +55,5 @@ public class ExceptionController {
     public ResponseEntity<ExceptionResponse> emptyFileHandler(EmptyFileException ex) {
         return new ResponseEntity<>(new ExceptionResponse(HttpStatus.BAD_REQUEST.value(), ExceptionMessages.EMPTY_FILE_EXCEPTION), HttpStatus.BAD_REQUEST);
     }
+
 }
