@@ -15,6 +15,6 @@ public class TheArticleService implements ArticleService {
 
     @Override
     public Page<Article> findHeroArticles(String fullName, Pageable pageable) {
-        return articleRepository.findByHeroFullName(fullName, pageable);
+        return articleRepository.findByHeroName(fullName, pageable);
     }
 }

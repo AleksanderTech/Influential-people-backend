@@ -24,7 +24,17 @@ public class TheHeroService implements HeroService {
     }
 
     @Override
-    public Page<Hero> findAllHeroes(Pageable pageable) {
+    public Hero findHero(String fullName) {
+
+        Hero hero = heroRepository.findByName(fullName);
+        if (hero == null) {
+            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_HERO_MESSAGE);
+        }
+        return heroRepository.findByName(fullName);
+    }
+
+    @Override
+    public Page<Hero> findHeroes(Pageable pageable) {
 
         return heroRepository.findAllHeroes(pageable);
     }
@@ -35,11 +45,6 @@ public class TheHeroService implements HeroService {
         return heroRepository.save(hero);
     }
 
-    @Override
-    public Hero findHero(String fullName) {
-
-        return heroRepository.findById(fullName).get();
-    }
 
     @Override
     public byte[] getHeroImage(String fullName) {

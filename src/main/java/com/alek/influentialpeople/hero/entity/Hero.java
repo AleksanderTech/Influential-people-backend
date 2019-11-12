@@ -20,11 +20,11 @@ import java.util.Set;
 public class Hero {
 
     @Id
-    private String fullName;
+    private String name;
     @OneToMany(mappedBy = "hero", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Article> articles;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "hero_category", joinColumns = @JoinColumn(name = "full_name"), inverseJoinColumns = @JoinColumn(name = "name"))
+    @JoinTable(name = "hero_category", joinColumns = @JoinColumn(name = "hero_name"), inverseJoinColumns = @JoinColumn(name = "category_name"))
     private Set<Category> heroCategories = new HashSet<>();
     private String avatarImagePath;
     @Transient
@@ -32,11 +32,11 @@ public class Hero {
     private int score;
 
     public String buildAndSetAvatarUrl() {
-        this.avatarImageUrl = Urls.ROOT_URL + Urls.HERO + "/" + this.fullName + Urls.IMAGE;
+        this.avatarImageUrl = Urls.ROOT_URL + Urls.HERO + "/" + this.name + Urls.IMAGE;
         return this.avatarImageUrl;
     }
 
-    public Hero(String fullName) {
-        this.fullName = fullName;
+    public Hero(String name) {
+        this.name = name;
     }
 }

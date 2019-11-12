@@ -38,15 +38,16 @@ public class HeroController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<HeroDetail>> findAllHeroes(Pageable pageable) {
+    public ResponseEntity<Page<HeroDetail>> findHeroes(Pageable pageable) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(heroService.findAllHeroes(pageable).map(hero -> heroDetailConverter.convert(hero)));
+        return ResponseEntity.status(HttpStatus.OK).body(heroService.findHeroes(pageable).map(hero -> heroDetailConverter.convert(hero)));
     }
 
-    @RequestMapping(path = "/{fullName}/article", method = RequestMethod.GET)
-    public ResponseEntity<Page<ArticleHeader>> findHeroArticles(@PathVariable String fullName, Pageable pageable) {
+    @RequestMapping(path = "/{name}", method = RequestMethod.GET)
+    public ResponseEntity<HeroDetail> findHero(@PathVariable(name = "name") String name) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(articleService.findHeroArticles(fullName, pageable).map(Article::toArticleResponse));
+        Hero hero = heroService.findHero(name);
+        return ResponseEntity.status(HttpStatus.OK).body(heroDetailConverter.convert(hero));
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -56,28 +57,28 @@ public class HeroController {
         return new ResponseEntity<>(heroResponseConverter.convert(hero), HttpStatus.CREATED);
     }
 
-    @RequestMapping(path = "/{fullName}", method = RequestMethod.GET)
-    public ResponseEntity<HeroDetail> findHero(@PathVariable String fullName) {
 
-        Hero hero = heroService.findHero(fullName);
-        return ResponseEntity.status(HttpStatus.OK).body(heroDetailConverter.convert(hero));
-    }
+    @RequestMapping(path = "/{name}/category", method = RequestMethod.POST)
+    public ResponseEntity addCategory(@PathVariable(name = "name") String fullName, @RequestBody CategoryRest category) {
 
-    @RequestMapping(path = "/{fullName}/category", method = RequestMethod.POST)
-    public ResponseEntity addCategory(@PathVariable String fullName, @RequestBody CategoryRest category) {
-
-//        heroCategoryService.addCategory(fullName, category.getName());
+//        heroCategoryService.addCategory(name, category.getName());
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @RequestMapping(path = "/{fullName}/image", method = RequestMethod.PUT)
+    @RequestMapping(path = "/{name}/article", method = RequestMethod.GET)
+    public ResponseEntity<Page<ArticleHeader>> findHeroArticles(@PathVariable String fullName, Pageable pageable) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.findHeroArticles(fullName, pageable).map(Article::toArticleResponse));
+    }
+
+    @RequestMapping(path = "/{name}/image", method = RequestMethod.PUT)
     public ResponseEntity uploadAvatarImage(@PathVariable String fullName, @RequestPart(value = "image", required = false) MultipartFile image) {
 
         heroService.storeHeroImage(fullName, image);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/{fullName}/image", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(path = "/{name}/image", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getAvatarImage(@PathVariable String fullName) {
 
         byte[] image = heroService.getHeroImage(fullName);

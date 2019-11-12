@@ -38,15 +38,15 @@ public class HeroControllerTest {
 
     @Before
     public void setUp() {
-        this.hero1 = Hero.builder().fullName("hero1").score(1).avatarImagePath("/hero1/path").build();
-        this.hero2 = Hero.builder().fullName("hero2").score(2).avatarImagePath("/hero2/path").build();
+        this.hero1 = Hero.builder().name("hero1").score(1).avatarImagePath("/hero1/path").build();
+        this.hero2 = Hero.builder().name("hero2").score(2).avatarImagePath("/hero2/path").build();
         mockMvc = MockMvcBuilders.standaloneSetup(heroController).setControllerAdvice(new ExceptionController()).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
     }
 
     @Test
     public void findAllHeroes_heroesFound_shouldReturnHeroes() throws Exception {
 
-        Mockito.when(heroService.findAllHeroes(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.newArrayList(hero1,hero2)));
+        Mockito.when(heroService.findHeroes(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.newArrayList(hero1,hero2)));
         mockMvc.perform(MockMvcRequestBuilders.get("/heroes")).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
