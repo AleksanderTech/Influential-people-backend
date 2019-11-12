@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    Page<Article> findByHeroFullName(String fullName, Pageable pageable);
+    Page<Article> findByHeroName(String fullName, Pageable pageable);
 }

@@ -19,7 +19,7 @@ public class Quote {
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
     @ManyToOne
-    @JoinColumn(name = "hero_fullName", referencedColumnName = "fullName")
+    @JoinColumn(name = "hero_fullName", referencedColumnName = "name")
     private Hero hero;
 
     public Quote() {

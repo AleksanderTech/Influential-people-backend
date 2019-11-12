@@ -29,7 +29,7 @@ public class Article {
     @Column(updatable = false, nullable = false)
     private Long created_at;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hero_fullName", referencedColumnName = "fullName")
+    @JoinColumn(name = "hero_fullName", referencedColumnName = "name")
     private Hero hero;
 //    @ManyToOne
 //    @JoinColumn(name = "username", referencedColumnName = "username")

@@ -2,12 +2,13 @@ package com.alek.influentialpeople.hero.entity;
 
 import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.common.Urls;
-import com.alek.influentialpeople.hero.category.entity.HeroCategory;
-import com.alek.influentialpeople.hero.model.HeroResponse;
+import com.alek.influentialpeople.hero.category.entity.Category;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -19,26 +20,23 @@ import java.util.List;
 public class Hero {
 
     @Id
-    private String fullName;
+    private String name;
     @OneToMany(mappedBy = "hero", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Article> articles;
-    @OneToMany(mappedBy = "hero", fetch = FetchType.EAGER)
-    private List<HeroCategory> heroCategories;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "hero_category", joinColumns = @JoinColumn(name = "hero_name"), inverseJoinColumns = @JoinColumn(name = "category_name"))
+    private Set<Category> heroCategories = new HashSet<>();
     private String avatarImagePath;
     @Transient
     private String avatarImageUrl;
     private int score;
 
-    public HeroResponse toHeroResponse() {
-        return HeroResponse.builder().fullName(this.fullName).profileImageUrl(this.avatarImagePath).score(this.score).build();
-    }
-
     public String buildAndSetAvatarUrl() {
-        this.avatarImageUrl = Urls.ROOT_URL + Urls.HERO + "/" + this.fullName + Urls.IMAGE;
+        this.avatarImageUrl = Urls.ROOT_URL + Urls.HERO + "/" + this.name + Urls.IMAGE;
         return this.avatarImageUrl;
     }
 
-    public Hero(String fullName) {
-        this.fullName = fullName;
+    public Hero(String name) {
+        this.name = name;
     }
 }

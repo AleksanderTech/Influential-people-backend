@@ -3,6 +3,8 @@ package com.alek.influentialpeople.hero.model;
 
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -11,7 +13,7 @@ import lombok.*;
 public class HeroResponse {
 
     private String fullName;
-    private String profileImageUrl;
+    private Set<String> categories;
     private int score;
 
     public HeroResponse(String fullName) {

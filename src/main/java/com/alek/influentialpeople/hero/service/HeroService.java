@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface HeroService {
 
-    Page<Hero> findAllHeroes(Pageable pageable);
+    Page<Hero> findHeroes(Pageable pageable);
 
     Hero createHero(Hero person);
 
