@@ -20,7 +20,7 @@ import java.util.HashSet;
 public class UserInitializer {
 
     @Autowired
-    public UserInitializer( CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserInitializer(CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         Category scientist = new Category("scientist");
         Category philosopher = new Category("philosopher");
@@ -28,17 +28,15 @@ public class UserInitializer {
         Category politician = new Category("politician");
         categoryRepository.saveAll(Arrays.asList(scientist, philosopher, tyrant, politician));
 
-        Hero edison = Hero.builder().fullName("Thomas Alva Edison").avatarImagePath("storage/images/heroes/Thomas_Alva_Edison/avatar/Thomas_Alva_Edison.jpg").build();
-        Hero stalin = Hero.builder().fullName("Joseph Stalin").avatarImagePath("storage/images/heroes/Joseph_Stalin/avatar/Joseph_Stalin.jpg").build();
+        Hero edison = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientist, philosopher))).fullName("Thomas Alva Edison").avatarImagePath("storage/images/heroes/Thomas_Alva_Edison/avatar/Thomas_Alva_Edison.jpg").build();
+        Hero stalin = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(tyrant, politician))).fullName("Joseph Stalin").avatarImagePath("storage/images/heroes/Joseph_Stalin/avatar/Joseph_Stalin.jpg").build();
+        Hero galileo = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientist, philosopher))).fullName("Galileo_Galilei").avatarImagePath("storage/images/heroes/Galileo_Galilei/avatar/Galileo Galilei.jpg").build();
 
         Article edisonArticle = Article.builder().title("Edison the rich man").content("Edison whas not only genius in science field but ... ").hero(edison).build();
         Article edisonArticle2 = Article.builder().title("Edison and his filosophy").content("Edison whas not only genius in science field but ... ").hero(edison).build();
         Article stalinArticle = Article.builder().title("Stalin the rich man").content("Stalin whas not only genius in science field but ... ").hero(stalin).build();
-        heroRepository.saveAll(Arrays.asList(edison, stalin));
-//        heroCategoryRepository.addCategory(edison.getFullName(),scientist.getName());
-//        heroCategoryRepository.addCategory(edison.getFullName(),philosopher.getName());
-//        heroCategoryRepository.addCategory(stalin.getFullName(),tyrant.getName());
-//        heroCategoryRepository.addCategory(stalin.getFullName(),politician.getName());
+        heroRepository.saveAll(Arrays.asList(edison, stalin, galileo));
+
         articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle));
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))

@@ -27,7 +27,6 @@ public class HeroController {
 
     private final HeroService heroService;
     private final ArticleService articleService;
-//    private final HeroCategoryService heroCategoryService;
 
     private TwoWayConverter<HeroRequest, Hero> heroRequestConverter = getConverter(HERO_REQUEST_TO_HERO);
     private TwoWayConverter<Hero, HeroResponse> heroResponseConverter = getConverter(HERO_TO_HERO_RESPONSE);
@@ -36,7 +35,6 @@ public class HeroController {
     public HeroController(final HeroService theHeroService, final ArticleService articleService) {
         this.heroService = theHeroService;
         this.articleService = articleService;
-//        this.heroCategoryService = heroCategoryService;
     }
 
     @RequestMapping(method = RequestMethod.GET)

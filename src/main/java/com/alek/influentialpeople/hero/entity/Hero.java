@@ -23,9 +23,9 @@ public class Hero {
     private String fullName;
     @OneToMany(mappedBy = "hero", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Article> articles;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "hero_category", joinColumns = @JoinColumn(name = "full_name"),inverseJoinColumns = @JoinColumn(name = "name"))
-    private Set<Category> heroCategories=new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "hero_category", joinColumns = @JoinColumn(name = "full_name"), inverseJoinColumns = @JoinColumn(name = "name"))
+    private Set<Category> heroCategories = new HashSet<>();
     private String avatarImagePath;
     @Transient
     private String avatarImageUrl;

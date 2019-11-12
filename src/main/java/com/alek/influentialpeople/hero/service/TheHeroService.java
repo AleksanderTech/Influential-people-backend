@@ -26,7 +26,7 @@ public class TheHeroService implements HeroService {
     @Override
     public Page<Hero> findAllHeroes(Pageable pageable) {
 
-        return heroRepository.findAll(pageable);
+        return heroRepository.findAllHeroes(pageable);
     }
 
     @Override
