@@ -11,22 +11,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/category")
 public class CategoryController {
 
-    private final HeroCategoryService categoryService;
-
-    public CategoryController(HeroCategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<CategoryRest> createCategory(@RequestBody CategoryRest categoryRest) {
         Category category = new Category(categoryRest.getName());
-        categoryService.createCategory(category);
+//        categoryService.createCategory(category);
         return new ResponseEntity<>(categoryRest, HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{name}")
     public ResponseEntity<CategoryRest> findCategory(@PathVariable String name) {
-        Category category = categoryService.findCategory(name);
+//        Category category = categoryService.findCategory(name);
 
         return new ResponseEntity<>(new CategoryRest(name), HttpStatus.OK);
     }

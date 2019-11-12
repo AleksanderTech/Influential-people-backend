@@ -4,7 +4,6 @@ import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.article.repository.ArticleRepository;
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
-import com.alek.influentialpeople.hero.category.persistence.HeroCategoryRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
 import com.alek.influentialpeople.user.entity.User;
@@ -21,7 +20,7 @@ import java.util.HashSet;
 public class UserInitializer {
 
     @Autowired
-    public UserInitializer(HeroCategoryRepository heroCategoryRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserInitializer( CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         Category scientist = new Category("scientist");
         Category philosopher = new Category("philosopher");
@@ -36,10 +35,10 @@ public class UserInitializer {
         Article edisonArticle2 = Article.builder().title("Edison and his filosophy").content("Edison whas not only genius in science field but ... ").hero(edison).build();
         Article stalinArticle = Article.builder().title("Stalin the rich man").content("Stalin whas not only genius in science field but ... ").hero(stalin).build();
         heroRepository.saveAll(Arrays.asList(edison, stalin));
-        heroCategoryRepository.addCategory(edison.getFullName(),scientist.getName());
-        heroCategoryRepository.addCategory(edison.getFullName(),philosopher.getName());
-        heroCategoryRepository.addCategory(stalin.getFullName(),tyrant.getName());
-        heroCategoryRepository.addCategory(stalin.getFullName(),politician.getName());
+//        heroCategoryRepository.addCategory(edison.getFullName(),scientist.getName());
+//        heroCategoryRepository.addCategory(edison.getFullName(),philosopher.getName());
+//        heroCategoryRepository.addCategory(stalin.getFullName(),tyrant.getName());
+//        heroCategoryRepository.addCategory(stalin.getFullName(),politician.getName());
         articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle));
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))

@@ -2,12 +2,13 @@ package com.alek.influentialpeople.hero.entity;
 
 import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.common.Urls;
-import com.alek.influentialpeople.hero.category.entity.HeroCategory;
-import com.alek.influentialpeople.hero.model.HeroResponse;
+import com.alek.influentialpeople.hero.category.entity.Category;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -22,16 +23,13 @@ public class Hero {
     private String fullName;
     @OneToMany(mappedBy = "hero", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Article> articles;
-    @OneToMany(mappedBy = "hero", fetch = FetchType.EAGER)
-    private List<HeroCategory> heroCategories;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "hero_category", joinColumns = @JoinColumn(name = "full_name"),inverseJoinColumns = @JoinColumn(name = "name"))
+    private Set<Category> heroCategories=new HashSet<>();
     private String avatarImagePath;
     @Transient
     private String avatarImageUrl;
     private int score;
-
-    public HeroResponse toHeroResponse() {
-        return HeroResponse.builder().fullName(this.fullName).profileImageUrl(this.avatarImagePath).score(this.score).build();
-    }
 
     public String buildAndSetAvatarUrl() {
         this.avatarImageUrl = Urls.ROOT_URL + Urls.HERO + "/" + this.fullName + Urls.IMAGE;

@@ -1,11 +1,11 @@
 package com.alek.influentialpeople.hero.category.entity;
 
+import com.alek.influentialpeople.hero.entity.Hero;
 import lombok.*;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -18,8 +18,8 @@ public class Category {
 
     @Id
     private String name;
-    @OneToMany(mappedBy = "category")
-    private List<HeroCategory> heroCategories = new ArrayList<>();
+    @ManyToMany(mappedBy = "heroCategories")
+    private Set<Hero> hero = new HashSet<>();
 
     public Category(String name) {
         this.name = name;

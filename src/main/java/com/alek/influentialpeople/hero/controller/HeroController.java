@@ -5,7 +5,6 @@ import com.alek.influentialpeople.article.model.ArticleHeader;
 import com.alek.influentialpeople.article.service.ArticleService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.category.model.CategoryRest;
-import com.alek.influentialpeople.hero.category.service.HeroCategoryService;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.model.HeroDetail;
 import com.alek.influentialpeople.hero.model.HeroRequest;
@@ -28,23 +27,22 @@ public class HeroController {
 
     private final HeroService heroService;
     private final ArticleService articleService;
-    private final HeroCategoryService heroCategoryService;
+//    private final HeroCategoryService heroCategoryService;
 
     private TwoWayConverter<HeroRequest, Hero> heroRequestConverter = getConverter(HERO_REQUEST_TO_HERO);
     private TwoWayConverter<Hero, HeroResponse> heroResponseConverter = getConverter(HERO_TO_HERO_RESPONSE);
     private TwoWayConverter<Hero, HeroDetail> heroDetailConverter = getConverter(HERO_TO_HERO_DETAIL);
 
-    public HeroController(final HeroService theHeroService, final ArticleService articleService, final HeroCategoryService heroCategoryService) {
+    public HeroController(final HeroService theHeroService, final ArticleService articleService) {
         this.heroService = theHeroService;
         this.articleService = articleService;
-        this.heroCategoryService = heroCategoryService;
+//        this.heroCategoryService = heroCategoryService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<HeroResponse>> findAllHeroes(Pageable pageable) {
+    public ResponseEntity<Page<HeroDetail>> findAllHeroes(Pageable pageable) {
 
-        Page<HeroResponse> heroResponses = heroService.findAllHeroes(pageable).map(Hero::toHeroResponse);
-        return ResponseEntity.status(HttpStatus.OK).body(heroResponses);
+        return ResponseEntity.status(HttpStatus.OK).body(heroService.findAllHeroes(pageable).map(hero -> heroDetailConverter.convert(hero)));
     }
 
     @RequestMapping(path = "/{fullName}/article", method = RequestMethod.GET)
@@ -70,7 +68,7 @@ public class HeroController {
     @RequestMapping(path = "/{fullName}/category", method = RequestMethod.POST)
     public ResponseEntity addCategory(@PathVariable String fullName, @RequestBody CategoryRest category) {
 
-        heroCategoryService.addCategory(fullName, category.getName());
+//        heroCategoryService.addCategory(fullName, category.getName());
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
