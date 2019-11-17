@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface HeroRepository extends JpaRepository<Hero, String> {
 
-    @Query(value = "select avatar_image_path from hero where full_name = :name", nativeQuery = true)
-    String findAvatarPath(@Param("name") String fullname);
+    @Query(value = "select avatar_image_path from hero where name = :name", nativeQuery = true)
+    String findAvatarPath(@Param("name") String name);
 
     @Transactional
     @Modifying
@@ -25,7 +25,7 @@ public interface HeroRepository extends JpaRepository<Hero, String> {
     void updateScore(@Param("name") String fullName);
 
     @Query(value = "select hero from Hero hero inner join fetch hero.heroCategories heroCategories where hero.name = :name")
-    Hero findByName(@Param("name") String fullName);
+    Hero findByName(@Param("name") String name);
 
     @Query(value = "select distinct hero from Hero hero inner join fetch hero.heroCategories heroCategories"
             , countQuery = "select count(hero) from Hero hero left join hero.heroCategories")

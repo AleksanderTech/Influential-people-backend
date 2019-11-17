@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.hero.entity;
 
-import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.common.Urls;
 import com.alek.influentialpeople.hero.category.entity.Category;
 import lombok.*;

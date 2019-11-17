@@ -1,6 +1,6 @@
-package com.alek.influentialpeople.article.articleComment;
+package com.alek.influentialpeople.article.comment;
 
-import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.article.entity.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

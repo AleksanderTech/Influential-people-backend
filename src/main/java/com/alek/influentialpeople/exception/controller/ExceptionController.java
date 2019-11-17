@@ -6,7 +6,6 @@ import com.alek.influentialpeople.exception.exceptions.EmptyFileException;
 import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
 import com.alek.influentialpeople.exception.exceptions.StateConflictException;
 import com.alek.influentialpeople.exception.exceptions.StorageException;
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -38,7 +37,7 @@ public class ExceptionController {
 
     @ExceptionHandler({EntityExistsException.class})
     public ResponseEntity<ExceptionResponse> entityExistsHandler(EntityExistsException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.CONFLICT.value(), ExceptionMessages.USER_ALREADY_EXIST_MESSAGE), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.CONFLICT.value(), ex.getMessage()), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler({StateConflictException.class})

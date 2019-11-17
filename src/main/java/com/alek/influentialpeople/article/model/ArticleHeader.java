@@ -14,5 +14,6 @@ public class ArticleHeader {
     private long id;
     private String title;
     private long createdAt;
+    private String heroName;
 
 }

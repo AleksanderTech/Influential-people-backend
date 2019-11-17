@@ -1,12 +1,6 @@
-package com.alek.influentialpeople.article.articleComment;
-
-import java.util.List;
+package com.alek.influentialpeople.article.comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,8 +19,8 @@ public class ArticleCommentController {
 //
 //
 //	@RequestMapping(path = "/article/{id}/comment", method = RequestMethod.POST)
-//	public void addUser(@RequestBody ArticleComment articleComment) { // deserializacja
-//		articleCommentService.addArticleComment(articleComment);
+//	public void addUser(@RequestBody ArticleComment comment) { // deserializacja
+//		articleCommentService.addArticleComment(comment);
 //	}
 
 }

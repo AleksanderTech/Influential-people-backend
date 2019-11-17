@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.article.service;
 
-import com.alek.influentialpeople.article.domain.Article;
+import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,5 +16,20 @@ public class TheArticleService implements ArticleService {
     @Override
     public Page<Article> findHeroArticles(String fullName, Pageable pageable) {
         return articleRepository.findByHeroName(fullName, pageable);
+    }
+
+    @Override
+    public Article findArticle(Long id) {
+        return articleRepository.findById(id).get();
+    }
+
+    @Override
+    public Article createHeroArticle(Article article) {
+       return  articleRepository.save(article);
+    }
+
+    @Override
+    public Page<Article> findArticles(Pageable pageable) {
+        return articleRepository.findAllArticles(pageable);
     }
 }

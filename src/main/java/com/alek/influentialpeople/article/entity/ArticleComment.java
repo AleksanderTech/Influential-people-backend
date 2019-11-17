@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.article.domain;
+package com.alek.influentialpeople.article.entity;
 
 import com.alek.influentialpeople.user.entity.User;
 

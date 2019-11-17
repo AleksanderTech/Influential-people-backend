@@ -2,6 +2,7 @@ package com.alek.influentialpeople.hero.service;
 
 import com.alek.influentialpeople.common.ImageService;
 import com.alek.influentialpeople.exception.ExceptionMessages;
+import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
 import org.springframework.data.domain.Page;
@@ -24,13 +25,13 @@ public class TheHeroService implements HeroService {
     }
 
     @Override
-    public Hero findHero(String fullName) {
+    public Hero findHero(String name) {
 
-        Hero hero = heroRepository.findByName(fullName);
+        Hero hero = heroRepository.findByName(name);
         if (hero == null) {
             throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_HERO_MESSAGE);
         }
-        return heroRepository.findByName(fullName);
+        return heroRepository.findByName(name);
     }
 
     @Override
@@ -42,6 +43,9 @@ public class TheHeroService implements HeroService {
     @Override
     public Hero createHero(Hero hero) {
 
+        if (heroRepository.existsById(hero.getName())) {
+            throw new EntityExistsException(ExceptionMessages.HERO_EXISTS_MESSAGE);
+        }
         return heroRepository.save(hero);
     }
 

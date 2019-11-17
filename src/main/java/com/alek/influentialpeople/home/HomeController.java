@@ -1,18 +1,12 @@
 package com.alek.influentialpeople.home;
 
-import com.alek.influentialpeople.article.domain.Article;
 import com.alek.influentialpeople.article.service.ArticleService;
 import com.alek.influentialpeople.hero.service.HeroService;
 import com.alek.influentialpeople.hero.service.TheHeroService;
 import com.alek.influentialpeople.home.service.LinkFactory;
 import com.alek.influentialpeople.home.service.UrlBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 public class HomeController {
