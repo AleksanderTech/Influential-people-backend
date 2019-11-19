@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ArticleService {
 
-    Page<Article> findHeroArticles(String fullName, Pageable pageable);
+    Page<Article> findHeroArticles(String name, Pageable pageable);
 
     Article findArticle(Long id);
 

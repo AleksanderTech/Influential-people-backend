@@ -5,6 +5,7 @@ import com.alek.influentialpeople.article.service.ArticleRequestConverter;
 import com.alek.influentialpeople.hero.service.HeroDetailConverter;
 import com.alek.influentialpeople.hero.service.HeroRequestConverter;
 import com.alek.influentialpeople.hero.service.HeroResponseConverter;
+import com.alek.influentialpeople.quote.service.QuoteHeaderConverter;
 import com.alek.influentialpeople.security.service.UserRegistrationConverter;
 import com.alek.influentialpeople.user.service.UserAccountConverter;
 import com.alek.influentialpeople.user.service.UserResponseConverter;
@@ -39,12 +40,15 @@ public class ConvertersFactory {
             case ARTICLE_TO_ARTICLE_HEADER:
                 converter = new <E, M>ArticleHeaderConverter();
                 break;
+            case QUOTE_TO_QUOTE_RESPONSE:
+                          converter = new <E, M>QuoteHeaderConverter();
+                          break;
         }
         return converter;
     }
 
     public enum ConverterType {
         USER_TO_USER_RESPONSE, USER_REGISTRATION_TO_USER, USER_ACCOUNT_TO_USER,
-        HERO_REQUEST_TO_HERO, HERO_TO_HERO_RESPONSE, HERO_TO_HERO_DETAIL, ARTICLE_REQUEST_TO_ARTICLE, ARTICLE_TO_ARTICLE_HEADER
+        HERO_REQUEST_TO_HERO, HERO_TO_HERO_RESPONSE, HERO_TO_HERO_DETAIL, ARTICLE_REQUEST_TO_ARTICLE, ARTICLE_TO_ARTICLE_HEADER,QUOTE_TO_QUOTE_RESPONSE
     }
 }
