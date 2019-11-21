@@ -12,11 +12,11 @@ import java.util.Set;
 @Builder
 public class HeroResponse {
 
-    private String fullName;
+    private String name;
     private Set<String> categories;
     private int score;
 
-    public HeroResponse(String fullName) {
-        this.fullName = fullName;
+    public HeroResponse(String name) {
+        this.name = name;
     }
 }

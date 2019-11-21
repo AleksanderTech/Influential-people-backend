@@ -11,7 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class HeroRequest {
 
-    private String fullName;
+    private String name;
     private Set<String> categories;
 
 }

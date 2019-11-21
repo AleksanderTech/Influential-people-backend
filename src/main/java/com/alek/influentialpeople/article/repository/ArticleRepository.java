@@ -15,5 +15,4 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query(value = "select distinct article from Article article inner join fetch article.hero hero"
             , countQuery = "select count(article) from Article article left join article.hero")
     Page<Article> findAllArticles(Pageable pageable);
-
 }

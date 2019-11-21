@@ -8,7 +8,7 @@ public class ExceptionMessages {
     public static final String NOT_FOUND_HERO_MESSAGE = "The Hero with given name does not exist";
     public static final String NOT_FOUND_IMAGE_MESSAGE = "Searching image does not exist";
     public static final String NOT_FOUND_VERIFICATION_TOKEN_MESSAGE = "Searching image does not exist";
-    public static final String ACCESS_DENIED_MESSAGE = "You are not allowed to this resources";
+    public static final String ACCESS_DENIED_MESSAGE = "You are not allowed to this resource";
     public static final String ENTITY_ALREADY_EXIST_MESSAGE = "Entity already exists";
     public static final String EMPTY_FILE_EXCEPTION = "File is empty !";
     public static final String USER_ALREADY_EXIST_MESSAGE = "User with this username already exists";

@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class HeroDetail {
 
-    private String fullName;
+    private String name;
     private String avatarImageUrl;
     private Set<String> categories;
     private int score;

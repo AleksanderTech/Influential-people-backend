@@ -17,15 +17,14 @@ public class Quote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false)
     private long id;
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String content;
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
     @ManyToOne
-    @JoinColumn(name = "hero_fullName", referencedColumnName = "name")
+    @JoinColumn(name = "hero_name", referencedColumnName = "name")
     private Hero hero;
 
 }

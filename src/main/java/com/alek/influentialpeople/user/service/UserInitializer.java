@@ -6,6 +6,8 @@ import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
+import com.alek.influentialpeople.quote.entity.Quote;
+import com.alek.influentialpeople.quote.persistence.QuoteRepository;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.persistence.UserRepository;
 import com.alek.influentialpeople.user.role.entity.Role;
@@ -20,7 +22,8 @@ import java.util.HashSet;
 public class UserInitializer {
 
     @Autowired
-    public UserInitializer(CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserInitializer(QuoteRepository quoteRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
 
         Category scientist = new Category("scientist");
         Category philosopher = new Category("philosopher");
@@ -35,8 +38,10 @@ public class UserInitializer {
         Article edisonArticle = Article.builder().title("Edison the rich man").text("Edison whas not only genius in science field but ... ").hero(edison).build();
         Article edisonArticle2 = Article.builder().title("Edison and his filosophy").text("Edison whas not only genius in science field but ... ").hero(edison).build();
         Article stalinArticle = Article.builder().title("Stalin the rich man").text("Stalin whas not only genius in science field but ... ").hero(stalin).build();
+        Quote galileo1 = Quote.builder().content("I have never met a man so ignorant that I couldn't learn something from him.").hero(galileo).build();
+        Quote galileo2 = Quote.builder().content("I do not feel obliged to believe that the same God who has endowed us with sense, reason, and intellect has intended us to forgo their use.").hero(galileo).build();
         heroRepository.saveAll(Arrays.asList(edison, stalin, galileo));
-
+        quoteRepository.saveAll(Arrays.asList(galileo1,galileo2));
         articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle));
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))

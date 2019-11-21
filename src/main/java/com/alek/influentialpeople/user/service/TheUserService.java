@@ -6,6 +6,7 @@ import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.persistence.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,20 +27,22 @@ public class TheUserService implements UserService {
     @Override
     public Page<User> findAll(Pageable pageable) {
 
-        return userRepository.findAll(pageable);
+        return userRepository.findAllUsers(pageable);
     }
 
     @Override
     public User findUser(String username) {
 
-        User user = userRepository.findById(username).orElse(null);
-        if (user == null) {
-            throw new UsernameNotFoundException(ExceptionMessages.NOT_FOUND_USER_MESSAGE);
-        }
-            if (isAllowed(username)) {
-                return userRepository.findById(username).get();
+        if (isAllowed(username)) {
+
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UsernameNotFoundException(ExceptionMessages.NOT_FOUND_USER_MESSAGE);
             }
-        return user;
+            return user;
+        } else {
+            throw new AccessDeniedException(ExceptionMessages.ACCESS_DENIED_MESSAGE);
+        }
     }
 
     @Override

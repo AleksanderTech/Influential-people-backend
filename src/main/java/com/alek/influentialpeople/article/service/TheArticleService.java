@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TheQuoteService implements ArticleService {
+public class TheArticleService implements ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
