@@ -3,6 +3,7 @@ package com.alek.influentialpeople.article.controller;
 import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.model.ArticleHeader;
 import com.alek.influentialpeople.article.model.ArticleRequest;
+import com.alek.influentialpeople.article.model.ArticleResponse;
 import com.alek.influentialpeople.article.service.ArticleService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import org.springframework.data.domain.Page;
@@ -11,8 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.ARTICLE_REQUEST_TO_ARTICLE;
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.ARTICLE_TO_ARTICLE_HEADER;
+import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.*;
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
@@ -23,6 +23,7 @@ public class ArticleController {
 
     private TwoWayConverter<ArticleRequest, Article> articleRequestConverter = getConverter(ARTICLE_REQUEST_TO_ARTICLE);
     private TwoWayConverter<Article, ArticleHeader> articleHeaderConverter = getConverter(ARTICLE_TO_ARTICLE_HEADER);
+    private TwoWayConverter<Article, ArticleResponse> articleResponseConverter = getConverter(ARTICLE_TO_ARTICLE_RESPONSE);
 
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
@@ -41,12 +42,12 @@ public class ArticleController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ArticleHeader> findArticle(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<ArticleResponse> findArticle(@PathVariable(name = "id") Long id) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(articleHeaderConverter.convert(articleService.findArticle(id)));
+        return ResponseEntity.status(HttpStatus.OK).body(articleResponseConverter.convert(articleService.findArticle(id)));
     }
 
-    @RequestMapping( method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ArticleHeader> createHeroArticle(@RequestBody ArticleRequest articleRequest) {
 
         Article article = articleService.createHeroArticle(articleRequestConverter.convert(articleRequest));

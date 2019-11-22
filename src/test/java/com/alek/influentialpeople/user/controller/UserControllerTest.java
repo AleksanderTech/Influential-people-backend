@@ -70,10 +70,10 @@ public class UserControllerTest {
         mockMvc.perform(get("/users"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.content", hasSize(2)))
-                .andExpect(jsonPath("$.content[*].username", hasItems(user1.getUsername(), user2.getUsername())))
-                .andExpect(jsonPath("$.content[*].email", hasItems(user1.getEmail(), user2.getEmail())))
-                .andExpect(jsonPath("$.content[*].roles[*]", hasItems(Role.Roles.ROLE_USER.name(), Role.Roles.ROLE_USER.name())));
+                .andExpect(jsonPath("$.text", hasSize(2)))
+                .andExpect(jsonPath("$.text[*].username", hasItems(user1.getUsername(), user2.getUsername())))
+                .andExpect(jsonPath("$.text[*].email", hasItems(user1.getEmail(), user2.getEmail())))
+                .andExpect(jsonPath("$.text[*].roles[*]", hasItems(Role.Roles.ROLE_USER.name(), Role.Roles.ROLE_USER.name())));
 
         verify(userService, Mockito.times(1)).findAll(any(Pageable.class));
     }
@@ -87,7 +87,7 @@ public class UserControllerTest {
         mockMvc.perform(get("/users"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.content", hasSize(0)));
+                .andExpect(jsonPath("$.text", hasSize(0)));
 
         verify(userService, Mockito.times(1)).findAll(any(Pageable.class));
     }

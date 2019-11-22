@@ -40,7 +40,7 @@ public class Article {
     }
 
 
-
-
-
+    public Article(Long id) {
+        this.id = id;
+    }
 }

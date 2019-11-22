@@ -1,7 +1,9 @@
 package com.alek.influentialpeople.common;
 
+import com.alek.influentialpeople.article.comment.ArtCommentRequestConverter;
 import com.alek.influentialpeople.article.service.ArticleHeaderConverter;
 import com.alek.influentialpeople.article.service.ArticleRequestConverter;
+import com.alek.influentialpeople.article.service.ArticleResponseConverter;
 import com.alek.influentialpeople.hero.service.HeroDetailConverter;
 import com.alek.influentialpeople.hero.service.HeroRequestConverter;
 import com.alek.influentialpeople.hero.service.HeroResponseConverter;
@@ -43,12 +45,18 @@ public class ConvertersFactory {
             case QUOTE_TO_QUOTE_RESPONSE:
                           converter = new <E, M>QuoteHeaderConverter();
                           break;
+            case ARTICLE_TO_ARTICLE_RESPONSE:
+                                 converter = new <E, M>ArticleResponseConverter();
+                                 break;
+            case ART_COMMENT_REQUEST_TO_ART_COMMENT:
+                                            converter = new <E, M>ArtCommentRequestConverter();
+                                            break;
         }
         return converter;
     }
 
     public enum ConverterType {
         USER_TO_USER_RESPONSE, USER_REGISTRATION_TO_USER, USER_ACCOUNT_TO_USER,
-        HERO_REQUEST_TO_HERO, HERO_TO_HERO_RESPONSE, HERO_TO_HERO_DETAIL, ARTICLE_REQUEST_TO_ARTICLE, ARTICLE_TO_ARTICLE_HEADER,QUOTE_TO_QUOTE_RESPONSE
+        HERO_REQUEST_TO_HERO, HERO_TO_HERO_RESPONSE, HERO_TO_HERO_DETAIL, ARTICLE_REQUEST_TO_ARTICLE, ARTICLE_TO_ARTICLE_HEADER,QUOTE_TO_QUOTE_RESPONSE,ARTICLE_TO_ARTICLE_RESPONSE,ART_COMMENT_REQUEST_TO_ART_COMMENT
     }
 }

@@ -74,7 +74,7 @@ public class ArticleComment {
 
 	@Override
 	public String toString() {
-		return String.format("ArticleComment [id=%s, content=%s, created_at=%s, article=%s]", id, content, created_at,
+		return String.format("ArticleComment [id=%s, text=%s, created_at=%s, article=%s]", id, content, created_at,
 				article);
 	}
 
