@@ -2,6 +2,7 @@ package com.alek.influentialpeople.article.entity;
 
 import com.alek.influentialpeople.article.comment.entity.ArticleComment;
 import com.alek.influentialpeople.hero.entity.Hero;
+import com.alek.influentialpeople.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,9 +32,9 @@ public class Article {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hero_fullName", referencedColumnName = "name")
     private Hero hero;
-//    @ManyToOne
-//    @JoinColumn(name = "username", referencedColumnName = "username")
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    private User user;
     @OneToMany(mappedBy = "article")
     private List<ArticleComment> articleComments = new ArrayList<>();
 
@@ -41,7 +42,6 @@ public class Article {
     private void onCreate() {
         created_at = new Date().toInstant().getEpochSecond();
     }
-
 
     public Article(Long id) {
         this.id = id;
