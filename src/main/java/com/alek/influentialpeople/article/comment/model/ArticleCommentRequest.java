@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.article.comment;
+package com.alek.influentialpeople.article.comment.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

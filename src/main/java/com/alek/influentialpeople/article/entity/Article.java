@@ -1,10 +1,13 @@
 package com.alek.influentialpeople.article.entity;
 
+import com.alek.influentialpeople.article.comment.entity.ArticleComment;
 import com.alek.influentialpeople.hero.entity.Hero;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Table
 @Entity
@@ -21,7 +24,7 @@ public class Article {
     private Long id;
     @Column(nullable = false, unique = true)
     private String title;
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String text;
     @Column(updatable = false, nullable = false)
     private Long created_at;
@@ -31,8 +34,8 @@ public class Article {
 //    @ManyToOne
 //    @JoinColumn(name = "username", referencedColumnName = "username")
 //    private User user;
-//    @OneToMany(mappedBy = "article")
-//    private List<ArticleComment> articleComments = new ArrayList<>();
+    @OneToMany(mappedBy = "article")
+    private List<ArticleComment> articleComments = new ArrayList<>();
 
     @PrePersist
     private void onCreate() {

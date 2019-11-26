@@ -1,6 +1,7 @@
 package com.alek.influentialpeople.common;
 
-import com.alek.influentialpeople.article.comment.ArtCommentRequestConverter;
+import com.alek.influentialpeople.article.comment.service.ArtCommentRequestConverter;
+import com.alek.influentialpeople.article.comment.service.ArtCommentResponseConverter;
 import com.alek.influentialpeople.article.service.ArticleHeaderConverter;
 import com.alek.influentialpeople.article.service.ArticleRequestConverter;
 import com.alek.influentialpeople.article.service.ArticleResponseConverter;
@@ -43,20 +44,23 @@ public class ConvertersFactory {
                 converter = new <E, M>ArticleHeaderConverter();
                 break;
             case QUOTE_TO_QUOTE_RESPONSE:
-                          converter = new <E, M>QuoteHeaderConverter();
-                          break;
+                converter = new <E, M>QuoteHeaderConverter();
+                break;
             case ARTICLE_TO_ARTICLE_RESPONSE:
-                                 converter = new <E, M>ArticleResponseConverter();
-                                 break;
+                converter = new <E, M>ArticleResponseConverter();
+                break;
             case ART_COMMENT_REQUEST_TO_ART_COMMENT:
-                                            converter = new <E, M>ArtCommentRequestConverter();
-                                            break;
+                converter = new <E, M>ArtCommentRequestConverter();
+                break;
+            case ART_COMMENT_TO_ART_COMMENT_RESPONSE:
+                          converter = new <E, M>ArtCommentResponseConverter();
+                          break;
         }
         return converter;
     }
 
     public enum ConverterType {
         USER_TO_USER_RESPONSE, USER_REGISTRATION_TO_USER, USER_ACCOUNT_TO_USER,
-        HERO_REQUEST_TO_HERO, HERO_TO_HERO_RESPONSE, HERO_TO_HERO_DETAIL, ARTICLE_REQUEST_TO_ARTICLE, ARTICLE_TO_ARTICLE_HEADER,QUOTE_TO_QUOTE_RESPONSE,ARTICLE_TO_ARTICLE_RESPONSE,ART_COMMENT_REQUEST_TO_ART_COMMENT
+        HERO_REQUEST_TO_HERO, HERO_TO_HERO_RESPONSE, HERO_TO_HERO_DETAIL, ARTICLE_REQUEST_TO_ARTICLE, ARTICLE_TO_ARTICLE_HEADER, QUOTE_TO_QUOTE_RESPONSE, ARTICLE_TO_ARTICLE_RESPONSE, ART_COMMENT_REQUEST_TO_ART_COMMENT, ART_COMMENT_TO_ART_COMMENT_RESPONSE
     }
 }

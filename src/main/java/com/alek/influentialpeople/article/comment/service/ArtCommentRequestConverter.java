@@ -1,5 +1,7 @@
-package com.alek.influentialpeople.article.comment;
+package com.alek.influentialpeople.article.comment.service;
 
+import com.alek.influentialpeople.article.comment.model.ArticleCommentRequest;
+import com.alek.influentialpeople.article.comment.entity.ArticleComment;
 import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.common.TwoWayConverter;
 

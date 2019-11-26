@@ -1,7 +1,11 @@
-package com.alek.influentialpeople.article.comment;
+package com.alek.influentialpeople.article.comment.service;
 
+import com.alek.influentialpeople.article.comment.entity.ArticleComment;
+import com.alek.influentialpeople.article.comment.persistence.ArticleCommentRepository;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.service.UserDataHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,5 +29,10 @@ public class TheArticleCommentService implements ArticleCommentService {
     @Override
     public void deleteComment(long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public Page<ArticleComment> findArticleComments(Pageable pageable, long articleId) {
+        return repository.findByArticleId(pageable, articleId);
     }
 }

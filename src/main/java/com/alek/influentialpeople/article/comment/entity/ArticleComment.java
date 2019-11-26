@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.article.comment;
+package com.alek.influentialpeople.article.comment.entity;
 
 import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.user.entity.User;
@@ -22,10 +22,10 @@ public class ArticleComment {
     private String content;
     @Column(updatable = false, nullable = false)
     private Long created_at;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id", referencedColumnName = "id", nullable = false)
     private Article article;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "username", referencedColumnName = "username", nullable = false)
     private User user;
 

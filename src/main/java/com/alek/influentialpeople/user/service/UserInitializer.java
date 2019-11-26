@@ -1,5 +1,6 @@
 package com.alek.influentialpeople.user.service;
 
+import com.alek.influentialpeople.article.comment.entity.ArticleComment;
 import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.repository.ArticleRepository;
 import com.alek.influentialpeople.hero.category.entity.Category;
@@ -36,12 +37,13 @@ public class UserInitializer {
         Hero galileo = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientist, philosopher))).name("Galileo Galilei").avatarImagePath("storage/images/heroes/Galileo_Galilei/avatar/Galileo Galilei.jpg").build();
 
         Article edisonArticle = Article.builder().title("Edison the rich man").text("Edison whas not only genius in science field but ... ").hero(edison).build();
-        Article edisonArticle2 = Article.builder().title("Edison and his filosophy").text("Edison whas not only genius in science field but ... ").hero(edison).build();
+        ArticleComment articleComment1 = ArticleComment.builder().content("Yea that's true").article(edisonArticle).build();
+        Article edisonArticle2 = Article.builder().title("Edison and his filosophy").text("Edison whas not only genius in science field but ... ").hero(edison).articleComments(Arrays.asList(articleComment1)).build();
         Article stalinArticle = Article.builder().title("Stalin the rich man").text("Stalin whas not only genius in science field but ... ").hero(stalin).build();
         Quote galileo1 = Quote.builder().content("I have never met a man so ignorant that I couldn't learn something from him.").hero(galileo).build();
         Quote galileo2 = Quote.builder().content("I do not feel obliged to believe that the same God who has endowed us with sense, reason, and intellect has intended us to forgo their use.").hero(galileo).build();
         heroRepository.saveAll(Arrays.asList(edison, stalin, galileo));
-        quoteRepository.saveAll(Arrays.asList(galileo1,galileo2));
+        quoteRepository.saveAll(Arrays.asList(galileo1, galileo2));
         articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle));
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))
