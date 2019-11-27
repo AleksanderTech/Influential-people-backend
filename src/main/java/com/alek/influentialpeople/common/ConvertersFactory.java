@@ -8,10 +8,14 @@ import com.alek.influentialpeople.article.service.ArticleResponseConverter;
 import com.alek.influentialpeople.hero.service.HeroDetailConverter;
 import com.alek.influentialpeople.hero.service.HeroRequestConverter;
 import com.alek.influentialpeople.hero.service.HeroResponseConverter;
-import com.alek.influentialpeople.quote.service.QuoteHeaderConverter;
+import com.alek.influentialpeople.quote.service.QuoteRequestConverter;
+import com.alek.influentialpeople.quote.service.QuoteResponseConverter;
 import com.alek.influentialpeople.security.service.UserRegistrationConverter;
 import com.alek.influentialpeople.user.service.UserAccountConverter;
 import com.alek.influentialpeople.user.service.UserResponseConverter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ConvertersFactory {
@@ -44,8 +48,12 @@ public class ConvertersFactory {
                 converter = new <E, M>ArticleHeaderConverter();
                 break;
             case QUOTE_TO_QUOTE_RESPONSE:
-                converter = new <E, M>QuoteHeaderConverter();
+                converter = new <E, M>QuoteResponseConverter();
+                List list=new <String>ArrayList();
                 break;
+            case QUOTE_REQUEST_TO_QUOTE:
+                          converter = new <E, M>QuoteRequestConverter();
+                          break;
             case ARTICLE_TO_ARTICLE_RESPONSE:
                 converter = new <E, M>ArticleResponseConverter();
                 break;
@@ -61,6 +69,6 @@ public class ConvertersFactory {
 
     public enum ConverterType {
         USER_TO_USER_RESPONSE, USER_REGISTRATION_TO_USER, USER_ACCOUNT_TO_USER,
-        HERO_REQUEST_TO_HERO, HERO_TO_HERO_RESPONSE, HERO_TO_HERO_DETAIL, ARTICLE_REQUEST_TO_ARTICLE, ARTICLE_TO_ARTICLE_HEADER, QUOTE_TO_QUOTE_RESPONSE, ARTICLE_TO_ARTICLE_RESPONSE, ART_COMMENT_REQUEST_TO_ART_COMMENT, ART_COMMENT_TO_ART_COMMENT_RESPONSE
+        HERO_REQUEST_TO_HERO, HERO_TO_HERO_RESPONSE, HERO_TO_HERO_DETAIL, ARTICLE_REQUEST_TO_ARTICLE, ARTICLE_TO_ARTICLE_HEADER, QUOTE_TO_QUOTE_RESPONSE,QUOTE_REQUEST_TO_QUOTE, ARTICLE_TO_ARTICLE_RESPONSE, ART_COMMENT_REQUEST_TO_ART_COMMENT, ART_COMMENT_TO_ART_COMMENT_RESPONSE
     }
 }

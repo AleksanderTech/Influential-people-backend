@@ -5,7 +5,7 @@ import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.model.QuoteResponse;
 
-public class QuoteHeaderConverter extends TwoWayConverter<Quote, QuoteResponse> {
+public class QuoteResponseConverter extends TwoWayConverter<Quote, QuoteResponse> {
 
     @Override
     public QuoteResponse convert(Quote from) {
