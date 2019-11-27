@@ -53,4 +53,16 @@ public class ArticleController {
         Article article = articleService.createHeroArticle(articleRequestConverter.convert(articleRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(articleHeaderConverter.convert(article));
     }
+
+    @RequestMapping(path = "/{id}/favourite", method = RequestMethod.POST)
+    public ResponseEntity addToFavourites(@PathVariable(name = "id") long articleId) {
+        articleService.addToFavourites(articleId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @RequestMapping(path = "/favourite", method = RequestMethod.GET)
+    public ResponseEntity<Page<ArticleHeader>> findFavourites(Pageable pageable) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.findFavourites(pageable).map(article -> articleHeaderConverter.convert(article)));
+    }
 }

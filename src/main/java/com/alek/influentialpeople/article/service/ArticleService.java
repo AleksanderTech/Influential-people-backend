@@ -13,4 +13,8 @@ public interface ArticleService {
     Article createHeroArticle(Article article);
 
     Page<Article> findArticles(Pageable pageable);
+
+    void addToFavourites(long articleId);
+
+    Page<Article> findFavourites(Pageable pageable);
 }

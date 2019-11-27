@@ -54,10 +54,11 @@ public class UserInitializer {
         Article edisonArticle2 = Article.builder().title("Edison and his filosophy").text("Edison whas not only genius in science field but ... ").hero(edison).build();
         Article stalinArticle = Article.builder().title("Stalin the tyrant").text("Stalin whas not only genius in science field but ... ").hero(stalin).build();
         Quote galileo1 = Quote.builder().content("I have never met a man so ignorant that I couldn't learn something from him.").hero(galileo).build();
+        Quote edison1 = Quote.builder().content("I have not failed. I've just found 10,000 ways that won't work.").hero(edison).build();
         Quote galileo2 = Quote.builder().content("I do not feel obliged to believe that the same God who has endowed us with sense, reason, and intellect has intended us to forgo their use.").hero(galileo).build();
         heroRepository.saveAll(Arrays.asList(edison, stalin, galileo));
 
-        quoteRepository.saveAll(Arrays.asList(galileo1, galileo2));
+        quoteRepository.saveAll(Arrays.asList(galileo1, galileo2,edison1));
         articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle));
 
         userRepository.save(admin);

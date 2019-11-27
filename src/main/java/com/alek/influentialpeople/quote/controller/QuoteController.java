@@ -52,13 +52,13 @@ public class QuoteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(quoteResponseConverter.convert(quote));
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.POST)
+    @RequestMapping(path = "/{id}/favourite", method = RequestMethod.POST)
     public ResponseEntity addToFavourites(@PathVariable(name = "id") long quoteId) {
         quoteService.addToFavourites(quoteId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @RequestMapping(path = "/user", method = RequestMethod.GET)
+    @RequestMapping(path = "/favourite", method = RequestMethod.GET)
     public ResponseEntity<Page<QuoteResponse>> findFavourites(Pageable pageable) {
 
         return ResponseEntity.status(HttpStatus.OK).body(quoteService.findFavourites(pageable).map(quote -> quoteResponseConverter.convert(quote)));
