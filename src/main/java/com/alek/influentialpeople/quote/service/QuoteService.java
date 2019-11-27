@@ -8,9 +8,13 @@ public interface QuoteService {
 
     Page<Quote> findHeroQuotes(String name, Pageable pageable);
 
-    Quote findQuote(Long id);
+    Page<Quote> findQuotes(Pageable pageable);
+
+    Page<Quote> findFavourites(Pageable pageable);
 
     Quote createHeroQuote(Quote quote);
 
-    Page<Quote> findQuotes(Pageable pageable);
+    Quote findQuote(long id);
+
+    void addToFavourites(long id);
 }

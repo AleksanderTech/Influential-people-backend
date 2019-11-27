@@ -21,8 +21,8 @@ public interface HeroRepository extends JpaRepository<Hero, String> {
 
     @Transactional
     @Modifying
-    @Query(value = "update hero set hero.score = (select sum(points) from hero_score where hero_id = :name) where full_name = :name", nativeQuery = true)
-    void updateScore(@Param("name") String fullName);
+    @Query(value = "update hero set hero.score = (select sum(points) from hero_score where hero_id = :name) where name = :name", nativeQuery = true)
+    void updateScore(@Param("name") String heroName);
 
     @Query(value = "select hero from Hero hero inner join fetch hero.heroCategories heroCategories where hero.name = :name")
     Hero findByName(@Param("name") String name);

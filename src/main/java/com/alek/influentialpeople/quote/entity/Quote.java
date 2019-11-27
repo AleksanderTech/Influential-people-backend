@@ -27,7 +27,7 @@ public class Quote {
     @ManyToMany
     @JoinTable(name = "favourite_user_quote", joinColumns = @JoinColumn(name = "quote_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
     private Set<User> userFavourites;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hero_name", referencedColumnName = "name")
     private Hero hero;
 
