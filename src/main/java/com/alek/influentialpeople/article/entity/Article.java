@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Table
 @Entity
@@ -37,6 +38,10 @@ public class Article {
     private User user;
     @OneToMany(mappedBy = "article")
     private List<ArticleComment> articleComments = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "favourite_user_article", joinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
+    private Set<User> userFavourites;
+
 
     @PrePersist
     private void onCreate() {

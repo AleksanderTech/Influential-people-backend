@@ -5,6 +5,7 @@ import com.alek.influentialpeople.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -23,6 +24,9 @@ public class Quote {
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
+    @ManyToMany
+    @JoinTable(name = "favourite_user_quote", joinColumns = @JoinColumn(name = "quote_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
+    private Set<User> userFavourites;
     @ManyToOne
     @JoinColumn(name = "hero_name", referencedColumnName = "name")
     private Hero hero;
