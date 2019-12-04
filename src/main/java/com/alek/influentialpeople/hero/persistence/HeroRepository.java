@@ -16,7 +16,7 @@ public interface HeroRepository extends JpaRepository<Hero, String> {
 
     @Transactional
     @Modifying
-    @Query(value = "update hero set hero.avatar_image_path = :path where hero.full_name = :name", nativeQuery = true)
+    @Query(value = "update hero set hero.avatar_image_path = :path where hero.name = :name", nativeQuery = true)
     void updateImagePath(@Param("path") String path, @Param("name") String fullName);
 
     @Transactional
@@ -28,6 +28,6 @@ public interface HeroRepository extends JpaRepository<Hero, String> {
     Hero findByName(@Param("name") String name);
 
     @Query(value = "select distinct hero from Hero hero inner join fetch hero.heroCategories heroCategories"
-            , countQuery = "select count(hero) from Hero hero left join hero.heroCategories")
+            , countQuery = "select count(distinct hero) from Hero hero left join hero.heroCategories")
     Page<Hero> findAllHeroes(Pageable pageable);
 }

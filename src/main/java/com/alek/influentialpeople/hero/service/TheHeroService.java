@@ -63,21 +63,21 @@ public class TheHeroService implements HeroService {
     }
 
     @Override
-    public String storeHeroImage(String fullName, MultipartFile image) {
+    public String storeHeroImage(String heroName, MultipartFile image) {
 
         String url = null;
-        boolean exists = heroRepository.existsById(fullName);
+        boolean exists = heroRepository.existsById(heroName);
         if (!exists) {
             throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_HERO_MESSAGE);
         }
-        String path = heroRepository.findAvatarPath(fullName);
+        String path = heroRepository.findAvatarPath(heroName);
         if (path == null || !new File(path).exists()) {
-            path = imageService.createHeroAvatarPath(fullName);
-            heroRepository.updateImagePath(imageService.appendImageName(fullName, path), fullName);
-            imageService.storeImage(fullName, image);
+            path = imageService.createHeroAvatarPath(heroName);
+            heroRepository.updateImagePath(imageService.appendImageName(heroName, path), heroName);
+            imageService.storeImage(heroName, image);
         } else {
-            imageService.storeImage(path, fullName, image);
+            imageService.storeImage(path, heroName, image);
         }
-        return imageService.createHeroAvatarUrl(fullName);
+        return imageService.createHeroAvatarUrl(heroName);
     }
 }

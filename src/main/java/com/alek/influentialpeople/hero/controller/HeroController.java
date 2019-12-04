@@ -64,9 +64,9 @@ public class HeroController {
 
 
     @RequestMapping(path = "/{name}/image", method = RequestMethod.PUT)
-    public ResponseEntity uploadAvatarImage(@PathVariable String fullName, @RequestPart(value = "image", required = false) MultipartFile image) {
+    public ResponseEntity uploadAvatarImage(@PathVariable String name, @RequestPart(value = "image", required = false) MultipartFile image) {
 
-        heroService.storeHeroImage(fullName, image);
+        heroService.storeHeroImage(name, image);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
