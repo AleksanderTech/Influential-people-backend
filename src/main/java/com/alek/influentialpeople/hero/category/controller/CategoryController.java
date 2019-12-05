@@ -2,7 +2,6 @@ package com.alek.influentialpeople.hero.category.controller;
 
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.model.CategoryRest;
-import com.alek.influentialpeople.hero.category.service.HeroCategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +9,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
+
+
+
+
 
 
     @RequestMapping(method = RequestMethod.POST)
