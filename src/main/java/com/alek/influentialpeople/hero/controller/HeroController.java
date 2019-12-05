@@ -38,7 +38,8 @@ public class HeroController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Page<HeroDetail>> findHeroes(Pageable pageable) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(heroService.findHeroes(pageable).map(hero -> heroDetailConverter.convert(hero)));
+        Page<HeroDetail> heroes = heroService.findHeroes(pageable).map(hero -> heroDetailConverter.convert(hero));
+        return ResponseEntity.status(HttpStatus.OK).body(heroes);
     }
 
     @RequestMapping(path = "/{name}", method = RequestMethod.GET)
