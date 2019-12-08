@@ -12,4 +12,6 @@ public class InfluentialPeopleApplication {
         SpringApplication.run(InfluentialPeopleApplication.class, args);
 
     }
+
+
 }

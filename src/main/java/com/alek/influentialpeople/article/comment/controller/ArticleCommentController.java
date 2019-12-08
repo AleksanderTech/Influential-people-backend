@@ -42,7 +42,7 @@ public class ArticleCommentController {
     }
 
     @RequestMapping(value = "/article/{articleId}/comment/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteComment(@PathVariable(name = "articleId") long articleId, @RequestBody ArticleCommentRequest articleComment, @PathVariable(name = "id") long id) {
+    public ResponseEntity deleteComment(@PathVariable(name = "articleId") long articleId, @PathVariable(name = "id") long id) {
 
         articleCommentService.deleteComment(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

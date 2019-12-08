@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 public class ArticleCommentResponse {
 
+    private long id;
     private String content;
     private String username;
     private long created_at;
