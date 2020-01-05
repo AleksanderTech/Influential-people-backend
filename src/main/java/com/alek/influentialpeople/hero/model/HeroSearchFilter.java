@@ -37,17 +37,18 @@ public class HeroSearchFilter implements Specification<Hero> {
             query.orderBy(order);
         }
         if (name != null) {
-            predicates.add(criteriaBuilder.equal(root.get("name"), name));
+            predicates.add(criteriaBuilder.like(root.get("name"), name + "%"));
         }
         if (score != null) {
             predicates.add(criteriaBuilder.equal(root.get("score"), score));
         }
         if (categories != null) {
-//            categories.forEach(category -> predicates.add(root.join("heroCategories").in(category)));
             predicates.add(root.join("heroCategories").in(categories));
-
         }
-        root.fetch("heroCategories", JoinType.LEFT);
+        if (Long.class != query.getResultType()) {
+            root.fetch("heroCategories", JoinType.LEFT);
+        }
+
         query.distinct(true);
         return query.where(criteriaBuilder.and(predicates.toArray(new Predicate[0])))
                 .getRestriction();

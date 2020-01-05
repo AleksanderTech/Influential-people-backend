@@ -43,7 +43,10 @@ public class SearchFilterHeroController {
                                                           @RequestParam(value = "category", required = false) List<String> categories,
                                                           @RequestParam(value = "sort", required = false) String sorting,
                                                           Pageable pageRequest) {
-        List<Category> categoriesDb = categoryRepository.findByNameIn(categories);
+        List<Category> categoriesDb = null;
+        if (categories != null) {
+            categoriesDb = categoryRepository.findByNameIn(categories);
+        }
         HeroSearchFilter heroSearchFilter = new HeroSearchFilter(name, score, categoriesDb, sorting, pageRequest);
         return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findPaged(heroSearchFilter).map(hero -> heroResponseConverter.convert(hero)));
     }
