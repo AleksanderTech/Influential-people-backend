@@ -2,6 +2,8 @@ package com.alek.influentialpeople.hero.controller;
 
 import com.alek.influentialpeople.common.SearchFilterService;
 import com.alek.influentialpeople.common.TwoWayConverter;
+import com.alek.influentialpeople.hero.category.entity.Category;
+import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.model.HeroResponse;
 import com.alek.influentialpeople.hero.model.HeroSearchFilter;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.HERO_TO_HERO_RESPONSE;
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
@@ -24,22 +25,26 @@ import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 @RestController
 @RequestMapping("/hero/search-filter")
 @PreAuthorize("hasAnyRole('USER','ADMIN')")
-public class SearchFilterController {
+public class SearchFilterHeroController {
 
+
+    private CategoryRepository categoryRepository;
     private TwoWayConverter<Hero, HeroResponse> heroResponseConverter = getConverter(HERO_TO_HERO_RESPONSE);
     private SearchFilterService<Hero, HeroSearchFilter> searchFilterService;
 
-    public SearchFilterController(SearchFilterService<Hero, HeroSearchFilter> searchFilterService) {
+    public SearchFilterHeroController(SearchFilterService<Hero, HeroSearchFilter> searchFilterService, CategoryRepository categoryRepository) {
         this.searchFilterService = searchFilterService;
+        this.categoryRepository = categoryRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Page<HeroResponse>> getAllPaged(@RequestParam(value = "name", required = false) String name,
-                                                     @RequestParam(value = "score", required = false) Integer score,
+                                                          @RequestParam(value = "score", required = false) Integer score,
+                                                          @RequestParam(value = "category", required = false) List<String> categories,
                                                           @RequestParam(value = "sort", required = false) String sorting,
-                                                     Pageable pageRequest) {
-        System.out.println(sorting);
-        HeroSearchFilter heroSearchFilter = new HeroSearchFilter(name, score, null,sorting, pageRequest);
+                                                          Pageable pageRequest) {
+        List<Category> categoriesDb = categoryRepository.findByNameIn(categories);
+        HeroSearchFilter heroSearchFilter = new HeroSearchFilter(name, score, categoriesDb, sorting, pageRequest);
         return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findPaged(heroSearchFilter).map(hero -> heroResponseConverter.convert(hero)));
     }
 

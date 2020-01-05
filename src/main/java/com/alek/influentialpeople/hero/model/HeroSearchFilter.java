@@ -9,7 +9,6 @@ import org.springframework.data.jpa.domain.Specification;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -20,9 +19,10 @@ public class HeroSearchFilter implements Specification<Hero> {
 
     private String name;
     private Integer score;
-    private Set<Category> categories;
+    private List<Category> categories;
     private String sorting;
     private Pageable pageRequest;
+
 
     @Override
     public Predicate toPredicate(Root<Hero> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -41,6 +41,11 @@ public class HeroSearchFilter implements Specification<Hero> {
         }
         if (score != null) {
             predicates.add(criteriaBuilder.equal(root.get("score"), score));
+        }
+        if (categories != null) {
+//            categories.forEach(category -> predicates.add(root.join("heroCategories").in(category)));
+            predicates.add(root.join("heroCategories").in(categories));
+
         }
         root.fetch("heroCategories", JoinType.LEFT);
         query.distinct(true);
