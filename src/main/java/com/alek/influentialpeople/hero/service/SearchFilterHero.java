@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 public class SearchFilterHero implements SearchFilterService<Hero, HeroSearchFilter> {
 
+
     private HeroRepository heroRepository;
 
     public SearchFilterHero(HeroRepository heroRepository) {
@@ -20,7 +21,7 @@ public class SearchFilterHero implements SearchFilterService<Hero, HeroSearchFil
 
     @Override
     public Page<Hero> findPaged(HeroSearchFilter model) {
-        return heroRepository.findAllPaged(model, model.getPageRequest());
+        return heroRepository.findAll(model, model.getPageRequest());
     }
 
     @Override
@@ -28,4 +29,5 @@ public class SearchFilterHero implements SearchFilterService<Hero, HeroSearchFil
 
         return heroRepository.findAllList(model);
     }
+
 }
