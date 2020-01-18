@@ -1,11 +1,8 @@
-package com.alek.influentialpeople.hero.score.domain;
+package com.alek.influentialpeople.hero.rate.domain;
 
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.user.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -15,10 +12,11 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HeroScore {
+@Builder
+public class HeroRate {
 
     @EmbeddedId
-    private HeroScoreId id;
+    private HeroRateId id;
 
     @ManyToOne
     @MapsId("hero_id")
@@ -30,5 +28,5 @@ public class HeroScore {
     @JoinColumn(name = "user_id", referencedColumnName = "username")
     private User user;
 
-    private long points;
+    private int rate;
 }

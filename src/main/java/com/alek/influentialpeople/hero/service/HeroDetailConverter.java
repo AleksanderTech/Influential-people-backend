@@ -11,14 +11,14 @@ public class HeroDetailConverter extends TwoWayConverter<Hero, HeroDetail> {
     @Override
     public HeroDetail convert(Hero from) {
 
-        HeroDetail heroDetail = HeroDetail.builder().name(from.getName()).avatarImageUrl(from.buildAndSetAvatarUrl()).categories(from.getHeroCategories().stream().map(category -> category.getName()).collect(Collectors.toSet())).score(from.getScore()).build();
+        HeroDetail heroDetail = HeroDetail.builder().name(from.getName()).avatarImageUrl(from.buildAndSetAvatarUrl()).categories(from.getHeroCategories().stream().map(category -> category.getName()).collect(Collectors.toSet())).rate(from.getRate()).build();
         return heroDetail;
     }
 
     @Override
     public Hero convertBack(HeroDetail from) {
 
-        Hero hero = Hero.builder().name(from.getName()).score(from.getScore()).build();
+        Hero hero = Hero.builder().name(from.getName()).rate(from.getRate()).build();
         return hero;
     }
 }

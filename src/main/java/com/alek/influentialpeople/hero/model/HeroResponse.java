@@ -14,7 +14,7 @@ public class HeroResponse {
 
     private String name;
     private Set<String> categories;
-    private int score;
+    private long rate;
 
     public HeroResponse(String name) {
         this.name = name;

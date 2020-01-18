@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Vote {
+public class Rate {
 
-    private String heroName;
-    private int points;
+    private int rate;
 }

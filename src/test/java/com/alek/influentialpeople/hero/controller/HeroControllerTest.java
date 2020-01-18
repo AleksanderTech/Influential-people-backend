@@ -47,8 +47,8 @@ public class HeroControllerTest {
 
         philosopher = new Category("philosopher");
         tyrant = new Category("tyrant");
-        this.hero1 = Hero.builder().name("hero1").score(1).avatarImagePath("/hero1/path").heroCategories(new HashSet<>(Arrays.asList(tyrant, philosopher))).build();
-        this.hero2 = Hero.builder().name("hero2").score(2).avatarImagePath("/hero2/path").heroCategories(new HashSet<>(Arrays.asList(tyrant, philosopher))).build();
+        this.hero1 = Hero.builder().name("hero1").rate(1).avatarImagePath("/hero1/path").heroCategories(new HashSet<>(Arrays.asList(tyrant, philosopher))).build();
+        this.hero2 = Hero.builder().name("hero2").rate(2).avatarImagePath("/hero2/path").heroCategories(new HashSet<>(Arrays.asList(tyrant, philosopher))).build();
         mockMvc = MockMvcBuilders.standaloneSetup(heroController).setControllerAdvice(new ExceptionController()).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
     }
 

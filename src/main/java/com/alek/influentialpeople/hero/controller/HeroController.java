@@ -57,7 +57,7 @@ public class HeroController {
     }
 
     @RequestMapping(path = "/{name}/category", method = RequestMethod.POST)
-    public ResponseEntity addCategory(@PathVariable(name = "name") String fullName, @RequestBody CategoryRest category) {
+    public ResponseEntity addCategory(@PathVariable(name = "name") String name, @RequestBody CategoryRest category) {
 
 //        heroCategoryService.addCategory(name, category.getName());
         return new ResponseEntity(HttpStatus.CREATED);

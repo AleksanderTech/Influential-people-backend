@@ -15,5 +15,5 @@ public class HeroDetail {
     private String name;
     private String avatarImageUrl;
     private Set<String> categories;
-    private int score;
+    private long rate;
 }

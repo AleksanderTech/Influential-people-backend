@@ -29,7 +29,7 @@ public class Hero {
     private String avatarImagePath;
     @Transient
     private String avatarImageUrl;
-    private int score;
+    private long rate;
 
     public String buildAndSetAvatarUrl() {
         this.avatarImageUrl = Urls.ROOT_URL + Urls.HERO + "/" + this.name + Urls.IMAGE;

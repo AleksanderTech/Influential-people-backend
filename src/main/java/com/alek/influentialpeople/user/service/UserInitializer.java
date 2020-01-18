@@ -8,7 +8,7 @@ import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
-import com.alek.influentialpeople.hero.score.persistence.HeroScoreRepository;
+import com.alek.influentialpeople.hero.rate.persistence.HeroRateRepository;
 import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.persistence.QuoteRepository;
 import com.alek.influentialpeople.user.entity.User;
@@ -25,7 +25,7 @@ import java.util.HashSet;
 public class UserInitializer {
 
     @Autowired
-    public UserInitializer(HeroScoreRepository heroScoreRepository, ArticleCommentRepository articleCommentRepository, QuoteRepository quoteRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserInitializer(HeroRateRepository heroRateRepository, ArticleCommentRepository articleCommentRepository, QuoteRepository quoteRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))
@@ -39,6 +39,12 @@ public class UserInitializer {
                 .enabled(true)
                 .roles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_USER))))
                 .build();
+        User user2 = User.builder().username("user2")
+                        .password(passwordEncoder.encode("user2"))
+                        .email("email@email.com")
+                        .enabled(true)
+                        .roles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_USER))))
+                        .build();
         Category scientist = new Category("scientist");
         Category philosopher = new Category("philosopher");
         Category tyrant = new Category("tyrant");
@@ -81,6 +87,7 @@ public class UserInitializer {
 
         userRepository.save(admin);
         userRepository.save(user);
+        userRepository.save(user2);
         ArticleComment articleComment1 = ArticleComment.builder().content("Yea that's true").article(edisonArticle).user(admin).build();
         ArticleComment articleComment2 = ArticleComment.builder().content("No that's false").article(edisonArticle).user(admin).build();
         ArticleComment articleComment3 = ArticleComment.builder().content("this is comment").article(edisonArticle).user(admin).build();
@@ -89,21 +96,21 @@ public class UserInitializer {
         articleCommentRepository.save(articleComment2);
         articleCommentRepository.save(articleComment3);
         articleCommentRepository.save(articleComment4);
-        heroScoreRepository.vote(admin.getUsername(), stalin.getName(), 6);
-        heroScoreRepository.vote(user.getUsername(), stalin.getName(), 5);
-        heroScoreRepository.vote(admin.getUsername(), edison.getName(), 7);
-        heroScoreRepository.vote(user.getUsername(), edison.getName(), 8);
-        heroScoreRepository.vote(admin.getUsername(), galileo.getName(), 7);
-        heroScoreRepository.vote(user.getUsername(), galileo.getName(), 7);
+        heroRateRepository.rate(user.getUsername(), stalin.getName(), 5);
+        heroRateRepository.rate(admin.getUsername(), edison.getName(), 7);
+        heroRateRepository.rate(user.getUsername(), edison.getName(), 8);
+        heroRateRepository.rate(admin.getUsername(), galileo.getName(), 7);
+        heroRateRepository.rate(user.getUsername(), galileo.getName(), 7);
+        heroRateRepository.rate(admin.getUsername(), stalin.getName(), 6);
 
-        heroScoreRepository.vote(user.getUsername(), aristotle1.getName(), 1);
-        heroScoreRepository.vote(user.getUsername(), aristotle2.getName(), 2);
-        heroScoreRepository.vote(user.getUsername(), aristotle3.getName(), 3);
-        heroScoreRepository.vote(user.getUsername(), aristotle4.getName(), 4);
-        heroScoreRepository.vote(user.getUsername(), aristotle5.getName(), 5);
-        heroScoreRepository.vote(user.getUsername(), aristotle6.getName(), 6);
-        heroScoreRepository.vote(user.getUsername(), aristotle7.getName(), 7);
-        heroScoreRepository.vote(user.getUsername(), aristotle8.getName(), 8);
+        heroRateRepository.rate(user.getUsername(), aristotle1.getName(), 1);
+        heroRateRepository.rate(user.getUsername(), aristotle2.getName(), 2);
+        heroRateRepository.rate(user.getUsername(), aristotle3.getName(), 3);
+        heroRateRepository.rate(user.getUsername(), aristotle4.getName(), 4);
+        heroRateRepository.rate(user.getUsername(), aristotle5.getName(), 5);
+        heroRateRepository.rate(user.getUsername(), aristotle6.getName(), 6);
+        heroRateRepository.rate(user.getUsername(), aristotle7.getName(), 7);
+        heroRateRepository.rate(user.getUsername(), aristotle8.getName(), 8);
 
 
         heroRepository.updateScore( stalin.getName());

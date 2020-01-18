@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.hero.score.domain;
+package com.alek.influentialpeople.hero.rate.domain;
 
 import lombok.AllArgsConstructor;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Embeddable
 @AllArgsConstructor
-public class HeroScoreId implements Serializable {
+public class HeroRateId implements Serializable {
 
     @Column(name = "user_id")
     private String userId;

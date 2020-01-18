@@ -10,7 +10,7 @@ public class HeroResponseConverter extends TwoWayConverter<Hero, HeroResponse> {
 
     @Override
     public HeroResponse convert(Hero from) {
-        return HeroResponse.builder().name(from.getName()).categories(from.getHeroCategories().stream().map(category -> category.getName()).collect(Collectors.toSet())).score(from.getScore()).build();
+        return HeroResponse.builder().name(from.getName()).categories(from.getHeroCategories().stream().map(category -> category.getName()).collect(Collectors.toSet())).rate(from.getRate()).build();
     }
 
     @Override

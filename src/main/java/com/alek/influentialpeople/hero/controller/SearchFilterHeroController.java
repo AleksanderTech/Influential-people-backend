@@ -39,7 +39,7 @@ public class SearchFilterHeroController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Page<HeroResponse>> getAllPaged(@RequestParam(value = "name", required = false) String name,
-                                                          @RequestParam(value = "score", required = false) Integer score,
+                                                          @RequestParam(value = "rate", required = false) Integer rate,
                                                           @RequestParam(value = "category", required = false) List<String> categories,
                                                           @RequestParam(value = "sort", required = false) String sorting,
                                                           Pageable pageRequest) {
@@ -47,7 +47,7 @@ public class SearchFilterHeroController {
         if (categories != null) {
             categoriesDb = categoryRepository.findByNameIn(categories);
         }
-        HeroSearchFilter heroSearchFilter = new HeroSearchFilter(name, score, categoriesDb, sorting, pageRequest);
+        HeroSearchFilter heroSearchFilter = new HeroSearchFilter(name, rate, categoriesDb, sorting, pageRequest);
         return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findPaged(heroSearchFilter).map(hero -> heroResponseConverter.convert(hero)));
     }
 

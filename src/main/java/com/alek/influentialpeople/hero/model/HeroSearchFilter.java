@@ -18,7 +18,7 @@ import java.util.List;
 public class HeroSearchFilter implements Specification<Hero> {
 
     private String name;
-    private Integer score;
+    private Integer rate;
     private List<Category> categories;
     private String sorting;
     private Pageable pageRequest;
@@ -30,17 +30,17 @@ public class HeroSearchFilter implements Specification<Hero> {
         if (sorting != null) {
             Order order = null;
             if (sorting.equals("asc")) {
-                order = criteriaBuilder.asc(root.get("score"));
+                order = criteriaBuilder.asc(root.get("rate"));
             } else if (sorting.equals("desc")) {
-                order = criteriaBuilder.desc(root.get("score"));
+                order = criteriaBuilder.desc(root.get("rate"));
             }
             query.orderBy(order);
         }
         if (name != null) {
             predicates.add(criteriaBuilder.like(root.get("name"), name + "%"));
         }
-        if (score != null) {
-            predicates.add(criteriaBuilder.equal(root.get("score"), score));
+        if (rate != null) {
+            predicates.add(criteriaBuilder.equal(root.get("rate"), rate));
         }
         if (categories != null) {
             predicates.add(root.join("heroCategories").in(categories));
