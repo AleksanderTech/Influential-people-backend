@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.HERO_TO_HERO_RESPONSE;
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
@@ -38,25 +39,21 @@ public class SearchFilterHeroController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<HeroResponse>> getAllPaged(@RequestParam(value = "name", required = false) String name,
-                                                          @RequestParam(value = "rate", required = false) Integer rate,
-                                                          @RequestParam(value = "category", required = false) List<String> categories,
-                                                          @RequestParam(value = "sort", required = false) String sorting,
-                                                          Pageable pageRequest) {
+    public ResponseEntity<Iterable<HeroResponse>> getAll(@RequestParam(value = "paging", defaultValue = "true") Boolean paging,
+                                                              @RequestParam(value = "name", required = false) String name,
+                                                              @RequestParam(value = "rate", required = false) Integer rate,
+                                                              @RequestParam(value = "category", required = false) List<String> categories,
+                                                              @RequestParam(value = "sort", required = false) String sorting,
+                                                              Pageable pageRequest) {
         List<Category> categoriesDb = null;
         if (categories != null) {
             categoriesDb = categoryRepository.findByNameIn(categories);
         }
         HeroSearchFilter heroSearchFilter = new HeroSearchFilter(name, rate, categoriesDb, sorting, pageRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findPaged(heroSearchFilter).map(hero -> heroResponseConverter.convert(hero)));
+        if (paging) {
+            return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findPaged(heroSearchFilter).map(hero -> heroResponseConverter.convert(hero)));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findList(heroSearchFilter).stream().map(hero -> heroResponseConverter.convert(hero)).collect(Collectors.toList()));
+        }
     }
-
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<List<HeroResponse>> getAllList(@RequestParam(value = "name", required = false) String name,
-//                                                     @RequestParam(value = "score", required = false) Integer score,
-//                                                     Pageable pageRequest) {
-//
-//        HeroSearchFilter heroSearchFilter = new HeroSearchFilter(name, score, null, pageRequest);
-//        return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findList(heroSearchFilter).stream().map(hero -> heroResponseConverter.convert(hero)).collect(Collectors.toList()));
-//    }
 }
