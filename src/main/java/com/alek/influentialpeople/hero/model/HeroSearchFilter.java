@@ -37,7 +37,7 @@ public class HeroSearchFilter implements Specification<Hero> {
             query.orderBy(order);
         }
         if (name != null) {
-            predicates.add(criteriaBuilder.like(root.get("name"), name + "%"));
+            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), name.toLowerCase() + "%"));
         }
         if (rate != null) {
             predicates.add(criteriaBuilder.equal(root.get("rate"), rate));

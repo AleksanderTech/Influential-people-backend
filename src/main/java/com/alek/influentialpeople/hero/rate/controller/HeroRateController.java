@@ -28,7 +28,7 @@ public class HeroRateController {
     }
 
     @RequestMapping(path = "/{heroName}/rate", method = RequestMethod.PUT)
-    public ResponseEntity rate(@RequestBody Rate rate, @RequestParam(name = "heroName") String heroName) {
+    public ResponseEntity rate(@RequestBody Rate rate, @PathVariable(name = "heroName") String heroName) {
 
         String username = userHolder.getUsername();
         System.out.println(username);
