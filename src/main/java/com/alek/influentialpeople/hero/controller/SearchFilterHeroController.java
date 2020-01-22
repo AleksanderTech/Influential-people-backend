@@ -7,7 +7,6 @@ import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.model.HeroResponse;
 import com.alek.influentialpeople.hero.model.HeroSearchFilter;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

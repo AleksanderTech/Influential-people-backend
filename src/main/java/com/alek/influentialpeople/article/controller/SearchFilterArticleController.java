@@ -38,13 +38,4 @@ public class SearchFilterArticleController {
         ArticleSearchFilter articleSearchFilter = ArticleSearchFilter.builder().title(title).sorting(sorting).build();
         return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findPaged(articleSearchFilter).map(article -> articleResponseConverter.convert(article)));
     }
-
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<List<HeroResponse>> getAllList(@RequestParam(value = "name", required = false) String name,
-//                                                     @RequestParam(value = "score", required = false) Integer score,
-//                                                     Pageable pageRequest) {
-//
-//        HeroSearchFilter heroSearchFilter = new HeroSearchFilter(name, score, null, pageRequest);
-//        return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findList(heroSearchFilter).stream().map(hero -> heroResponseConverter.convert(hero)).collect(Collectors.toList()));
-//    }
 }

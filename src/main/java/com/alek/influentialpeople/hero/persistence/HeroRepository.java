@@ -35,12 +35,7 @@ public interface HeroRepository extends JpaRepository<Hero, String>, JpaSpecific
             , countQuery = "select count(distinct hero) from Hero hero left join hero.heroCategories")
     Page<Hero> findAllHeroes(Pageable pageable);
 
-    @Query(value = "select distinct hero from Hero hero inner join fetch hero.heroCategories heroCategories"
-            , countQuery = "select count(distinct hero) from Hero hero left join hero.heroCategories")
-    Page<Hero> findAllPaged(Specification<Hero> specification, Pageable pageable);
-
     Page<Hero> findAll(Specification<Hero> specification, Pageable pageable);
 
-    @Query(value = "select distinct hero from Hero hero inner join fetch hero.heroCategories heroCategories")
-    List<Hero> findAllList(Specification<Hero> specification);
+    List<Hero> findAll(Specification<Hero> specification);
 }

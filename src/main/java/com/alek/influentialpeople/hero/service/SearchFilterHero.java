@@ -27,7 +27,6 @@ public class SearchFilterHero implements SearchFilterService<Hero, HeroSearchFil
     @Override
     public List<Hero> findList(HeroSearchFilter model) {
 
-        return heroRepository.findAllList(model);
+        return heroRepository.findAll(model);
     }
-
 }
