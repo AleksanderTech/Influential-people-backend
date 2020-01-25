@@ -39,15 +39,16 @@ public class QuoteControllerTest {
     private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter = getConverter(QUOTE_TO_QUOTE_RESPONSE);
     private TwoWayConverter<QuoteRequest, Quote> quoteRequestConverter = getConverter(QUOTE_REQUEST_TO_QUOTE);
 
+    private Hero aristotle;
     private Quote quote1;
     private Quote quote2;
     private MockMvc mockMvc;
 
     @Before
     public void setUp() {
-
-        quote1 = Quote.builder().content("I have never met a man so ignorant that I couldn't learn something from him.").hero(new Hero("hero1")).build();
-        quote2 = Quote.builder().content("I have not failed. I've just found 10,000 ways that won't work.").hero(new Hero("hero2")).build();
+        aristotle = Hero.builder().name("Aristotle").build();
+        quote1 = Quote.builder().content("I have never met a man so ignorant that I couldn't learn something from him.").hero(aristotle).build();
+        quote2 = Quote.builder().content("I have not failed. I've just found 10,000 ways that won't work.").hero(aristotle).build();
         mockMvc = MockMvcBuilders.standaloneSetup(quoteController).setControllerAdvice(new ExceptionController()).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
     }
 
@@ -56,5 +57,12 @@ public class QuoteControllerTest {
 
         Mockito.when(quoteService.findQuotes(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.list(quote1, quote2)));
         mockMvc.perform(MockMvcRequestBuilders.get("/quote")).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void findHeroQuotes_quotesExist_returnsQuotesAndStatus200() throws Exception {
+
+        Mockito.when(quoteService.findHeroQuotes(Mockito.eq("Aristotle"), Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.list(quote1, quote2)));
+        mockMvc.perform(MockMvcRequestBuilders.get("/quote/hero/"+aristotle.getName())).andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
