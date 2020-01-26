@@ -51,7 +51,7 @@ public class ArticleCommentControllerTest {
     @Before
     public void setUp() {
 
-         article = new Article(1L);
+        article = new Article(1L);
 
         comment1 = ArticleComment.builder().content("comment1").article(article).user(new User("user1")).createdAt(new Date().getTime()).build();
         comment2 = ArticleComment.builder().content("comment2").article(article).user(new User("user2")).createdAt(new Date().getTime()).build();
@@ -62,8 +62,8 @@ public class ArticleCommentControllerTest {
     @Test
     public void findComments_commentsExist_returnsCommentsAndStatus200() throws Exception {
 
-        Mockito.when(commentService.findArticleComments(Mockito.any(Pageable.class),Mockito.anyLong())).thenReturn(new PageImpl<>(Lists.list(comment1, comment2)));
-        mockMvc.perform(MockMvcRequestBuilders.get("/article/"+article.getId()+"/comment")).andExpect(MockMvcResultMatchers.status().isOk());
+        Mockito.when(commentService.findArticleComments(Mockito.any(Pageable.class), Mockito.anyLong())).thenReturn(new PageImpl<>(Lists.list(comment1, comment2)));
+        mockMvc.perform(MockMvcRequestBuilders.get("/article/" + article.getId() + "/comment")).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 }
