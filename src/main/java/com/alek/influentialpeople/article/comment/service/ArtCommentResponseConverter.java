@@ -8,7 +8,7 @@ public class ArtCommentResponseConverter extends TwoWayConverter<ArticleComment,
 
     @Override
     public ArticleCommentResponse convert(ArticleComment from) {
-        return ArticleCommentResponse.builder().username(from.getUser().getUsername()).id(from.getId()).created_at(from.getCreated_at()).content(from.getContent()).build();
+        return ArticleCommentResponse.builder().username(from.getUser().getUsername()).id(from.getId()).createdAt(from.getCreatedAt()).content(from.getContent()).build();
     }
 
     @Override

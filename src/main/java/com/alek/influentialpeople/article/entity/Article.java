@@ -29,7 +29,7 @@ public class Article {
     @Column(nullable = false)
     private String text;
     @Column(updatable = false, nullable = false)
-    private Long created_at;
+    private Long createdAt;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hero_fullName", referencedColumnName = "name")
     private Hero hero;
@@ -45,7 +45,7 @@ public class Article {
 
     @PrePersist
     private void onCreate() {
-        created_at = new Date().toInstant().getEpochSecond();
+        createdAt = new Date().toInstant().getEpochSecond();
     }
 
     public Article(Long id) {

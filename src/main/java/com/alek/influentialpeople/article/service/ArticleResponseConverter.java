@@ -9,7 +9,7 @@ public class ArticleResponseConverter extends TwoWayConverter<Article, ArticleRe
 
     @Override
     public ArticleResponse convert(Article from) {
-        return ArticleResponse.builder().heroName(from.getHero().getName()).title(from.getTitle()).id(from.getId()).text(from.getText()).createdAt(from.getCreated_at()).build();
+        return ArticleResponse.builder().heroName(from.getHero().getName()).title(from.getTitle()).id(from.getId()).text(from.getText()).createdAt(from.getCreatedAt()).build();
     }
 
     @Override

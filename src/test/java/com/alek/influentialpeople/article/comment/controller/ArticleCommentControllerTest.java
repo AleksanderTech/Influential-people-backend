@@ -53,8 +53,8 @@ public class ArticleCommentControllerTest {
 
          article = new Article(1L);
 
-        comment1 = ArticleComment.builder().content("comment1").article(article).user(new User("user1")).created_at(new Date().getTime()).build();
-        comment2 = ArticleComment.builder().content("comment2").article(article).user(new User("user2")).created_at(new Date().getTime()).build();
+        comment1 = ArticleComment.builder().content("comment1").article(article).user(new User("user1")).createdAt(new Date().getTime()).build();
+        comment2 = ArticleComment.builder().content("comment2").article(article).user(new User("user2")).createdAt(new Date().getTime()).build();
         mockMvc = MockMvcBuilders.standaloneSetup(commentController).setControllerAdvice(new ExceptionController()).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
     }
 

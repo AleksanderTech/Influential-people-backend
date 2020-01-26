@@ -48,8 +48,8 @@ public class ArticleControllerTest {
     @Before
     public void setUp() {
 
-        article1 = Article.builder().id(1L).created_at(new Date().getTime()).title("title1").text("text1").hero(new Hero("hero1")).build();
-        article2 = Article.builder().id(2L).created_at(new Date().getTime()).title("title2").text("text2").hero(new Hero("hero2")).build();
+        article1 = Article.builder().id(1L).createdAt(new Date().getTime()).title("title1").text("text1").hero(new Hero("hero1")).build();
+        article2 = Article.builder().id(2L).createdAt(new Date().getTime()).title("title2").text("text2").hero(new Hero("hero2")).build();
         mockMvc = MockMvcBuilders.standaloneSetup(articleController).setControllerAdvice(new ExceptionController()).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
     }
 

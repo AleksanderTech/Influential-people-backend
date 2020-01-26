@@ -17,7 +17,7 @@ import java.util.List;
 public class ArticleSearchFilter implements Specification<Article> {
 
     private String title;
-    private Long created_at;
+    private Long createdAt;
     private Pageable pageRequest;
     private String sorting;
 
@@ -27,9 +27,9 @@ public class ArticleSearchFilter implements Specification<Article> {
         if (sorting != null) {
             Order order = null;
             if (sorting.equals("newest")) {
-                order = criteriaBuilder.desc(root.get("created_at"));
+                order = criteriaBuilder.desc(root.get("createdAt"));
             } else if (sorting.equals("oldest")) {
-                order = criteriaBuilder.asc(root.get("created_at"));
+                order = criteriaBuilder.asc(root.get("createdAt"));
             }
             query.orderBy(order);
         }

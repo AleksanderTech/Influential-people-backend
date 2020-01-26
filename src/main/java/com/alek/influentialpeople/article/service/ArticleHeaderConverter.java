@@ -8,11 +8,11 @@ public class ArticleHeaderConverter extends TwoWayConverter<Article, ArticleHead
 
     @Override
     public ArticleHeader convert(Article from) {
-        return ArticleHeader.builder().heroName(from.getHero().getName()).title(from.getTitle()).id(from.getId()).createdAt(from.getCreated_at()).build();
+        return ArticleHeader.builder().heroName(from.getHero().getName()).title(from.getTitle()).id(from.getId()).createdAt(from.getCreatedAt()).build();
     }
 
     @Override
     public Article convertBack(ArticleHeader from) {
-        return Article.builder().title(from.getTitle()).created_at(from.getCreatedAt()).id(from.getId()).build();
+        return Article.builder().title(from.getTitle()).createdAt(from.getCreatedAt()).id(from.getId()).build();
     }
 }

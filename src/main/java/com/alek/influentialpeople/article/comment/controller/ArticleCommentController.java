@@ -28,11 +28,11 @@ public class ArticleCommentController {
     }
 
     @RequestMapping(value = "/article/{articleId}/comment", method = RequestMethod.POST)
-    public ResponseEntity<ArticleComment> addComment(@PathVariable(name = "articleId") long articleId, @RequestBody ArticleCommentRequest commentRequest) {
+    public ResponseEntity<ArticleCommentResponse> addComment(@PathVariable(name = "articleId") long articleId, @RequestBody ArticleCommentRequest commentRequest) {
 
         commentRequest.setArticleIdIf(articleId);
         ArticleComment articleComment = commentRequestConverter.convert(commentRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(articleCommentService.addComment(articleComment));
+        return ResponseEntity.status(HttpStatus.CREATED).body(commentResponseConverter.convert(articleCommentService.addComment(articleComment)));
     }
 
     @RequestMapping(value = "/article/{articleId}/comment", method = RequestMethod.GET)

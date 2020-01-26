@@ -21,7 +21,7 @@ public class ArticleComment {
     private long id;
     private String content;
     @Column(updatable = false, nullable = false)
-    private Long created_at;
+    private Long createdAt;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id", referencedColumnName = "id", nullable = false)
     private Article article;
@@ -31,7 +31,7 @@ public class ArticleComment {
 
     @PrePersist
     private void onCreate() {
-        created_at = new Date().getTime();
+        createdAt = new Date().getTime();
     }
 
 }
