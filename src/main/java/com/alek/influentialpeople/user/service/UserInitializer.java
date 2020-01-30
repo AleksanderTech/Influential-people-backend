@@ -40,38 +40,42 @@ public class UserInitializer {
                 .roles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_USER))))
                 .build();
         User user2 = User.builder().username("user2")
-                        .password(passwordEncoder.encode("user2"))
-                        .email("email@email.com")
-                        .enabled(true)
-                        .roles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_USER))))
-                        .build();
-        Category scientist = new Category("scientist");
-        Category philosopher = new Category("philosopher");
-        Category tyrant = new Category("tyrant");
-        Category politician = new Category("politician");
-        categoryRepository.saveAll(Arrays.asList(scientist, philosopher, tyrant, politician));
+                .password(passwordEncoder.encode("user2"))
+                .email("email@email.com")
+                .enabled(true)
+                .roles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_USER))))
+                .build();
+        Category scientists = new Category("scientists", "Science is organized knowledge. Wisdom is organized life");
+        Category leaders = new Category("leaders", "Do not follow where the path may lead. Go instead where there is no path and leave a trail.");
+        Category religiousFounders = new Category("religious founders", "Just as a candle cannot burn without fire, men cannot live without a spiritual life.");
+        Category explorers = new Category("explorers", "Life is an experiment in which you may fail or succeed. Explore more, expect least.");
+        Category activists = new Category("activists", "We must always take sides. Neutrality helps the oppressor, never the victim. Silence encourages the tormentor, never the tormented.");
+        Category artistsWriters = new Category("artists & writers", "Every child is an artist. The problem is how to remain an artist once he grows up.");
+        Category philosophers = new Category("philosophers", "If you only read the books that everyone else is reading, you can only think what everyone else is thinking.");
 
-        Hero edison = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientist, philosopher))).name("Thomas Alva Edison").avatarImagePath("storage/images/heroes/Thomas_Alva_Edison/avatar/Thomas_Alva_Edison.jpg").build();
-        Hero julius = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(politician))).name("Gaius Julius Caesar").build();
-        Hero christ = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosopher))).name("Jesus Christ").build();
-        Hero aristotle = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosopher,scientist))).name("Aristotle").build();
+        categoryRepository.saveAll(Arrays.asList(scientists, philosophers, leaders, religiousFounders, explorers, activists, artistsWriters));
 
-
-        Hero aristotle1 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosopher,scientist))).name("Aristotle1").build();
-        Hero aristotle2 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosopher,scientist))).name("Aristotle2").build();
-        Hero aristotle3 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosopher,scientist))).name("Aristotle3").build();
-        Hero aristotle4 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosopher,scientist))).name("Aristotle4").build();
-        Hero aristotle5 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosopher,scientist))).name("Aristotle5").build();
-        Hero aristotle6 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosopher,scientist))).name("Aristotle6").build();
-        Hero aristotle7 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosopher,scientist))).name("Aristotle7").build();
-        Hero aristotle8 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosopher,scientist))).name("Aristotle8").build();
+        Hero edison = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Thomas Alva Edison").avatarImagePath("storage/images/heroes/Thomas_Alva_Edison/avatar/Thomas_Alva_Edison.jpg").build();
+        Hero julius = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(leaders))).name("Gaius Julius Caesar").build();
+        Hero christ = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers))).name("Jesus Christ").build();
+        Hero aristotle = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle").build();
 
 
-        Hero plato = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientist, philosopher))).name("Plato").build();
-        Hero socrates = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientist, philosopher))).name("Socrates").build();
-        Hero newton = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientist, philosopher))).name("Isaac Newton").build();
-        Hero stalin = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(tyrant, politician))).name("Joseph Stalin").avatarImagePath("storage/images/heroes/Joseph_Stalin/avatar/Joseph_Stalin.jpg").build();
-        Hero galileo = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientist, philosopher))).name("Galileo Galilei").avatarImagePath("storage/images/heroes/Galileo_Galilei/avatar/Galileo Galilei.jpg").build();
+        Hero aristotle1 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle1").build();
+        Hero aristotle2 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle2").build();
+        Hero aristotle3 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle3").build();
+        Hero aristotle4 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle4").build();
+        Hero aristotle5 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle5").build();
+        Hero aristotle6 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle6").build();
+        Hero aristotle7 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle7").build();
+        Hero aristotle8 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle8").build();
+
+
+        Hero plato = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Plato").build();
+        Hero socrates = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Socrates").build();
+        Hero newton = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Isaac Newton").build();
+        Hero stalin = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(leaders))).name("Joseph Stalin").avatarImagePath("storage/images/heroes/Joseph_Stalin/avatar/Joseph_Stalin.jpg").build();
+        Hero galileo = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Galileo Galilei").avatarImagePath("storage/images/heroes/Galileo_Galilei/avatar/Galileo Galilei.jpg").build();
 
         Article edisonArticle = Article.builder().title("Edison the wise man").text("Edison whas not only genius in science field but ... ").hero(edison).build();
         Article platoArticle = Article.builder().title("Plato the wise man").text("Plato was not only genius in science field but ... ").hero(edison).build();
@@ -82,10 +86,10 @@ public class UserInitializer {
         Quote edison1 = Quote.builder().content("I have not failed. I've just found 10,000 ways that won't work.").hero(edison).build();
         Quote galileo2 = Quote.builder().content("I do not feel obliged to believe that the same God who has endowed us with sense, reason, and intellect has intended us to forgo their use.").hero(galileo).build();
         Quote galileo3 = Quote.builder().content("You cannot teach a man anything, you can only help him find it within himself.").hero(galileo).build();
-        heroRepository.saveAll(Arrays.asList(edison, stalin, galileo,julius,christ,socrates,plato,aristotle,newton,aristotle1,aristotle2,aristotle3,aristotle4,aristotle5,aristotle6,aristotle7,aristotle8));
+        heroRepository.saveAll(Arrays.asList(edison, stalin, galileo, julius, christ, socrates, plato, aristotle, newton, aristotle1, aristotle2, aristotle3, aristotle4, aristotle5, aristotle6, aristotle7, aristotle8));
 
-        quoteRepository.saveAll(Arrays.asList(galileo1, galileo2,galileo3,edison1));
-        articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle,platoArticle));
+        quoteRepository.saveAll(Arrays.asList(galileo1, galileo2, galileo3, edison1));
+        articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle, platoArticle));
 
         userRepository.save(admin);
         userRepository.save(user);
@@ -115,11 +119,11 @@ public class UserInitializer {
         heroRateRepository.rate(user.getUsername(), aristotle8.getName(), 8);
 
 
-        heroRepository.updateScore( stalin.getName());
-        heroRepository.updateScore( edison.getName());
-        heroRepository.updateScore( galileo.getName());
-        quoteRepository.addToFavourites(1,admin.getUsername());
-        quoteRepository.addToFavourites(2,admin.getUsername());
-        quoteRepository.addToFavourites(1,user.getUsername());
+        heroRepository.updateScore(stalin.getName());
+        heroRepository.updateScore(edison.getName());
+        heroRepository.updateScore(galileo.getName());
+        quoteRepository.addToFavourites(1, admin.getUsername());
+        quoteRepository.addToFavourites(2, admin.getUsername());
+        quoteRepository.addToFavourites(1, user.getUsername());
     }
 }

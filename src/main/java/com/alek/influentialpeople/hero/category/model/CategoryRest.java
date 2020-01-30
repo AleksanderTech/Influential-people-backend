@@ -12,5 +12,6 @@ import lombok.Setter;
 public class CategoryRest {
 
      private String name;
+     private String description;
 
 }

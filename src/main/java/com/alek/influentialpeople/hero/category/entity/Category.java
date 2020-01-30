@@ -9,19 +9,19 @@ import java.util.Set;
 
 @Entity
 @Table
-@AllArgsConstructor
-@Builder
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 public class Category {
 
     @Id
     private String name;
+    private String description;
     @ManyToMany(mappedBy = "heroCategories")
     private Set<Hero> hero = new HashSet<>();
 
-    public Category(String name) {
+    public Category(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 }

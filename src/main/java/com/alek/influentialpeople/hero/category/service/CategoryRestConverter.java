@@ -8,11 +8,11 @@ public class CategoryRestConverter extends TwoWayConverter<Category, CategoryRes
 
     @Override
     public CategoryRest convert(Category from) {
-        return new CategoryRest(from.getName());
+        return new CategoryRest(from.getName(),from.getDescription());
     }
 
     @Override
     public Category convertBack(CategoryRest from) {
-        return new Category(from.getName());
+        return new Category(from.getName(),from.getDescription());
     }
 }
