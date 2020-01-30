@@ -38,4 +38,6 @@ public interface HeroRepository extends JpaRepository<Hero, String>, JpaSpecific
     Page<Hero> findAll(Specification<Hero> specification, Pageable pageable);
 
     List<Hero> findAll(Specification<Hero> specification);
+
+    List<Hero> findByNameIn(List<String> heroes);
 }
