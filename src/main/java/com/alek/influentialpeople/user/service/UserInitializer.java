@@ -74,16 +74,18 @@ public class UserInitializer {
         Hero galileo = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientist, philosopher))).name("Galileo Galilei").avatarImagePath("storage/images/heroes/Galileo_Galilei/avatar/Galileo Galilei.jpg").build();
 
         Article edisonArticle = Article.builder().title("Edison the wise man").text("Edison whas not only genius in science field but ... ").hero(edison).build();
+        Article platoArticle = Article.builder().title("Plato the wise man").text("Plato was not only genius in science field but ... ").hero(edison).build();
 
         Article edisonArticle2 = Article.builder().title("Edison and his filosophy").text("Edison whas not only genius in science field but ... ").hero(edison).build();
         Article stalinArticle = Article.builder().title("Stalin the tyrant").text("Stalin whas not only genius in science field but ... ").hero(stalin).build();
         Quote galileo1 = Quote.builder().content("I have never met a man so ignorant that I couldn't learn something from him.").hero(galileo).build();
         Quote edison1 = Quote.builder().content("I have not failed. I've just found 10,000 ways that won't work.").hero(edison).build();
         Quote galileo2 = Quote.builder().content("I do not feel obliged to believe that the same God who has endowed us with sense, reason, and intellect has intended us to forgo their use.").hero(galileo).build();
+        Quote galileo3 = Quote.builder().content("You cannot teach a man anything, you can only help him find it within himself.").hero(galileo).build();
         heroRepository.saveAll(Arrays.asList(edison, stalin, galileo,julius,christ,socrates,plato,aristotle,newton,aristotle1,aristotle2,aristotle3,aristotle4,aristotle5,aristotle6,aristotle7,aristotle8));
 
-        quoteRepository.saveAll(Arrays.asList(galileo1, galileo2,edison1));
-        articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle));
+        quoteRepository.saveAll(Arrays.asList(galileo1, galileo2,galileo3,edison1));
+        articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle,platoArticle));
 
         userRepository.save(admin);
         userRepository.save(user);

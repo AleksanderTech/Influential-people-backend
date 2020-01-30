@@ -22,14 +22,17 @@ public class QuoteSearchFilter implements Specification<Quote> {
     private Pageable pageRequest;
     private String sorting;
 
+    private static final String SORT_ALPH_ASC = "asc";
+    private static final String SORT_ALPH_DESC = "desc";
+
     @Override
     public Predicate toPredicate(Root<Quote> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
         if (sorting != null) {
             Order order = null;
-            if (sorting.equals("asc")) {
+            if (sorting.equals(SORT_ALPH_ASC)) {
                 order = criteriaBuilder.asc(root.get("content"));
-            } else if (sorting.equals("desc")) {
+            } else if (sorting.equals(SORT_ALPH_DESC)) {
                 order = criteriaBuilder.desc(root.get("content"));
             }
             query.orderBy(order);

@@ -4,8 +4,6 @@ import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.model.ArticleSearchFilter;
 import com.alek.influentialpeople.article.repository.ArticleRepository;
 import com.alek.influentialpeople.common.SearchFilterService;
-import com.alek.influentialpeople.hero.entity.Hero;
-import com.alek.influentialpeople.hero.model.HeroSearchFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +21,11 @@ public class SearchFilterArticle implements SearchFilterService<Article, Article
 
     @Override
     public Page<Article> findPaged(ArticleSearchFilter model) {
-        return articleRepository.findAllPaged(model, model.getPageRequest());
+        return articleRepository.findAll(model, model.getPageRequest());
     }
 
     @Override
     public List<Article> findList(ArticleSearchFilter model) {
-        return articleRepository.findAllList(model);
+        return articleRepository.findAll(model);
     }
 }
