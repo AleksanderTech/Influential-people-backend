@@ -45,15 +45,16 @@ public class UserInitializer {
                 .enabled(true)
                 .roles(new HashSet(Arrays.asList(new Role(Role.Roles.ROLE_USER))))
                 .build();
-        Category scientists = new Category("scientists", "Science is organized knowledge. Wisdom is organized life");
+        Category scientists = new Category("scientists", "Science is organized knowledge. Wisdom is organized life.");
+        Category inventors = new Category("inventors", "Either write something worth reading or do something worth writing.");
         Category leaders = new Category("leaders", "Do not follow where the path may lead. Go instead where there is no path and leave a trail.");
         Category religiousFounders = new Category("religious founders", "Just as a candle cannot burn without fire, men cannot live without a spiritual life.");
         Category explorers = new Category("explorers", "Life is an experiment in which you may fail or succeed. Explore more, expect least.");
         Category activists = new Category("activists", "We must always take sides. Neutrality helps the oppressor, never the victim. Silence encourages the tormentor, never the tormented.");
         Category artistsWriters = new Category("artists & writers", "Every child is an artist. The problem is how to remain an artist once he grows up.");
-        Category philosophers = new Category("philosophers", "If you only read the books that everyone else is reading, you can only think what everyone else is thinking.");
+        Category philosophers = new Category("philosophers", "If you only read the books that everyone else is reading, you can only think what everyone else is thinking.author-Haruki Murakami");
 
-        categoryRepository.saveAll(Arrays.asList(scientists, philosophers, leaders, religiousFounders, explorers, activists, artistsWriters));
+        categoryRepository.saveAll(Arrays.asList(scientists, philosophers, leaders, religiousFounders, activists, artistsWriters, explorers));
 
         Hero edison = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Thomas Alva Edison").avatarImagePath("storage/images/heroes/Thomas_Alva_Edison/avatar/Thomas_Alva_Edison.jpg").build();
         Hero julius = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(leaders))).name("Gaius Julius Caesar").build();

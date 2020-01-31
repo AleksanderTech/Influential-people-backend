@@ -38,7 +38,11 @@ public class QuoteController {
 
         return ResponseEntity.status(HttpStatus.OK).body(quoteService.findQuotes(pageable).map(quote -> quoteResponseConverter.convert(quote)));
     }
+    @RequestMapping(path = "/category/{categoryName}", method = RequestMethod.GET)
+        public ResponseEntity<Page<QuoteResponse>> findCategoryQuotes(Pageable pageable,@PathVariable(name = "categoryName") String category) {
 
+            return ResponseEntity.status(HttpStatus.OK).body(quoteService.findCategoryQuotes(pageable,category).map(quote -> quoteResponseConverter.convert(quote)));
+        }
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<QuoteResponse> findQuote(@PathVariable(name = "id") Long id) {
 

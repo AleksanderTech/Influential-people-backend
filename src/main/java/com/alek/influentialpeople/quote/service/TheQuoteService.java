@@ -46,6 +46,11 @@ public class TheQuoteService implements QuoteService {
     }
 
     @Override
+    public Page<Quote> findCategoryQuotes(Pageable pageable, String category) {
+        return quoteRepository.findCategoryQuotes(pageable,category);
+    }
+
+    @Override
     public Page<Quote> findFavourites(Pageable pageable) {
         return quoteRepository.findFavourites(pageable,userHolder.getUsername());
     }

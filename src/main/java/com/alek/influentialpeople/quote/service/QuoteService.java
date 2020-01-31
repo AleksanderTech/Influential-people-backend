@@ -10,6 +10,8 @@ public interface QuoteService {
 
     Page<Quote> findQuotes(Pageable pageable);
 
+    Page<Quote> findCategoryQuotes(Pageable pageable,String category);
+
     Page<Quote> findFavourites(Pageable pageable);
 
     Quote createHeroQuote(Quote quote);

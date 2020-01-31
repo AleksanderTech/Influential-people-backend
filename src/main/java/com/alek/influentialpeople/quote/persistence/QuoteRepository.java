@@ -28,10 +28,16 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
     void addToFavourites(@Param("quoteId") long quoteId, @Param("username") String username);
 
     @Query(value = "select * from quote join favourite_user_quote on quote.id = favourite_user_quote.quote_id where  favourite_user_quote.username =:username"
-            , countQuery = "select count(*) from quote join favourite_user_quote on quote.id = favourite_user_quote.quote_id where  favourite_user_quote.username = :username", nativeQuery = true)
+            , countQuery = "select count(*) from quote join favourite_user_quote on quote.id = favourite_user_quote.quote_id where  favourite_user_quote.username = :username",
+            nativeQuery = true)
     Page<Quote> findFavourites(Pageable pageable, @Param("username") String username);
 
     Page<Quote> findAll(Specification<Quote> specification, Pageable pageable);
 
     List<Quote> findAll(Specification<Quote> specification);
+
+    @Query(value = "select * from quote join hero on quote.hero_name = hero.name join hero_category on hero.name = hero_category.hero_name where category_name = :category",
+            countQuery = "select count(*) from quote join hero on quote.hero_name = hero.name join hero_category on hero.name = hero_category.hero_name where category_name = :category",
+            nativeQuery = true)
+    Page<Quote> findCategoryQuotes(Pageable pageable,@Param("category") String category);
 }
