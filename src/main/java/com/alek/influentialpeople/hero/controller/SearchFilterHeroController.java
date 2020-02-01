@@ -5,6 +5,7 @@ import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
+import com.alek.influentialpeople.hero.model.HeroDetail;
 import com.alek.influentialpeople.hero.model.HeroResponse;
 import com.alek.influentialpeople.hero.model.HeroSearchFilter;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.HERO_TO_HERO_RESPONSE;
+import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.HERO_TO_HERO_DETAIL;
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
@@ -29,7 +30,7 @@ public class SearchFilterHeroController {
 
 
     private CategoryRepository categoryRepository;
-    private TwoWayConverter<Hero, HeroResponse> heroResponseConverter = getConverter(HERO_TO_HERO_RESPONSE);
+    private TwoWayConverter<Hero, HeroDetail> heroResponseConverter = getConverter(HERO_TO_HERO_DETAIL);
     private SearchFilterService<Hero, HeroSearchFilter> searchFilterService;
 
     public SearchFilterHeroController(SearchFilterService<Hero, HeroSearchFilter> searchFilterService, CategoryRepository categoryRepository) {
@@ -38,12 +39,12 @@ public class SearchFilterHeroController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Iterable<HeroResponse>> getAll(@RequestParam(value = "paging", defaultValue = "true") Boolean paging,
-                                                              @RequestParam(value = "name", required = false) String name,
-                                                              @RequestParam(value = "rate", required = false) Integer rate,
-                                                              @RequestParam(value = "category", required = false) List<String> categories,
-                                                              @RequestParam(value = "sort", required = false) String sorting,
-                                                              Pageable pageRequest) {
+    public ResponseEntity<Iterable<HeroDetail>> getAll(@RequestParam(value = "paging", defaultValue = "true") Boolean paging,
+                                                       @RequestParam(value = "name", required = false) String name,
+                                                       @RequestParam(value = "rate", required = false) Integer rate,
+                                                       @RequestParam(value = "category", required = false) List<String> categories,
+                                                       @RequestParam(value = "sort", required = false) String sorting,
+                                                       Pageable pageRequest) {
         List<Category> categoriesDb = null;
         if (categories != null) {
             categoriesDb = categoryRepository.findByNameIn(categories);
