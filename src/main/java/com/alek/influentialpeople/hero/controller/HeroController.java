@@ -7,6 +7,7 @@ import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.model.HeroDetail;
 import com.alek.influentialpeople.hero.model.HeroRequest;
 import com.alek.influentialpeople.hero.model.HeroResponse;
+import com.alek.influentialpeople.hero.model.HeroTile;
 import com.alek.influentialpeople.hero.service.HeroService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,6 +55,18 @@ public class HeroController {
 
         Hero hero = heroService.createHero(heroRequestConverter.convert(heroRequest));
         return new ResponseEntity<>(heroResponseConverter.convert(hero), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(path = "/{name}/favourite", method = RequestMethod.POST)
+    public ResponseEntity addToFavourites(@PathVariable(name = "name") String name) {
+        heroService.addToFavourites(name);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @RequestMapping(path = "/favourite", method = RequestMethod.GET)
+    public ResponseEntity<Page<HeroTile>> findFavourites(Pageable pageable) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(heroService.findFavourites(pageable).map(hero -> new HeroTile(hero.getName())));
     }
 
     @RequestMapping(path = "/{name}/category", method = RequestMethod.POST)

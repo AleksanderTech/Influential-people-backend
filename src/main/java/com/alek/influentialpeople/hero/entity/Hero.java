@@ -3,6 +3,7 @@ package com.alek.influentialpeople.hero.entity;
 import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.common.Urls;
 import com.alek.influentialpeople.hero.category.entity.Category;
+import com.alek.influentialpeople.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +31,9 @@ public class Hero {
     @Transient
     private String avatarImageUrl;
     private long rate;
+    @ManyToMany
+    @JoinTable(name = "favourite_user_hero", joinColumns = @JoinColumn(name = "hero_name", referencedColumnName = "name"), inverseJoinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
+    private Set<User> userFavourites;
 
     public String buildAndSetAvatarUrl() {
         this.avatarImageUrl = Urls.ROOT_URL + Urls.HERO + "/" + this.name + Urls.IMAGE;

@@ -1,6 +1,7 @@
 package com.alek.influentialpeople.hero.persistence;
 
 import com.alek.influentialpeople.hero.entity.Hero;
+import com.alek.influentialpeople.quote.entity.Quote;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -40,4 +41,14 @@ public interface HeroRepository extends JpaRepository<Hero, String>, JpaSpecific
     List<Hero> findAll(Specification<Hero> specification);
 
     List<Hero> findByNameIn(List<String> heroes);
+
+    @Transactional
+    @Modifying
+    @Query(value = "insert into favourite_user_hero values(:heroName,:username)", nativeQuery = true)
+    void addToFavourites(@Param("heroName") String heroName, @Param("username") String username);
+
+    @Query(value = "select * from hero join favourite_user_hero on hero.name = favourite_user_hero.hero_name where  favourite_user_hero.username =:username"
+            , countQuery = "select count(*) from hero join favourite_user_hero on hero.name = favourite_user_hero.hero_name where favourite_user_hero.username = :username",
+            nativeQuery = true)
+    Page<Hero> findFavourites(Pageable pageable, @Param("username") String username);
 }
