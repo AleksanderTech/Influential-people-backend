@@ -4,7 +4,9 @@ import com.alek.influentialpeople.article.service.ArticleService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserAccount;
+import com.alek.influentialpeople.user.model.UserPassword;
 import com.alek.influentialpeople.user.model.UserResponse;
+import com.alek.influentialpeople.user.model.UserRole;
 import com.alek.influentialpeople.user.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -58,5 +60,24 @@ public class UserController {
     public ResponseEntity<UserResponse> createUser(@RequestBody UserAccount user) {
 
         return new ResponseEntity<>(resConverter.convert(userService.createUser(accConverter.convert(user))), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(path = "/password", method = RequestMethod.PUT)
+    public ResponseEntity<Void> changePassword(@RequestBody UserPassword newPassword) {
+        userService.changePassword(newPassword.getPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(path = "/{username}/role", method = RequestMethod.PUT)
+    public ResponseEntity<Void> changeRole(@PathVariable String username, @RequestBody UserRole newRole) {
+        userService.changeRole(username, newRole.getRole());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(path = "/{username}/password", method = RequestMethod.PUT)
+    public ResponseEntity<UserPassword> resetPassword(@PathVariable String username) {
+        return new ResponseEntity<>(new UserPassword(userService.resetPassword(username)), HttpStatus.OK);
     }
 }

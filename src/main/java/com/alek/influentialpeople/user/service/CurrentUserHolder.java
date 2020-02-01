@@ -28,7 +28,11 @@ public class CurrentUserHolder implements UserDataHolder<User> {
 
     @Override
     public boolean isUserAdmin(User user) {
-        return user.getRoles().contains(Role.Roles.ROLE_ADMIN.name());
+        Role adminRole = user.getRoles().stream()
+          .filter(role -> role.getName().equals(Role.Roles.ROLE_ADMIN.name()))
+          .findAny()
+          .orElse(null);
+        return adminRole != null;
     }
 }
 

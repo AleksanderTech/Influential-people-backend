@@ -15,4 +15,10 @@ public interface UserService {
     User findUser(String username);
 
     void deleteUser(String username);
+
+    void changePassword(String password);
+
+    void changeRole(String username, String role);
+
+    String resetPassword(String username);
 }
