@@ -41,6 +41,11 @@ public class TheQuoteService implements QuoteService {
     }
 
     @Override
+    public void deleteFromFavourites(long quoteId) {
+        quoteRepository.deleteFromFavourites(userHolder.getUsername(),quoteId);
+    }
+
+    @Override
     public Page<Quote> findQuotes(Pageable pageable) {
         return quoteRepository.findAllQuotes(pageable);
     }

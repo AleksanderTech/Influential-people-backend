@@ -56,6 +56,11 @@ public class TheHeroService implements HeroService {
     }
 
     @Override
+    public void deleteFromFavourites(String name) {
+        heroRepository.deleteFromFavourites(userHolder.getUsername(), name);
+    }
+
+    @Override
     public Page<Hero> findFavourites(Pageable pageable) {
         return heroRepository.findFavourites(pageable, userHolder.getUsername());
     }

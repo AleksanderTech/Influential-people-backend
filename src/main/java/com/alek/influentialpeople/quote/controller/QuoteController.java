@@ -38,11 +38,13 @@ public class QuoteController {
 
         return ResponseEntity.status(HttpStatus.OK).body(quoteService.findQuotes(pageable).map(quote -> quoteResponseConverter.convert(quote)));
     }
-    @RequestMapping(path = "/category/{categoryName}", method = RequestMethod.GET)
-        public ResponseEntity<Page<QuoteResponse>> findCategoryQuotes(Pageable pageable,@PathVariable(name = "categoryName") String category) {
 
-            return ResponseEntity.status(HttpStatus.OK).body(quoteService.findCategoryQuotes(pageable,category).map(quote -> quoteResponseConverter.convert(quote)));
-        }
+    @RequestMapping(path = "/category/{categoryName}", method = RequestMethod.GET)
+    public ResponseEntity<Page<QuoteResponse>> findCategoryQuotes(Pageable pageable, @PathVariable(name = "categoryName") String category) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(quoteService.findCategoryQuotes(pageable, category).map(quote -> quoteResponseConverter.convert(quote)));
+    }
+
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<QuoteResponse> findQuote(@PathVariable(name = "id") Long id) {
 
@@ -60,6 +62,12 @@ public class QuoteController {
     public ResponseEntity addToFavourites(@PathVariable(name = "id") long quoteId) {
         quoteService.addToFavourites(quoteId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @RequestMapping(path = "/{id}/favourite", method = RequestMethod.DELETE)
+    public ResponseEntity deleteFromFavourites(@PathVariable(name = "id") long quoteId) {
+        quoteService.deleteFromFavourites(quoteId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @RequestMapping(path = "/favourite", method = RequestMethod.GET)

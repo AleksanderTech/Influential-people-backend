@@ -21,4 +21,6 @@ public interface HeroService {
     byte[] getHeroImage(String fullName);
 
     String storeHeroImage(String fullName, MultipartFile image);
+
+    void deleteFromFavourites(String name);
 }

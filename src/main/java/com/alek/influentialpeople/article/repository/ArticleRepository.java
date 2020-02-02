@@ -29,6 +29,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query(value = "insert into favourite_user_article values(:articleId,:username)", nativeQuery = true)
     void addToFavourites(@Param("articleId") long articleId, @Param("username") String username);
 
+    @Transactional
+    @Modifying
+    @Query(value = "delete from favourite_user_article where favourite_user_article.username = :username and favourite_user_article.article_id = :articleId", nativeQuery = true)
+    void deleteFromFavourites(@Param("username")String username,@Param("articleId")long articleId);
+
     @Query(value = "select * from article join favourite_user_article on article.id = favourite_user_article.article_id where  favourite_user_article.username =:username"
             , countQuery = "select count(*) from article join favourite_user_article on article.id = favourite_user_article.article_id where  favourite_user_article.username = :username", nativeQuery = true)
     Page<Article> findFavourites(Pageable pageable, @Param("username") String username);

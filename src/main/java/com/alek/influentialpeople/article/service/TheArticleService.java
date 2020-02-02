@@ -44,6 +44,12 @@ public class TheArticleService implements ArticleService {
         articleRepository.addToFavourites(quoteId, userHolder.getUsername());
     }
 
+
+    @Override
+    public void deleteFromFavourites(long articleId) {
+        articleRepository.deleteFromFavourites(userHolder.getUsername(), articleId);
+    }
+
     @Override
     public Page<Article> findFavourites(Pageable pageable) {
         return articleRepository.findFavourites(pageable, userHolder.getUsername());

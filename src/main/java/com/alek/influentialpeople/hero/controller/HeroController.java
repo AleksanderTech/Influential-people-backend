@@ -63,6 +63,12 @@ public class HeroController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @RequestMapping(path = "/{name}/favourite", method = RequestMethod.DELETE)
+    public ResponseEntity deleteFromFavourites(@PathVariable(name = "name") String name) {
+        heroService.deleteFromFavourites(name);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @RequestMapping(path = "/favourite", method = RequestMethod.GET)
     public ResponseEntity<Page<HeroTile>> findFavourites(Pageable pageable) {
 

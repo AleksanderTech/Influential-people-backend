@@ -47,6 +47,13 @@ public interface HeroRepository extends JpaRepository<Hero, String>, JpaSpecific
     @Query(value = "insert into favourite_user_hero values(:heroName,:username)", nativeQuery = true)
     void addToFavourites(@Param("heroName") String heroName, @Param("username") String username);
 
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from favourite_user_hero where favourite_user_hero.username = :username and favourite_user_hero.hero_name = :heroName", nativeQuery = true)
+    void deleteFromFavourites(@Param("username") String username, @Param("heroName") String heroName);
+
+
     @Query(value = "select * from hero join favourite_user_hero on hero.name = favourite_user_hero.hero_name where  favourite_user_hero.username =:username"
             , countQuery = "select count(*) from hero join favourite_user_hero on hero.name = favourite_user_hero.hero_name where favourite_user_hero.username = :username",
             nativeQuery = true)

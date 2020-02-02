@@ -27,6 +27,11 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
     @Query(value = "insert into favourite_user_quote values(:quoteId,:username)", nativeQuery = true)
     void addToFavourites(@Param("quoteId") long quoteId, @Param("username") String username);
 
+    @Transactional
+    @Modifying
+    @Query(value = "delete from favourite_user_quote where favourite_user_quote.username = :username and favourite_user_quote.quote_id = :quoteId", nativeQuery = true)
+    void deleteFromFavourites(@Param("username")String username,@Param("quoteId")long quoteId);
+
     @Query(value = "select * from quote join favourite_user_quote on quote.id = favourite_user_quote.quote_id where  favourite_user_quote.username =:username"
             , countQuery = "select count(*) from quote join favourite_user_quote on quote.id = favourite_user_quote.quote_id where  favourite_user_quote.username = :username",
             nativeQuery = true)
@@ -40,4 +45,5 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
             countQuery = "select count(*) from quote join hero on quote.hero_name = hero.name join hero_category on hero.name = hero_category.hero_name where category_name = :category",
             nativeQuery = true)
     Page<Quote> findCategoryQuotes(Pageable pageable,@Param("category") String category);
+
 }
