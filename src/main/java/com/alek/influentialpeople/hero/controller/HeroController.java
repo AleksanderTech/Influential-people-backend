@@ -75,6 +75,12 @@ public class HeroController {
         return ResponseEntity.status(HttpStatus.OK).body(heroService.findFavourites(pageable).map(hero -> new HeroTile(hero.getName())));
     }
 
+    @RequestMapping(path = "/{name}/favourite", method = RequestMethod.GET)
+    public ResponseEntity<HeroTile> findFavourite(@PathVariable(name = "name") String name) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HeroTile(heroService.findFavourite(name).getName()));
+    }
+
     @RequestMapping(path = "/{name}/category", method = RequestMethod.POST)
     public ResponseEntity addCategory(@PathVariable(name = "name") String name, @RequestBody CategoryRest category) {
 

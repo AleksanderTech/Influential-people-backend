@@ -23,4 +23,6 @@ public interface HeroService {
     String storeHeroImage(String fullName, MultipartFile image);
 
     void deleteFromFavourites(String name);
+
+    Hero findFavourite(String name);
 }

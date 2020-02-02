@@ -61,6 +61,15 @@ public class TheHeroService implements HeroService {
     }
 
     @Override
+    public Hero findFavourite(String name) {
+        Hero hero = heroRepository.findFavourite(name, userHolder.getUsername());
+        if (hero == null) {
+            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_HERO_FAVOURITE_MESSAGE);
+        }
+        return heroRepository.findFavourite(name, userHolder.getUsername());
+    }
+
+    @Override
     public Page<Hero> findFavourites(Pageable pageable) {
         return heroRepository.findFavourites(pageable, userHolder.getUsername());
     }

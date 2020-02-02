@@ -58,4 +58,8 @@ public interface HeroRepository extends JpaRepository<Hero, String>, JpaSpecific
             , countQuery = "select count(*) from hero join favourite_user_hero on hero.name = favourite_user_hero.hero_name where favourite_user_hero.username = :username",
             nativeQuery = true)
     Page<Hero> findFavourites(Pageable pageable, @Param("username") String username);
+
+    @Query(value = "select * from hero join favourite_user_hero on hero.name = favourite_user_hero.hero_name where  favourite_user_hero.username = :username and hero.name = :heroName limit 1",
+                nativeQuery = true)
+    Hero findFavourite(@Param("heroName")String heroName,  @Param("username") String username);
 }
