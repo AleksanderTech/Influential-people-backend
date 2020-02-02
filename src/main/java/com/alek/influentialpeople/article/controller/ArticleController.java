@@ -70,8 +70,8 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.findFavourites(pageable).map(article -> articleHeaderConverter.convert(article)));
     }
 
-    @RequestMapping(path = "/{name}/favourite", method = RequestMethod.GET)
-       public ResponseEntity<ArticleHeader> findFavourite(@PathVariable(name="articleId") long articleId) {
+    @RequestMapping(path = "/{id}/favourite", method = RequestMethod.GET)
+       public ResponseEntity<ArticleHeader> findFavourite(@PathVariable(name="id") long articleId) {
            return ResponseEntity.status(HttpStatus.OK).body(articleHeaderConverter.convert(articleService.findFavourite(articleId)));
        }
 }
