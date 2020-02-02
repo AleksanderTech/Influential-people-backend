@@ -18,7 +18,10 @@ public interface UserService {
 
     void changePassword(String password);
 
+    void changeEmail(String email);
+
     void changeRole(String username, String role);
 
     String resetPassword(String username);
+
 }

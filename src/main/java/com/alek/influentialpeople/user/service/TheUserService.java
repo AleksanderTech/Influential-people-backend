@@ -83,6 +83,13 @@ public class TheUserService implements UserService {
     }
 
     @Override
+    public void changeEmail(String email) {
+        User user = userHolder.getUser();
+        user.setEmail(email);
+        userRepository.save(user);
+    }
+
+    @Override
     public void changeRole(String login, String newRole) {
         User user = checkIfExist(login);
         if (isAllowed(user.getUsername())) {

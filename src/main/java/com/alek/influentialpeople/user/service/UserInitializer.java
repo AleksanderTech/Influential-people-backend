@@ -123,8 +123,15 @@ public class UserInitializer {
         heroRepository.updateScore(stalin.getName());
         heroRepository.updateScore(edison.getName());
         heroRepository.updateScore(galileo.getName());
+        heroRepository.addToFavourites(aristotle.getName(),admin.getUsername());
+        heroRepository.addToFavourites(galileo.getName(),admin.getUsername());
+        heroRepository.addToFavourites(plato.getName(),admin.getUsername());
+        articleRepository.addToFavourites(1,admin.getUsername());
+        articleRepository.addToFavourites(2,admin.getUsername());
+        articleRepository.addToFavourites(3,admin.getUsername());
         quoteRepository.addToFavourites(1, admin.getUsername());
         quoteRepository.addToFavourites(2, admin.getUsername());
+        quoteRepository.addToFavourites(3, admin.getUsername());
         quoteRepository.addToFavourites(1, user.getUsername());
     }
 }
