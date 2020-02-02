@@ -7,6 +7,7 @@ public class ExceptionMessages {
     public static final String HERO_EXISTS_MESSAGE = "The Hero with given name already exists";
     public static final String NOT_FOUND_HERO_MESSAGE = "The Hero with given name does not exist";
     public static final String NOT_FOUND_HERO_FAVOURITE_MESSAGE = "The Hero with given name is not your favourite";
+    public static final String NOT_FOUND_ARTICLE_FAVOURITE_MESSAGE = "The Article with given id is not your favourite";
     public static final String NOT_FOUND_IMAGE_MESSAGE = "Searching image does not exist";
     public static final String NOT_FOUND_VERIFICATION_TOKEN_MESSAGE = "Searching image does not exist";
     public static final String ACCESS_DENIED_MESSAGE = "You are not allowed to this resource";

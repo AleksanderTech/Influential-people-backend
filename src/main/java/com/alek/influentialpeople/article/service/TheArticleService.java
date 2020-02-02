@@ -2,11 +2,14 @@ package com.alek.influentialpeople.article.service;
 
 import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.repository.ArticleRepository;
+import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.service.UserDataHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class TheArticleService implements ArticleService {
@@ -48,6 +51,15 @@ public class TheArticleService implements ArticleService {
     @Override
     public void deleteFromFavourites(long articleId) {
         articleRepository.deleteFromFavourites(userHolder.getUsername(), articleId);
+    }
+
+    @Override
+    public Article findFavourite(long articleId) {
+        Article article = articleRepository.findFavourite(articleId, userHolder.getUsername());
+        if (article == null) {
+            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_ARTICLE_FAVOURITE_MESSAGE);
+        }
+        return articleRepository.findFavourite(articleId, userHolder.getUsername());
     }
 
     @Override

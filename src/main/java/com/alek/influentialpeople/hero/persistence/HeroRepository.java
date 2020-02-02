@@ -1,7 +1,6 @@
 package com.alek.influentialpeople.hero.persistence;
 
 import com.alek.influentialpeople.hero.entity.Hero;
-import com.alek.influentialpeople.quote.entity.Quote;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

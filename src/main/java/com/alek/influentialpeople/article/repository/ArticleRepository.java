@@ -1,8 +1,6 @@
 package com.alek.influentialpeople.article.repository;
 
 import com.alek.influentialpeople.article.entity.Article;
-import com.alek.influentialpeople.hero.entity.Hero;
-import com.alek.influentialpeople.quote.entity.Quote;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -32,11 +30,15 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Transactional
     @Modifying
     @Query(value = "delete from favourite_user_article where favourite_user_article.username = :username and favourite_user_article.article_id = :articleId", nativeQuery = true)
-    void deleteFromFavourites(@Param("username")String username,@Param("articleId")long articleId);
+    void deleteFromFavourites(@Param("username") String username, @Param("articleId") long articleId);
 
     @Query(value = "select * from article join favourite_user_article on article.id = favourite_user_article.article_id where  favourite_user_article.username =:username"
             , countQuery = "select count(*) from article join favourite_user_article on article.id = favourite_user_article.article_id where  favourite_user_article.username = :username", nativeQuery = true)
     Page<Article> findFavourites(Pageable pageable, @Param("username") String username);
+
+    @Query(value = "select * from article join favourite_user_article on article.id = favourite_user_article.article_id where favourite_user_article.username = :username and article.id = :articleId limit 1",
+            nativeQuery = true)
+    Article findFavourite(@Param("articleId") long articleId, @Param("username") String username);
 
     Page<Article> findAll(Specification<Article> specification, Pageable pageable);
 

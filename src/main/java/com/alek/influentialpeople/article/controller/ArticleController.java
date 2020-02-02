@@ -67,7 +67,11 @@ public class ArticleController {
 
     @RequestMapping(path = "/favourite", method = RequestMethod.GET)
     public ResponseEntity<Page<ArticleHeader>> findFavourites(Pageable pageable) {
-
         return ResponseEntity.status(HttpStatus.OK).body(articleService.findFavourites(pageable).map(article -> articleHeaderConverter.convert(article)));
     }
+
+    @RequestMapping(path = "/{name}/favourite", method = RequestMethod.GET)
+       public ResponseEntity<ArticleHeader> findFavourite(@PathVariable(name="articleId") long articleId) {
+           return ResponseEntity.status(HttpStatus.OK).body(articleHeaderConverter.convert(articleService.findFavourite(articleId)));
+       }
 }

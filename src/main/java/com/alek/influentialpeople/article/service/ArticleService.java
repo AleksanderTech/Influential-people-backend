@@ -19,4 +19,6 @@ public interface ArticleService {
     Page<Article> findFavourites(Pageable pageable);
 
     void deleteFromFavourites(long articleId);
+
+    Article findFavourite(long articleId);
 }
