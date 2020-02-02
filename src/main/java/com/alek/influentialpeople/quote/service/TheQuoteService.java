@@ -1,5 +1,7 @@
 package com.alek.influentialpeople.quote.service;
 
+import com.alek.influentialpeople.article.entity.Article;
+import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.persistence.QuoteRepository;
 import com.alek.influentialpeople.user.entity.User;
@@ -7,6 +9,8 @@ import com.alek.influentialpeople.user.service.UserDataHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class TheQuoteService implements QuoteService {
@@ -54,6 +58,15 @@ public class TheQuoteService implements QuoteService {
     public Page<Quote> findCategoryQuotes(Pageable pageable, String category) {
         return quoteRepository.findCategoryQuotes(pageable,category);
     }
+
+    @Override
+       public Quote findFavourite(long quoteId) {
+           Quote quote = quoteRepository.findFavourite(quoteId, userHolder.getUsername());
+           if (quote == null) {
+               throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_QUOTE_FAVOURITE_MESSAGE);
+           }
+           return quoteRepository.findFavourite(quoteId, userHolder.getUsername());
+       }
 
     @Override
     public Page<Quote> findFavourites(Pageable pageable) {

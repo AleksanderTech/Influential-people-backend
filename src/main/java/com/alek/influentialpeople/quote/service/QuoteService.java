@@ -21,4 +21,6 @@ public interface QuoteService {
     void addToFavourites(long id);
 
     void deleteFromFavourites(long quoteId);
+
+    Quote findFavourite(long quoteId);
 }

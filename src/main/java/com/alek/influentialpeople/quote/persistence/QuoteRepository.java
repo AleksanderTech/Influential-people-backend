@@ -30,7 +30,7 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
     @Transactional
     @Modifying
     @Query(value = "delete from favourite_user_quote where favourite_user_quote.username = :username and favourite_user_quote.quote_id = :quoteId", nativeQuery = true)
-    void deleteFromFavourites(@Param("username")String username,@Param("quoteId")long quoteId);
+    void deleteFromFavourites(@Param("username") String username, @Param("quoteId") long quoteId);
 
     @Query(value = "select * from quote join favourite_user_quote on quote.id = favourite_user_quote.quote_id where  favourite_user_quote.username =:username"
             , countQuery = "select count(*) from quote join favourite_user_quote on quote.id = favourite_user_quote.quote_id where  favourite_user_quote.username = :username",
@@ -44,6 +44,9 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
     @Query(value = "select * from quote join hero on quote.hero_name = hero.name join hero_category on hero.name = hero_category.hero_name where category_name = :category",
             countQuery = "select count(*) from quote join hero on quote.hero_name = hero.name join hero_category on hero.name = hero_category.hero_name where category_name = :category",
             nativeQuery = true)
-    Page<Quote> findCategoryQuotes(Pageable pageable,@Param("category") String category);
+    Page<Quote> findCategoryQuotes(Pageable pageable, @Param("category") String category);
 
+    @Query(value = "select * from quote join favourite_user_quote on quote.id = favourite_user_quote.quote_id where favourite_user_quote.username = :username and quote.id = :quoteId limit 1",
+            nativeQuery = true)
+    Quote findFavourite(long quoteId, String username);
 }

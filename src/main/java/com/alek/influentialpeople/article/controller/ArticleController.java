@@ -60,10 +60,10 @@ public class ArticleController {
     }
 
     @RequestMapping(path = "/{id}/favourite", method = RequestMethod.DELETE)
-      public ResponseEntity deleteFromFavourites(@PathVariable(name = "id") long articleId) {
-          articleService.deleteFromFavourites(articleId);
-          return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-      }
+    public ResponseEntity deleteFromFavourites(@PathVariable(name = "id") long articleId) {
+        articleService.deleteFromFavourites(articleId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
     @RequestMapping(path = "/favourite", method = RequestMethod.GET)
     public ResponseEntity<Page<ArticleHeader>> findFavourites(Pageable pageable) {
@@ -71,7 +71,7 @@ public class ArticleController {
     }
 
     @RequestMapping(path = "/{id}/favourite", method = RequestMethod.GET)
-       public ResponseEntity<ArticleHeader> findFavourite(@PathVariable(name="id") long articleId) {
-           return ResponseEntity.status(HttpStatus.OK).body(articleHeaderConverter.convert(articleService.findFavourite(articleId)));
-       }
+    public ResponseEntity<ArticleHeader> findFavourite(@PathVariable(name = "id") long articleId) {
+        return ResponseEntity.status(HttpStatus.OK).body(articleHeaderConverter.convert(articleService.findFavourite(articleId)));
+    }
 }
