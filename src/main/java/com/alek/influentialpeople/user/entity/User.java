@@ -1,5 +1,6 @@
 package com.alek.influentialpeople.user.entity;
 
+import com.alek.influentialpeople.common.Urls;
 import com.alek.influentialpeople.user.role.entity.Role;
 import lombok.*;
 
@@ -25,6 +26,8 @@ public class User {
     @Column(columnDefinition = "boolean default false")
     private boolean enabled;
     private String avatarImagePath;
+    @Transient
+    private String avatarImageUrl;
     @Column(nullable = false)
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -34,5 +37,10 @@ public class User {
 
     public User(String username) {
         this.username = username;
+    }
+
+    public String buildAndSetAvatarUrl() {
+        this.avatarImageUrl = Urls.ROOT_URL + Urls.USER + "/" + this.username + Urls.IMAGE;
+        return this.avatarImageUrl;
     }
 }

@@ -12,6 +12,7 @@ import java.util.Set;
 public class UserResponse {
 
     private String username;
+    private String avatarImageUrl;
     private String email;
     private Set<String> roles;
 }
