@@ -4,8 +4,10 @@ import com.alek.influentialpeople.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
@@ -18,4 +20,11 @@ public interface UserRepository extends JpaRepository<User, String> {
     User findByUsername(@Param("username") String username);
 
 
+    @Query(value = "select avatar_image_path from user where username = :username", nativeQuery = true)
+    String findAvatarPath(@Param("username") String username);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update user set user.avatar_image_path = :path where user.username = :username", nativeQuery = true)
+    void updateImagePath(@Param("path") String path, @Param("username") String username);
 }

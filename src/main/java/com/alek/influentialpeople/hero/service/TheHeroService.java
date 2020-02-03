@@ -94,12 +94,13 @@ public class TheHeroService implements HeroService {
         }
         String path = heroRepository.findAvatarPath(heroName);
         if (path == null || !new File(path).exists()) {
-            path = imageService.createHeroAvatarPath(heroName);
+            path = imageService.createAvatarPath(ImageService.StorageOf.HERO, heroName);
+            System.out.println(path + "path ?hero");
             heroRepository.updateImagePath(imageService.appendImageName(heroName, path), heroName);
-            imageService.storeImage(heroName, image);
+            imageService.storeImage(ImageService.StorageOf.HERO, heroName, image);
         } else {
             imageService.storeImage(path, heroName, image);
         }
-        return imageService.createHeroAvatarUrl(heroName);
+        return imageService.createAvatarUrl(ImageService.StorageOf.HERO,heroName);
     }
 }

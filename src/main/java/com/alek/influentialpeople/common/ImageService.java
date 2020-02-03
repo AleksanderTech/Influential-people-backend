@@ -19,6 +19,11 @@ public class ImageService {
     private static final String IMAGE_FORMAT = "jpg";
     private static final String AVATAR = "avatar";
 
+    public enum StorageOf {
+        USER,
+        HERO
+    }
+
     public ImageService(Properties properties) {
         this.properties = properties;
     }
@@ -40,7 +45,6 @@ public class ImageService {
         if (image.isEmpty()) {
             throw new EmptyFileException(ExceptionMessages.EMPTY_FILE_EXCEPTION);
         }
-
         try (BufferedOutputStream stream =
                      new BufferedOutputStream(new FileOutputStream(new File(path), false))) {
             byte[] imageBytes = image.getBytes();
@@ -51,18 +55,18 @@ public class ImageService {
         }
     }
 
-    public void storeImage(String fullName, MultipartFile image) {
+    public void storeImage(StorageOf storageType, String name, MultipartFile image) {
 
         if (image == null) {
             throw new EmptyFileException(ExceptionMessages.EMPTY_FILE_EXCEPTION);
         }
-        String path = createHeroAvatarPath(fullName);
+        String path = createAvatarPath(storageType, name);
         File directory = new File(path);
         if (!directory.exists()) {
             directory.mkdirs();
         }
         try (BufferedOutputStream stream =
-                     new BufferedOutputStream(new FileOutputStream(new File(path + File.separatorChar + createHeroAvatarName(fullName)), false))) {
+                     new BufferedOutputStream(new FileOutputStream(new File(path + File.separatorChar + createAvatarName(name)), false))) {
             byte[] imageBytes = image.getBytes();
 
             stream.write(imageBytes);
@@ -71,38 +75,37 @@ public class ImageService {
         }
     }
 
-    public String createHeroAvatarPath(String fullName) {
+    public String createAvatarName(String name) {
+        return name.replace(" ", "_") + "." + IMAGE_FORMAT;
+    }
 
-        String modifiedFullName = fullName.replace(" ", "_");
-        String path = properties.getConfig("heroes.images.path") + File.separatorChar + modifiedFullName + File.separatorChar + AVATAR;
+    public String createAvatarPath(StorageOf storageType, String name) {
+        String path = null;
+        if (storageType.equals(StorageOf.USER)) {
+            System.out.println("user type");
+            System.out.println(name);
+            String modifiedUsername = name.replace(" ", "_");
+            path = properties.getConfig("users.images.path") + File.separatorChar + modifiedUsername + File.separatorChar + AVATAR;
+            System.out.println(path+" result path");
+        } else if (storageType.equals(StorageOf.HERO)) {
+            String modifiedFullName = name.replace(" ", "_");
+            path = properties.getConfig("heroes.images.path") + File.separatorChar + modifiedFullName + File.separatorChar + AVATAR;
+            System.out.println(path+" result path hero");
+        }
         return path;
     }
 
-    public String createHeroAvatarName(String fullName) {
-
-        return fullName.replace(" ", "_") + "." + IMAGE_FORMAT;
-    }
-
-    public String createUserAvatarPath(String username) {
-
-        String modifiedUsername = username.replace(" ", "_");
-        String path = properties.getConfig("users.images.path") + File.separatorChar + modifiedUsername + File.separatorChar + AVATAR;
-        return path;
-    }
-
-    public String createHeroAvatarUrl(String fullName) {
-
-        String url = Urls.ROOT_URL + Urls.HERO + File.separatorChar + fullName + Urls.IMAGE;
-        return url;
-    }
-
-    public String createUserAvatarUrl(String username) {
-
-        String url = Urls.ROOT_URL + Urls.USER + File.separatorChar + username + Urls.IMAGE;
+    public String createAvatarUrl(StorageOf storageType, String name) {
+        String url = null;
+        if (storageType.equals(StorageOf.USER)) {
+            url = Urls.ROOT_URL + Urls.USER + File.separatorChar + name + Urls.IMAGE;
+        } else if (storageType.equals(StorageOf.HERO)) {
+            url = Urls.ROOT_URL + Urls.HERO + File.separatorChar + name + Urls.IMAGE;
+        }
         return url;
     }
 
     public String appendImageName(String name, String path) {
-        return path + File.separatorChar + createHeroAvatarName(name);
+        return path + File.separatorChar + createAvatarName(name);
     }
 }

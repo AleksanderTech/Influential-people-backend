@@ -1,5 +1,6 @@
 package com.alek.influentialpeople.user.service;
 
+import com.alek.influentialpeople.common.ImageService;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.exceptions.StateConflictException;
 import com.alek.influentialpeople.user.entity.User;
@@ -11,8 +12,10 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
 import java.util.Random;
 import java.util.Set;
 
@@ -22,13 +25,15 @@ public class TheUserService implements UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private CurrentUserHolder userHolder;
+    private ImageService imageService;
 
     private static final int FIXED_GENERATED_PASSWORD_LENGTH = 10;
 
-    public TheUserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CurrentUserHolder userHolder) {
+    public TheUserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CurrentUserHolder userHolder,ImageService imageService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userHolder = userHolder;
+        this.imageService=imageService;
     }
 
     @Override
@@ -113,6 +118,36 @@ public class TheUserService implements UserService {
             return generatedPassword;
         }
         throw new AccessDeniedException(ExceptionMessages.ACCESS_DENIED_MESSAGE);
+    }
+
+    @Override
+    public byte[] getUserImage() {
+        String path = userRepository.findAvatarPath(userHolder.getUsername());
+        if (path == null || !(new File(path).exists())) {
+            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_IMAGE_MESSAGE);
+        }
+        File directory = new File(path);
+        byte[] image = imageService.getImage(path);
+        return image;
+    }
+
+    @Override
+    public String storeUserImage(MultipartFile image) {
+        String url = null;
+        String name = userHolder.getUsername();
+        String path = userRepository.findAvatarPath(name);
+        System.out.println(path);
+        if (path == null || !new File(path).exists()) {
+            System.out.println("in if not exitst");
+            path = imageService.createAvatarPath(ImageService.StorageOf.USER,name);
+            System.out.println(path + "path ?");
+            userRepository.updateImagePath(imageService.appendImageName(name, path), name);
+            imageService.storeImage(ImageService.StorageOf.USER,name, image);
+        } else {
+            System.out.println("in path exists");
+            imageService.storeImage(path, name, image);
+        }
+        return imageService.createAvatarUrl(ImageService.StorageOf.USER,name);
     }
 
     private User checkIfExist(String username) {

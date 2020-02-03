@@ -3,6 +3,7 @@ package com.alek.influentialpeople.user.service;
 import com.alek.influentialpeople.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
@@ -24,4 +25,7 @@ public interface UserService {
 
     String resetPassword(String username);
 
+    byte[] getUserImage();
+
+    String storeUserImage(MultipartFile image);
 }

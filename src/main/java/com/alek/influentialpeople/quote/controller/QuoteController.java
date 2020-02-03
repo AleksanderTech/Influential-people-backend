@@ -75,8 +75,9 @@ public class QuoteController {
 
         return ResponseEntity.status(HttpStatus.OK).body(quoteService.findFavourites(pageable).map(quote -> quoteResponseConverter.convert(quote)));
     }
+
     @RequestMapping(path = "/{id}/favourite", method = RequestMethod.GET)
-      public ResponseEntity<QuoteResponse> findFavourite(@PathVariable(name = "id") long quoteId) {
-          return ResponseEntity.status(HttpStatus.OK).body(quoteResponseConverter.convert(quoteService.findFavourite(quoteId)));
-      }
+    public ResponseEntity<QuoteResponse> findFavourite(@PathVariable(name = "id") long quoteId) {
+        return ResponseEntity.status(HttpStatus.OK).body(quoteResponseConverter.convert(quoteService.findFavourite(quoteId)));
+    }
 }

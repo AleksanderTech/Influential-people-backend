@@ -1,6 +1,5 @@
 package com.alek.influentialpeople.quote.service;
 
-import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.persistence.QuoteRepository;
@@ -41,12 +40,12 @@ public class TheQuoteService implements QuoteService {
 
     @Override
     public void addToFavourites(long quoteId) {
-        quoteRepository.addToFavourites(quoteId,userHolder.getUsername());
+        quoteRepository.addToFavourites(quoteId, userHolder.getUsername());
     }
 
     @Override
     public void deleteFromFavourites(long quoteId) {
-        quoteRepository.deleteFromFavourites(userHolder.getUsername(),quoteId);
+        quoteRepository.deleteFromFavourites(userHolder.getUsername(), quoteId);
     }
 
     @Override
@@ -56,20 +55,20 @@ public class TheQuoteService implements QuoteService {
 
     @Override
     public Page<Quote> findCategoryQuotes(Pageable pageable, String category) {
-        return quoteRepository.findCategoryQuotes(pageable,category);
+        return quoteRepository.findCategoryQuotes(pageable, category);
     }
 
     @Override
-       public Quote findFavourite(long quoteId) {
-           Quote quote = quoteRepository.findFavourite(quoteId, userHolder.getUsername());
-           if (quote == null) {
-               throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_QUOTE_FAVOURITE_MESSAGE);
-           }
-           return quoteRepository.findFavourite(quoteId, userHolder.getUsername());
-       }
+    public Quote findFavourite(long quoteId) {
+        Quote quote = quoteRepository.findFavourite(quoteId, userHolder.getUsername());
+        if (quote == null) {
+            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_QUOTE_FAVOURITE_MESSAGE);
+        }
+        return quoteRepository.findFavourite(quoteId, userHolder.getUsername());
+    }
 
     @Override
     public Page<Quote> findFavourites(Pageable pageable) {
-        return quoteRepository.findFavourites(pageable,userHolder.getUsername());
+        return quoteRepository.findFavourites(pageable, userHolder.getUsername());
     }
 }
