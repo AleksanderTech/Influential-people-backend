@@ -25,7 +25,7 @@ public interface UserService {
 
     String resetPassword(String username);
 
-    byte[] getUserImage();
+    byte[] getUserImage(String username);
 
     String storeUserImage(MultipartFile image);
 }

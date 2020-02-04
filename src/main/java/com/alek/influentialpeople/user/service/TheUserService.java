@@ -121,8 +121,8 @@ public class TheUserService implements UserService {
     }
 
     @Override
-    public byte[] getUserImage() {
-        String path = userRepository.findAvatarPath(userHolder.getUsername());
+    public byte[] getUserImage(String username) {
+        String path = userRepository.findAvatarPath(username);
         if (path == null || !(new File(path).exists())) {
             throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_IMAGE_MESSAGE);
         }

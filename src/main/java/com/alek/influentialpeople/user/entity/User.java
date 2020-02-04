@@ -40,7 +40,7 @@ public class User {
     }
 
     public String buildAndSetAvatarUrl() {
-        this.avatarImageUrl = Urls.ROOT_URL + Urls.USER + "/" + this.username + Urls.IMAGE;
-        return this.avatarImageUrl;
+        avatarImageUrl = Urls.ROOT_URL + Urls.USER + "/" + this.username + Urls.IMAGE;
+        return avatarImagePath != null ? avatarImageUrl : null;
     }
 }

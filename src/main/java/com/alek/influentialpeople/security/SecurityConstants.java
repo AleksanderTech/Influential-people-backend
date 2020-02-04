@@ -15,6 +15,7 @@ public class SecurityConstants {
             "/sign-up",
             "/confirm",
             "/h2-console/**",
-            "/hero/{\\d+}/image"
+            "/hero/{\\d+}/image",
+            "/user/{\\d+}/image",
     };
 }
