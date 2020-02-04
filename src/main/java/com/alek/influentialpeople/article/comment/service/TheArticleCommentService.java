@@ -33,6 +33,6 @@ public class TheArticleCommentService implements ArticleCommentService {
 
     @Override
     public Page<ArticleComment> findArticleComments(Pageable pageable, long articleId) {
-        return repository.findByArticleId(pageable, articleId);
+        return repository.findByArticle(pageable, articleId);
     }
 }

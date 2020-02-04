@@ -12,6 +12,7 @@ public class ArticleCommentResponse {
     private long id;
     private String content;
     private String username;
+    private String avatarUrl;
     private long createdAt;
 
 }

@@ -25,7 +25,7 @@ public class ArticleComment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id", referencedColumnName = "id", nullable = false)
     private Article article;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "username", referencedColumnName = "username", nullable = false)
     private User user;
 

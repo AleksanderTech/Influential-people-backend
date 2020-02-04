@@ -38,7 +38,7 @@ public class ArticleCommentController {
     }
 
     @RequestMapping(value = "/article/{articleId}/comment", method = RequestMethod.GET)
-    public ResponseEntity<Page<ArticleCommentResponse>> findComments(@PageableDefault(sort = {"createdAt"}, direction = Sort.Direction.DESC)Pageable pageable, @PathVariable(name = "articleId") long articleId) {
+    public ResponseEntity<Page<ArticleCommentResponse>> findComments(Pageable pageable, @PathVariable(name = "articleId") long articleId) {
 
         return ResponseEntity.status(HttpStatus.OK).body(articleCommentService.findArticleComments(pageable, articleId).map(article -> commentResponseConverter.convert(article)));
     }
