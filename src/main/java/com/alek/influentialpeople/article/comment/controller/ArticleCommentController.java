@@ -1,14 +1,12 @@
 package com.alek.influentialpeople.article.comment.controller;
 
+import com.alek.influentialpeople.article.comment.entity.ArticleComment;
 import com.alek.influentialpeople.article.comment.model.ArticleCommentRequest;
 import com.alek.influentialpeople.article.comment.model.ArticleCommentResponse;
 import com.alek.influentialpeople.article.comment.service.ArticleCommentService;
-import com.alek.influentialpeople.article.comment.entity.ArticleComment;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -87,7 +87,6 @@ public class TheHeroService implements HeroService {
 
     @Override
     public String storeHeroImage(String heroName, MultipartFile image) {
-        String url = null;
         boolean exists = heroRepository.existsById(heroName);
         if (!exists) {
             throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_HERO_MESSAGE);
@@ -95,7 +94,6 @@ public class TheHeroService implements HeroService {
         String path = heroRepository.findAvatarPath(heroName);
         if (path == null || !new File(path).exists()) {
             path = imageService.createAvatarPath(ImageService.StorageOf.HERO, heroName);
-            System.out.println(path + "path ?hero");
             heroRepository.updateImagePath(imageService.appendImageName(heroName, path), heroName);
             imageService.storeImage(ImageService.StorageOf.HERO, heroName, image);
         } else {

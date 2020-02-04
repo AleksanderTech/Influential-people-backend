@@ -27,5 +27,5 @@ public interface UserService {
 
     byte[] getUserImage(String username);
 
-    String storeUserImage(MultipartFile image);
+    String storeUserImage(String username,MultipartFile image);
 }

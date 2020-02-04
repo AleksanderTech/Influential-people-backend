@@ -29,11 +29,11 @@ public class TheUserService implements UserService {
 
     private static final int FIXED_GENERATED_PASSWORD_LENGTH = 10;
 
-    public TheUserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CurrentUserHolder userHolder,ImageService imageService) {
+    public TheUserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CurrentUserHolder userHolder, ImageService imageService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userHolder = userHolder;
-        this.imageService=imageService;
+        this.imageService = imageService;
     }
 
     @Override
@@ -132,22 +132,23 @@ public class TheUserService implements UserService {
     }
 
     @Override
-    public String storeUserImage(MultipartFile image) {
-        String url = null;
-        String name = userHolder.getUsername();
+    public String storeUserImage(String name, MultipartFile image) {
+        if (!name.equals(userHolder.getUsername())) {
+            throw new AccessDeniedException(ExceptionMessages.ACCESS_DENIED_MESSAGE);
+        }
+        boolean exists = userRepository.existsById(name);
+        if (!exists) {
+            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_HERO_MESSAGE);
+        }
         String path = userRepository.findAvatarPath(name);
-        System.out.println(path);
         if (path == null || !new File(path).exists()) {
-            System.out.println("in if not exitst");
-            path = imageService.createAvatarPath(ImageService.StorageOf.USER,name);
-            System.out.println(path + "path ?");
+            path = imageService.createAvatarPath(ImageService.StorageOf.USER, name);
             userRepository.updateImagePath(imageService.appendImageName(name, path), name);
-            imageService.storeImage(ImageService.StorageOf.USER,name, image);
+            imageService.storeImage(ImageService.StorageOf.USER, name, image);
         } else {
-            System.out.println("in path exists");
             imageService.storeImage(path, name, image);
         }
-        return imageService.createAvatarUrl(ImageService.StorageOf.USER,name);
+        return imageService.createAvatarUrl(ImageService.StorageOf.USER, name);
     }
 
     private User checkIfExist(String username) {

@@ -88,7 +88,6 @@ public class HeroController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-
     @RequestMapping(path = "/{name}/image", method = RequestMethod.PUT)
     public ResponseEntity uploadAvatarImage(@PathVariable String name, @RequestPart(value = "image", required = false) MultipartFile image) {
 

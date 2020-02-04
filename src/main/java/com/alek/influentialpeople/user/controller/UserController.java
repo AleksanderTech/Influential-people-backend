@@ -85,15 +85,15 @@ public class UserController {
         return new ResponseEntity<>(new UserPassword(userService.resetPassword(username)), HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/image", method = RequestMethod.PUT)
-    public ResponseEntity uploadAvatarImage(@RequestPart(value = "image", required = false) MultipartFile image) {
+    @RequestMapping(path = "/{username}/image", method = RequestMethod.PUT)
+    public ResponseEntity uploadAvatarImage(@PathVariable(name = "username") String username, @RequestPart(value = "image", required = false) MultipartFile image) {
 
-        userService.storeUserImage(image);
+        userService.storeUserImage(username,image);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{username}/image", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> getAvatarImage(@PathVariable(name = "username")String username) {
+    public ResponseEntity<byte[]> getAvatarImage(@PathVariable(name = "username") String username) {
 
         byte[] image = userService.getUserImage(username);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
