@@ -61,17 +61,6 @@ public class UserInitializer {
         Hero christ = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers))).name("Jesus Christ").build();
         Hero aristotle = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle").build();
 
-
-        Hero aristotle1 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle1").build();
-        Hero aristotle2 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle2").build();
-        Hero aristotle3 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle3").build();
-        Hero aristotle4 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle4").build();
-        Hero aristotle5 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle5").build();
-        Hero aristotle6 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle6").build();
-        Hero aristotle7 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle7").build();
-        Hero aristotle8 = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(philosophers, scientists))).name("Aristotle8").build();
-
-
         Hero plato = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Plato").build();
         Hero socrates = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Socrates").build();
         Hero newton = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Isaac Newton").build();
@@ -87,7 +76,7 @@ public class UserInitializer {
         Quote edison1 = Quote.builder().content("I have not failed. I've just found 10,000 ways that won't work.").hero(edison).build();
         Quote galileo2 = Quote.builder().content("I do not feel obliged to believe that the same God who has endowed us with sense, reason, and intellect has intended us to forgo their use.").hero(galileo).build();
         Quote galileo3 = Quote.builder().content("You cannot teach a man anything, you can only help him find it within himself.").hero(galileo).build();
-        heroRepository.saveAll(Arrays.asList(edison, stalin, galileo, julius, christ, socrates, plato, aristotle, newton, aristotle1, aristotle2, aristotle3, aristotle4, aristotle5, aristotle6, aristotle7, aristotle8));
+        heroRepository.saveAll(Arrays.asList(edison, stalin, galileo, julius, christ, socrates, plato, aristotle, newton));
 
         quoteRepository.saveAll(Arrays.asList(galileo1, galileo2, galileo3, edison1));
         articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle, platoArticle));
@@ -109,16 +98,6 @@ public class UserInitializer {
         heroRateRepository.rate(admin.getUsername(), galileo.getName(), 7);
         heroRateRepository.rate(user.getUsername(), galileo.getName(), 7);
         heroRateRepository.rate(admin.getUsername(), stalin.getName(), 6);
-
-        heroRateRepository.rate(user.getUsername(), aristotle1.getName(), 1);
-        heroRateRepository.rate(user.getUsername(), aristotle2.getName(), 2);
-        heroRateRepository.rate(user.getUsername(), aristotle3.getName(), 3);
-        heroRateRepository.rate(user.getUsername(), aristotle4.getName(), 4);
-        heroRateRepository.rate(user.getUsername(), aristotle5.getName(), 5);
-        heroRateRepository.rate(user.getUsername(), aristotle6.getName(), 6);
-        heroRateRepository.rate(user.getUsername(), aristotle7.getName(), 7);
-        heroRateRepository.rate(user.getUsername(), aristotle8.getName(), 8);
-
 
         heroRepository.updateScore(stalin.getName());
         heroRepository.updateScore(edison.getName());

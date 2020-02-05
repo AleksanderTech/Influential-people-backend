@@ -84,10 +84,10 @@ public class UserControllerTest {
         when(userService.findAll(any(Pageable.class)))
                 .thenReturn(new PageImpl<>(Lists.emptyList()));
 
-        mockMvc.perform(get("/users"))
+        mockMvc.perform(get("/user"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.text", hasSize(0)));
+                .andExpect(jsonPath("$.content", hasSize(0)));
 
         verify(userService, Mockito.times(1)).findAll(any(Pageable.class));
     }
@@ -99,7 +99,7 @@ public class UserControllerTest {
         when(userService.findUser(eq(user1.getUsername())))
                 .thenReturn(user1);
 
-        mockMvc.perform(get("/users/" + user1.getUsername()))
+        mockMvc.perform(get("/user/" + user1.getUsername()))
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(user1.getUsername()))
@@ -114,7 +114,7 @@ public class UserControllerTest {
         when(userService.findUser(any(String.class)))
                 .thenThrow(UsernameNotFoundException.class);
 
-        mockMvc.perform(get("/users/" + "notExistingUsername"))
+        mockMvc.perform(get("/user/" + "notExistingUsername"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.message").value(ExceptionMessages.NOT_FOUND_USER_MESSAGE));
@@ -126,7 +126,7 @@ public class UserControllerTest {
 
         when(userService.createUser(any(User.class)))
                 .thenReturn(user1);
-        mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8)
+        mockMvc.perform(post("/user").contentType(APPLICATION_JSON_UTF8)
                 .content(TestUtils.stringify(converterA.convertBack(user1))))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
@@ -141,8 +141,8 @@ public class UserControllerTest {
     public void createUser_userAlreadyExists_shouldReturnStatus409() throws Exception {
 
         when(userService.createUser(any(User.class)))
-                .thenThrow(new EntityExistsException(ExceptionMessages.ENTITY_ALREADY_EXIST_MESSAGE));
-        mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8)
+                .thenThrow(new EntityExistsException(ExceptionMessages.USER_ALREADY_EXIST_MESSAGE));
+        mockMvc.perform(post("/user").contentType(APPLICATION_JSON_UTF8)
                 .content(TestUtils.stringify(converterA.convertBack(user1))))
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
@@ -154,7 +154,7 @@ public class UserControllerTest {
     @Test
     public void deleteUser_deletesAnotherUser_shouldReturnStatus204() throws Exception {
 
-        mockMvc.perform(delete("/users/" + user1.getUsername()).contentType(APPLICATION_JSON_UTF8))
+        mockMvc.perform(delete("/user/" + user1.getUsername()).contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
 
         verify(userService, Mockito.times(1)).deleteUser(any(String.class));
@@ -165,7 +165,7 @@ public class UserControllerTest {
 
         doThrow(StateConflictException.class).when(userService).deleteUser(any(String.class));
 
-        mockMvc.perform(delete("/users/" + user1.getUsername()).contentType(APPLICATION_JSON_UTF8))
+        mockMvc.perform(delete("/user/" + user1.getUsername()).contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message").value(ExceptionMessages.STATE_CONFLICT_MESSAGE));
 
