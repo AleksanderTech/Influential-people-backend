@@ -62,6 +62,6 @@ public class AuthService {
             user.setEnabled(true);
         }
         userService.saveUser(user);
-        return properties.getConfig("trusted.origin");
+        return properties.getConfig("gui.origin");
     }
 }
