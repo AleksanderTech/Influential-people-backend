@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfiguration implements WebMvcConfigurer {
 
-    @Value("${angular.origin}")
+    @Value("${gui.origin}")
     private String corsOrigin;
 
     @Override
