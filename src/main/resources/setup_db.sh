@@ -1,7 +1,7 @@
 #!/bin/sh
 
 user="root"
-password=""
+password="\n"
 database="influential_people"
 host="localhost"
 port=3306
