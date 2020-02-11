@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.user.service;
+package com.alek.influentialpeople.init;
 
 import com.alek.influentialpeople.article.comment.entity.ArticleComment;
 import com.alek.influentialpeople.article.comment.persistence.ArticleCommentRepository;
@@ -15,6 +15,7 @@ import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.persistence.UserRepository;
 import com.alek.influentialpeople.user.role.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +23,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 @Service
-public class UserInitializer {
+@Profile(value = {"dev"})
+public class DevInitializer {
 
     @Autowired
-    public UserInitializer(HeroRateRepository heroRateRepository, ArticleCommentRepository articleCommentRepository, QuoteRepository quoteRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public DevInitializer(HeroRateRepository heroRateRepository, ArticleCommentRepository articleCommentRepository, QuoteRepository quoteRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))
