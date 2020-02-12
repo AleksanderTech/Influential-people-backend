@@ -62,6 +62,6 @@ public class AuthService {
             user.setEnabled(true);
         }
         userService.saveUser(user);
-        return properties.getConfig("gui.origin");
+        return properties.getConfig("gui.origin")+"/sign-in";
     }
 }
