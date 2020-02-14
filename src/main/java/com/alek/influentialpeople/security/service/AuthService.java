@@ -1,67 +1,45 @@
 package com.alek.influentialpeople.security.service;
 
-import com.alek.influentialpeople.common.Properties;
-import com.alek.influentialpeople.common.Urls;
-import com.alek.influentialpeople.email.Email;
-import com.alek.influentialpeople.email.EmailSender;
 import com.alek.influentialpeople.exception.ExceptionMessages;
-import com.alek.influentialpeople.user.entity.User;
-import com.alek.influentialpeople.user.service.UserService;
-import com.alek.influentialpeople.user.verification.entity.VerificationToken;
-import com.alek.influentialpeople.user.verification.persistence.VerificationTokenRepository;
+import com.alek.influentialpeople.exception.exceptions.DisabledUserException;
+import com.alek.influentialpeople.exception.exceptions.IncorrectPasswordException;
+import com.alek.influentialpeople.security.jwt.JWTService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
-import java.util.Date;
-import java.util.UUID;
 
 @Service
 public class AuthService {
 
-    private Properties properties;
-    private EmailSender emailSender;
-    private UserService userService;
-    private VerificationTokenRepository tokenRepository;
+    private final AuthenticationManager manager;
+    private final UserDetailsService userDetService;
+    private final PasswordEncoder encoder;
+    private final JWTService jwtService;
 
-    public AuthService(Properties properties, EmailSender emailSender, UserService userService, VerificationTokenRepository tokenRepository) {
-        this.properties = properties;
-        this.emailSender = emailSender;
-        this.userService = userService;
-        this.tokenRepository = tokenRepository;
+    public AuthService(AuthenticationManager manager, UserDetailsService userDetService, PasswordEncoder encoder, JWTService jwtService) {
+        this.manager = manager;
+        this.userDetService = userDetService;
+        this.encoder = encoder;
+        this.jwtService = jwtService;
     }
 
-    public User signUp(User user) {
+    public String authenticate(String username, String password) {
 
-        userService.createUser(user);
-        VerificationToken token = tokenRepository.save(makeToken(user));
-
-        emailSender.sendEmail(new Email(user.getEmail(), properties.getConfig("spring.mail.username"), properties.getConfig("email.verification.subject"), properties.getConfig("email.verification.message") + "\n\n" + makeConfirmationUrl(token.getValue())));
-
-        return user;
+        final UserDetails userDetails = userDetService.loadUserByUsername(username);
+        validate(userDetails.isEnabled(),userDetails.getPassword(),password);
+        manager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        return jwtService.generateToken(userDetails);
     }
 
-    private VerificationToken makeToken(User user) {
-
-        String token = UUID.randomUUID().toString();
-        return VerificationToken.builder().user(user).value(token).expireDate(new Date(new Date().toInstant().toEpochMilli() + VerificationToken.VALIDITY_TIME)).build();
-    }
-
-    private String makeConfirmationUrl(String token) {
-
-        return Urls.ROOT_URL+ "/confirm?token=" + token;
-    }
-
-    public String confirm(String tokenValue) {
-
-        VerificationToken verificationToken = tokenRepository.findByValue(tokenValue);
-        if (verificationToken == null) {
-            throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_VERIFICATION_TOKEN_MESSAGE);
+    private void validate(boolean isEnabled,String userPassword,String providedPassword) {
+        if (!isEnabled) {
+            throw new DisabledUserException(ExceptionMessages.USER_DISABLED_MESSAGE);
         }
-        User user = verificationToken.getUser();
-        if (verificationToken.getExpireDate().after(new Date())) {
-            user.setEnabled(true);
+        if (!encoder.matches(providedPassword, userPassword)) {
+            throw new IncorrectPasswordException(ExceptionMessages.INCORRECT_PASSWORD_MESSAGE);
         }
-        userService.saveUser(user);
-        return properties.getConfig("gui.origin")+"/sign-in";
     }
 }

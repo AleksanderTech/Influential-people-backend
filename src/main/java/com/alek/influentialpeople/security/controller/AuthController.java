@@ -1,39 +1,34 @@
 package com.alek.influentialpeople.security.controller;
 
-import com.alek.influentialpeople.common.ConvertersFactory;
-import com.alek.influentialpeople.common.TwoWayConverter;
-import com.alek.influentialpeople.security.model.UserRegistration;
+import com.alek.influentialpeople.security.SecurityConstants;
+import com.alek.influentialpeople.security.jwt.JWTService;
+import com.alek.influentialpeople.security.model.AuthRequest;
+import com.alek.influentialpeople.security.model.AuthResponse;
 import com.alek.influentialpeople.security.service.AuthService;
-import com.alek.influentialpeople.user.entity.User;
-import com.alek.influentialpeople.user.model.UserResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
-import static com.alek.influentialpeople.common.ConvertersFactory.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthController {
 
     private AuthService authService;
-    private TwoWayConverter<UserRegistration,User>regConverter=getConverter(ConverterType.USER_REGISTRATION_TO_USER);
-    private TwoWayConverter<User,UserResponse>resConverter=getConverter(ConverterType.USER_TO_USER_RESPONSE);
+    private JWTService jwtService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, JWTService jwtService) {
         this.authService = authService;
+        this.jwtService = jwtService;
     }
 
-    @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
-    public ResponseEntity<UserResponse> signUp(@RequestBody UserRegistration userRegistration) {
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest authRequest) {
 
-        User user = regConverter.convert(userRegistration);
-        user=authService.signUp(user);
-        return new ResponseEntity(resConverter.convert(user), HttpStatus.CREATED);
-    }
 
-    @RequestMapping(value = "/confirm", method = RequestMethod.GET)
-    public RedirectView confirm(@RequestParam(required = true, name = "token") String token) {
+        final String jwt = authService.authenticate(authRequest.getUsername(),authRequest.getPassword());
 
-        return new RedirectView(authService.confirm(token));
+        return ResponseEntity.status(HttpStatus.CREATED).header(SecurityConstants.AUTHORIZATION,SecurityConstants.TOKEN_PREFIX+jwt).body(new AuthResponse(jwt));
     }
 }

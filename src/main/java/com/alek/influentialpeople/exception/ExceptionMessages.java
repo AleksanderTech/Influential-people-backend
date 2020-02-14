@@ -18,4 +18,6 @@ public class ExceptionMessages {
     public static final String UNPROCESSABLE_ENTITY_MESSAGE = "Incorrect provided data";
     public static final String FILE_STORAGE_FAIL_MESSAGE = "Failed to store file";
     public static final String STATE_CONFLICT_MESSAGE = "Conflict occurred with the current state of the resource";
+    public static final String USER_DISABLED_MESSAGE = "User is disabled";
+    public static final String INCORRECT_PASSWORD_MESSAGE = "Incorrect password";
 }

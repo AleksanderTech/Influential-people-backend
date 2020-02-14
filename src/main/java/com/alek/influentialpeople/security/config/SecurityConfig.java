@@ -1,10 +1,9 @@
 package com.alek.influentialpeople.security.config;
 
 import com.alek.influentialpeople.security.SecurityConstants;
-import com.alek.influentialpeople.security.jwt.JwtAuthenticationEntryPoint;
-import com.alek.influentialpeople.security.jwt.JwtAuthenticationFilter;
-import com.alek.influentialpeople.security.jwt.JwtAuthorizationFilter;
-import com.alek.influentialpeople.security.jwt.service.TokenService;
+
+import com.alek.influentialpeople.security.jwt.JWTAuthFilter;
+import com.alek.influentialpeople.security.jwt.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,22 +15,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-    @Autowired
-    private TokenService token;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private JWTAuthFilter jwtAuthFilter;
 
     @Bean
     @Override
@@ -50,13 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), token))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userDetailsService, token))
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

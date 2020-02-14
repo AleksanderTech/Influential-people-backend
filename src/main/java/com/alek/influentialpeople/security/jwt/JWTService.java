@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.security.jwt.service;
+package com.alek.influentialpeople.security.jwt;
 
 import com.alek.influentialpeople.security.SecurityConstants;
 import io.jsonwebtoken.Claims;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TokenService {
+public class JWTService {
 
     public static final String AUTHORITIES_CLAIM = "authorities";
 

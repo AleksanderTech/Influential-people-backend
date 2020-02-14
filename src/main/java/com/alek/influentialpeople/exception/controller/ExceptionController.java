@@ -2,10 +2,7 @@ package com.alek.influentialpeople.exception.controller;
 
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.ExceptionResponse;
-import com.alek.influentialpeople.exception.exceptions.EmptyFileException;
-import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
-import com.alek.influentialpeople.exception.exceptions.StateConflictException;
-import com.alek.influentialpeople.exception.exceptions.StorageException;
+import com.alek.influentialpeople.exception.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -53,6 +50,16 @@ public class ExceptionController {
     @ExceptionHandler({EmptyFileException.class})
     public ResponseEntity<ExceptionResponse> emptyFileHandler(EmptyFileException ex) {
         return new ResponseEntity<>(new ExceptionResponse(HttpStatus.BAD_REQUEST.value(), ExceptionMessages.EMPTY_FILE_EXCEPTION), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({DisabledUserException.class})
+    public ResponseEntity<ExceptionResponse> userDisabledHandler(DisabledUserException ex) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.UNAUTHORIZED.value(), ExceptionMessages.USER_DISABLED_MESSAGE), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({IncorrectPasswordException.class})
+    public ResponseEntity<ExceptionResponse> incorrectPasswordHandler(IncorrectPasswordException ex) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.UNAUTHORIZED.value(), ExceptionMessages.INCORRECT_PASSWORD_MESSAGE),HttpStatus.UNAUTHORIZED);
     }
 
 }

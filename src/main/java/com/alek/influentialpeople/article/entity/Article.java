@@ -45,7 +45,7 @@ public class Article {
 
     @PrePersist
     private void onCreate() {
-        createdAt = new Date().toInstant().getEpochSecond();
+        createdAt = new Date().getTime();
     }
 
     public Article(Long id) {

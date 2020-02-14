@@ -1,16 +1,16 @@
-package com.alek.influentialpeople.security.jwt.model;
+package com.alek.influentialpeople.security.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthenticationRequest {
+public class AuthRequest {
 
     private String username;
     private String password;
 
-    public AuthenticationRequest(String username, String password) {
+    public AuthRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
