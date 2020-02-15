@@ -39,6 +39,9 @@ public class UserSearch implements Specification<User> {
         if (username != null) {
             predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("username")), username.toLowerCase() + "%"));
         }
+        if (email != null) {
+            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("email")), email.toLowerCase() + "%"));
+        }
         if (Long.class != query.getResultType()) {
             root.fetch("roles", JoinType.LEFT);
         }
