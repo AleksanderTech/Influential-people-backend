@@ -36,6 +36,12 @@ public class CategoryController {
         return new ResponseEntity<>(categoryConverter.convert(categoryService.addCategory(categoryConverter.convertBack(categoryRest))), HttpStatus.CREATED);
     }
 
+    @RequestMapping(method = RequestMethod.DELETE,value = "/{name}")
+    public ResponseEntity<String> deleteCategory(@PathVariable String name) {
+
+        return new ResponseEntity<>(categoryService.deleteCategory(name), HttpStatus.NO_CONTENT);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{name}")
     public ResponseEntity<CategoryRest> findCategory(@PathVariable String name) {
 

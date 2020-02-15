@@ -11,4 +11,6 @@ public interface CategoryService {
     Category addCategory(Category category);
 
     Category findCategory(String name);
+
+    String deleteCategory(String name);
 }

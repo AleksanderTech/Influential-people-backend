@@ -81,13 +81,6 @@ public class HeroController {
         return ResponseEntity.status(HttpStatus.OK).body(new HeroTile(heroService.findFavourite(name).getName()));
     }
 
-    @RequestMapping(path = "/{name}/category", method = RequestMethod.POST)
-    public ResponseEntity addCategory(@PathVariable(name = "name") String name, @RequestBody CategoryRest category) {
-
-//        heroCategoryService.addCategory(name, category.getName());
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
-
     @RequestMapping(path = "/{name}/image", method = RequestMethod.PUT)
     public ResponseEntity uploadAvatarImage(@PathVariable String name, @RequestPart(value = "image", required = false) MultipartFile image) {
 

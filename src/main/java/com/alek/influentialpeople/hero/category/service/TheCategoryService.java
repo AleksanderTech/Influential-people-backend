@@ -22,13 +22,18 @@ public class TheCategoryService implements CategoryService {
 
     @Override
     public Category addCategory(Category category) {
-
         return categoryRepository.save(category);
     }
 
     @Override
     public Category findCategory(String name) {
         return categoryRepository.findById(name).get();
+    }
+
+    @Override
+    public String deleteCategory(String name) {
+        categoryRepository.deleteById(name);
+        return name;
     }
 
 }
