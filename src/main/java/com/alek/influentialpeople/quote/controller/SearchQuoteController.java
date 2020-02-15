@@ -1,12 +1,12 @@
 package com.alek.influentialpeople.quote.controller;
 
-import com.alek.influentialpeople.common.SearchFilterService;
+import com.alek.influentialpeople.common.SearchService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
 import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.model.QuoteResponse;
-import com.alek.influentialpeople.quote.model.QuoteSearchFilter;
+import com.alek.influentialpeople.quote.model.QuoteSearch;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +23,16 @@ import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
-@RequestMapping("/quote/search-filter")
+@RequestMapping("/quote/search")
 @PreAuthorize("hasAnyRole('USER','ADMIN')")
-public class SearchFilterQuoteController {
+public class SearchQuoteController {
 
     private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter = getConverter(QUOTE_TO_QUOTE_RESPONSE);
-    private SearchFilterService<Quote, QuoteSearchFilter> searchFilterService;
+    private SearchService<Quote, QuoteSearch> searchService;
     private HeroRepository heroRepository;
 
-    public SearchFilterQuoteController(SearchFilterService<Quote, QuoteSearchFilter> searchFilterService, HeroRepository heroRepository) {
-        this.searchFilterService = searchFilterService;
+    public SearchQuoteController(SearchService<Quote, QuoteSearch> searchService, HeroRepository heroRepository) {
+        this.searchService = searchService;
         this.heroRepository = heroRepository;
     }
 
@@ -46,11 +46,11 @@ public class SearchFilterQuoteController {
         if (heroes != null) {
             heroesDb = heroRepository.findByNameIn(heroes);
         }
-        QuoteSearchFilter quoteSearchFilter = QuoteSearchFilter.builder().heroes(heroesDb).pageRequest(pageRequest).content(content).sorting(sorting).build();
+        QuoteSearch quoteSearch = QuoteSearch.builder().heroes(heroesDb).pageRequest(pageRequest).content(content).sorting(sorting).build();
         if (paging) {
-            return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findPaged(quoteSearchFilter).map(quote -> quoteResponseConverter.convert(quote)));
+            return ResponseEntity.status(HttpStatus.OK).body(searchService.findPaged(quoteSearch).map(quote -> quoteResponseConverter.convert(quote)));
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findList(quoteSearchFilter).stream().map(quote -> quoteResponseConverter.convert(quote)).collect(Collectors.toList()));
+            return ResponseEntity.status(HttpStatus.OK).body(searchService.findList(quoteSearch).stream().map(quote -> quoteResponseConverter.convert(quote)).collect(Collectors.toList()));
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.hero.rate.persistence;
 
-import com.alek.influentialpeople.hero.rate.domain.HeroRate;
-import com.alek.influentialpeople.hero.rate.domain.HeroRateId;
+import com.alek.influentialpeople.hero.rate.entity.HeroRate;
+import com.alek.influentialpeople.hero.rate.entity.HeroRateId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,13 +1,12 @@
 package com.alek.influentialpeople.hero.controller;
 
-import com.alek.influentialpeople.common.SearchFilterService;
+import com.alek.influentialpeople.common.SearchService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.model.HeroDetail;
-import com.alek.influentialpeople.hero.model.HeroResponse;
-import com.alek.influentialpeople.hero.model.HeroSearchFilter;
+import com.alek.influentialpeople.hero.model.HeroSearch;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,17 +23,17 @@ import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
-@RequestMapping("/hero/search-filter")
+@RequestMapping("/hero/search")
 @PreAuthorize("hasAnyRole('USER','ADMIN')")
-public class SearchFilterHeroController {
+public class SearchHeroController {
 
 
     private CategoryRepository categoryRepository;
     private TwoWayConverter<Hero, HeroDetail> heroResponseConverter = getConverter(HERO_TO_HERO_DETAIL);
-    private SearchFilterService<Hero, HeroSearchFilter> searchFilterService;
+    private SearchService<Hero, HeroSearch> searchService;
 
-    public SearchFilterHeroController(SearchFilterService<Hero, HeroSearchFilter> searchFilterService, CategoryRepository categoryRepository) {
-        this.searchFilterService = searchFilterService;
+    public SearchHeroController(SearchService<Hero, HeroSearch> searchService, CategoryRepository categoryRepository) {
+        this.searchService = searchService;
         this.categoryRepository = categoryRepository;
     }
 
@@ -49,11 +48,11 @@ public class SearchFilterHeroController {
         if (categories != null) {
             categoriesDb = categoryRepository.findByNameIn(categories);
         }
-        HeroSearchFilter heroSearchFilter = new HeroSearchFilter(name, rate, categoriesDb, sorting, pageRequest);
+        HeroSearch heroSearch = new HeroSearch(name, rate, categoriesDb, sorting, pageRequest);
         if (paging) {
-            return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findPaged(heroSearchFilter).map(hero -> heroResponseConverter.convert(hero)));
+            return ResponseEntity.status(HttpStatus.OK).body(searchService.findPaged(heroSearch).map(hero -> heroResponseConverter.convert(hero)));
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findList(heroSearchFilter).stream().map(hero -> heroResponseConverter.convert(hero)).collect(Collectors.toList()));
+            return ResponseEntity.status(HttpStatus.OK).body(searchService.findList(heroSearch).stream().map(hero -> heroResponseConverter.convert(hero)).collect(Collectors.toList()));
         }
     }
 }

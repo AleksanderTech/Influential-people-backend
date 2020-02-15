@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ArticleSearchFilter implements Specification<Article> {
+public class ArticleSearch implements Specification<Article> {
 
     private String title;
     private Long createdAt;

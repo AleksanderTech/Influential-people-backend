@@ -2,8 +2,8 @@ package com.alek.influentialpeople.article.controller;
 
 import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.model.ArticleResponse;
-import com.alek.influentialpeople.article.model.ArticleSearchFilter;
-import com.alek.influentialpeople.common.SearchFilterService;
+import com.alek.influentialpeople.article.model.ArticleSearch;
+import com.alek.influentialpeople.common.SearchService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
@@ -23,16 +23,16 @@ import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.
 import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
-@RequestMapping("/article/search-filter")
+@RequestMapping("/article/search")
 @PreAuthorize("hasAnyRole('USER','ADMIN')")
-public class SearchFilterArticleController {
+public class SearchArticleController {
 
     private TwoWayConverter<Article, ArticleResponse> articleResponseConverter = getConverter(ARTICLE_TO_ARTICLE_RESPONSE);
-    private SearchFilterService<Article, ArticleSearchFilter> searchFilterService;
+    private SearchService<Article, ArticleSearch> searchService;
     private HeroRepository heroRepository;
 
-    public SearchFilterArticleController(SearchFilterService<Article, ArticleSearchFilter> searchFilterService, HeroRepository heroRepository) {
-        this.searchFilterService = searchFilterService;
+    public SearchArticleController(SearchService<Article, ArticleSearch> searchService, HeroRepository heroRepository) {
+        this.searchService = searchService;
         this.heroRepository = heroRepository;
     }
 
@@ -47,11 +47,11 @@ public class SearchFilterArticleController {
         if (heroes != null) {
             heroesDb = heroRepository.findByNameIn(heroes);
         }
-        ArticleSearchFilter articleSearchFilter = ArticleSearchFilter.builder().heroes(heroesDb).pageRequest(pageRequest).title(title).sorting(sorting).build();
+        ArticleSearch articleSearch = ArticleSearch.builder().heroes(heroesDb).pageRequest(pageRequest).title(title).sorting(sorting).build();
         if (paging) {
-            return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findPaged(articleSearchFilter).map(article -> articleResponseConverter.convert(article)));
+            return ResponseEntity.status(HttpStatus.OK).body(searchService.findPaged(articleSearch).map(article -> articleResponseConverter.convert(article)));
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body(searchFilterService.findList(articleSearchFilter).stream().map(article -> articleResponseConverter.convert(article)).collect(Collectors.toList()));
+            return ResponseEntity.status(HttpStatus.OK).body(searchService.findList(articleSearch).stream().map(article -> articleResponseConverter.convert(article)).collect(Collectors.toList()));
         }
     }
 }

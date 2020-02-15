@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.hero.rate.domain;
+package com.alek.influentialpeople.hero.rate.entity;
 
 import lombok.AllArgsConstructor;
 

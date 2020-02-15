@@ -2,8 +2,8 @@ package com.alek.influentialpeople.hero.rate.controller;
 
 import com.alek.influentialpeople.hero.model.Rate;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
-import com.alek.influentialpeople.hero.rate.domain.HeroRate;
-import com.alek.influentialpeople.hero.rate.domain.HeroRateId;
+import com.alek.influentialpeople.hero.rate.entity.HeroRate;
+import com.alek.influentialpeople.hero.rate.entity.HeroRateId;
 import com.alek.influentialpeople.hero.rate.persistence.HeroRateRepository;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.service.UserDataHolder;

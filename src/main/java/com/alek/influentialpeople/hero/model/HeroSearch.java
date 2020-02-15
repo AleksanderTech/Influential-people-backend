@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class HeroSearchFilter implements Specification<Hero> {
+public class HeroSearch implements Specification<Hero> {
 
     private String name;
     private Integer rate;
