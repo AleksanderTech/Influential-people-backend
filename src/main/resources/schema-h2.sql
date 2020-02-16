@@ -41,7 +41,8 @@ DROP TABLE IF EXISTS category;
 
 CREATE TABLE category (
   name varchar(255),
-  description varchar(255),
+  description varchar(1000),
+  image_path varchar(255),
   PRIMARY KEY (name)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 

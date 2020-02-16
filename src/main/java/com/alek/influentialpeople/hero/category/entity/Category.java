@@ -1,5 +1,6 @@
 package com.alek.influentialpeople.hero.category.entity;
 
+import com.alek.influentialpeople.common.Urls;
 import com.alek.influentialpeople.hero.entity.Hero;
 import lombok.*;
 
@@ -19,9 +20,14 @@ public class Category {
     private String description;
     @ManyToMany(mappedBy = "heroCategories")
     private Set<Hero> hero = new HashSet<>();
+    private String imagePath;
 
     public Category(String name, String description) {
         this.name = name;
         this.description = description;
     }
+
+    public String buildUrl() {
+         return Urls.ROOT_URL + Urls.CATEGORY + "/" + this.name + Urls.IMAGE;
+     }
 }

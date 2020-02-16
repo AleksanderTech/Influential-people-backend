@@ -4,7 +4,7 @@ import com.alek.influentialpeople.hero.category.entity.Category;
 
 import java.util.Collection;
 
-public interface CategoryService {
+public interface CategoryCrudService {
 
     Collection<Category> findCategories();
 

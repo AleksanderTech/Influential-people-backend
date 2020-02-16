@@ -9,9 +9,9 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryRest {
+public class CategoryResponse {
 
      private String name;
      private String description;
-
+     private String imageUrl;
 }

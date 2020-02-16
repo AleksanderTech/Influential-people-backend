@@ -142,13 +142,13 @@ public class TheUserService implements UserService {
         }
         String path = userRepository.findAvatarPath(name);
         if (path == null || !new File(path).exists()) {
-            path = imageService.createAvatarPath(ImageService.StorageOf.USER, name);
+            path = imageService.createPath(ImageService.StorageOf.USER, name);
             userRepository.updateImagePath(imageService.appendImageName(name, path), name);
             imageService.storeImage(ImageService.StorageOf.USER, name, image);
         } else {
-            imageService.storeImage(path, name, image);
+            imageService.storeImage(path, image);
         }
-        return imageService.createAvatarUrl(ImageService.StorageOf.USER, name);
+        return imageService.createUrl(ImageService.StorageOf.USER, name);
     }
 
     private User checkIfExist(String username) {

@@ -3,7 +3,7 @@ package com.alek.influentialpeople.hero.controller;
 import com.alek.influentialpeople.common.SearchService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.category.entity.Category;
-import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
+import com.alek.influentialpeople.hero.category.persistence.CategoryCrudRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.model.HeroDetail;
 import com.alek.influentialpeople.hero.model.HeroSearch;
@@ -28,13 +28,13 @@ import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 public class SearchHeroController {
 
 
-    private CategoryRepository categoryRepository;
+    private CategoryCrudRepository categoryCrudRepository;
     private TwoWayConverter<Hero, HeroDetail> heroResponseConverter = getConverter(HERO_TO_HERO_DETAIL);
     private SearchService<Hero, HeroSearch> searchService;
 
-    public SearchHeroController(SearchService<Hero, HeroSearch> searchService, CategoryRepository categoryRepository) {
+    public SearchHeroController(SearchService<Hero, HeroSearch> searchService, CategoryCrudRepository categoryCrudRepository) {
         this.searchService = searchService;
-        this.categoryRepository = categoryRepository;
+        this.categoryCrudRepository = categoryCrudRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -46,7 +46,7 @@ public class SearchHeroController {
                                                        Pageable pageRequest) {
         List<Category> categoriesDb = null;
         if (categories != null) {
-            categoriesDb = categoryRepository.findByNameIn(categories);
+            categoriesDb = categoryCrudRepository.findByNameIn(categories);
         }
         HeroSearch heroSearch = new HeroSearch(name, rate, categoriesDb, sorting, pageRequest);
         if (paging) {

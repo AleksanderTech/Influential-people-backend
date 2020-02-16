@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category,String> {
-
+public interface CategoryCrudRepository extends JpaRepository<Category,String> {
 
     List<Category> findByNameIn(List<String> categories);
 }

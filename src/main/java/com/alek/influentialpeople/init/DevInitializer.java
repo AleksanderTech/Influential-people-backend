@@ -5,7 +5,7 @@ import com.alek.influentialpeople.article.comment.persistence.ArticleCommentRepo
 import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.repository.ArticleRepository;
 import com.alek.influentialpeople.hero.category.entity.Category;
-import com.alek.influentialpeople.hero.category.persistence.CategoryRepository;
+import com.alek.influentialpeople.hero.category.persistence.CategoryCrudRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroRepository;
 import com.alek.influentialpeople.hero.rate.persistence.HeroRateRepository;
@@ -27,7 +27,7 @@ import java.util.HashSet;
 public class DevInitializer {
 
     @Autowired
-    public DevInitializer(HeroRateRepository heroRateRepository, ArticleCommentRepository articleCommentRepository, QuoteRepository quoteRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public DevInitializer(HeroRateRepository heroRateRepository, ArticleCommentRepository articleCommentRepository, QuoteRepository quoteRepository, CategoryCrudRepository categoryCrudRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))
@@ -56,7 +56,7 @@ public class DevInitializer {
         Category artistsWriters = new Category("artists & writers", "Every child is an artist. The problem is how to remain an artist once he grows up.");
         Category philosophers = new Category("philosophers", "If you only read the books that everyone else is reading, you can only think what everyone else is thinking.author-Haruki Murakami");
 
-        categoryRepository.saveAll(Arrays.asList(scientists, philosophers, leaders, religiousFounders, activists, artistsWriters, explorers));
+        categoryCrudRepository.saveAll(Arrays.asList(scientists, philosophers, leaders, religiousFounders, activists, artistsWriters, explorers));
 
         Hero edison = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Thomas Alva Edison").avatarImagePath("storage/images/heroes/Thomas_Alva_Edison/avatar/Thomas_Alva_Edison.jpg").build();
         Hero julius = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(leaders))).name("Gaius Julius Caesar").build();

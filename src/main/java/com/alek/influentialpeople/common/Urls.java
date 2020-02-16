@@ -6,5 +6,6 @@ public class Urls {
     public static final String HERO = "/hero";
     public static final String USER = "/user";
     public static final String IMAGE = "/image";
+    public static final String CATEGORY = "/category";
 
 }

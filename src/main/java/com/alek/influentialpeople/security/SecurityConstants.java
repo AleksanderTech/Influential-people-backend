@@ -18,5 +18,6 @@ public class SecurityConstants {
             "/h2-console/**",
             "/hero/{\\d+}/image",
             "/user/{\\d+}/image",
+            "/category/{\\d+}/image",
     };
 }
