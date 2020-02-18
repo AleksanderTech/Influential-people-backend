@@ -5,6 +5,7 @@ import com.alek.influentialpeople.article.comment.service.ArtCommentResponseConv
 import com.alek.influentialpeople.article.service.ArticleHeaderConverter;
 import com.alek.influentialpeople.article.service.ArticleRequestConverter;
 import com.alek.influentialpeople.article.service.ArticleResponseConverter;
+import com.alek.influentialpeople.hero.category.service.CategoryChangesConverter;
 import com.alek.influentialpeople.hero.category.service.CategoryResponseConverter;
 import com.alek.influentialpeople.hero.service.HeroDetailConverter;
 import com.alek.influentialpeople.hero.service.HeroRequestConverter;
@@ -67,6 +68,9 @@ public class ConvertersFactory {
             case CATEGORY_TO_CATEGORY_RESPONSE:
                 converter = new <E, M>CategoryResponseConverter();
                 break;
+            case CATEGORY_CHANGES_TO_CATEGORY:
+                converter = new <E, M>CategoryChangesConverter();
+                break;
         }
         return converter;
     }
@@ -85,6 +89,7 @@ public class ConvertersFactory {
         ARTICLE_TO_ARTICLE_RESPONSE,
         ART_COMMENT_REQUEST_TO_ART_COMMENT,
         ART_COMMENT_TO_ART_COMMENT_RESPONSE,
-        CATEGORY_TO_CATEGORY_RESPONSE
+        CATEGORY_TO_CATEGORY_RESPONSE,
+        CATEGORY_CHANGES_TO_CATEGORY
     }
 }

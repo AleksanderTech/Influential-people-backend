@@ -13,4 +13,6 @@ public interface CategoryCrudService {
     Category findCategory(String name);
 
     String deleteCategory(String name);
+
+    Category updateCategory(String name,Category changes);
 }
