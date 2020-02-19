@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 @Service
-public class ImageService {
+public class ImageManager {
 
     private Properties properties;
     private static final String IMAGE_FORMAT = "jpg";
@@ -26,7 +26,7 @@ public class ImageService {
         CATEGORY
     }
 
-    public ImageService(Properties properties) {
+    public ImageManager(Properties properties) {
         this.properties = properties;
     }
 
@@ -73,7 +73,7 @@ public class ImageService {
         }
     }
 
-    public String createFileName(String name) {
+    private String createFileName(String name) {
         return name.replace(" ", "_") + "." + IMAGE_FORMAT;
     }
 

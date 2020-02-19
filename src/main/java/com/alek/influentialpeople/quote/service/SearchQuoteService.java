@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.quote.service;
 
-import com.alek.influentialpeople.common.SearchService;
+import com.alek.influentialpeople.common.abstraction.SearchService;
 import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.model.QuoteSearch;
 import com.alek.influentialpeople.quote.persistence.QuoteRepository;

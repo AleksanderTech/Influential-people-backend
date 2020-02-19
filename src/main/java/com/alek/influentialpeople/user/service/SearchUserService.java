@@ -1,9 +1,6 @@
 package com.alek.influentialpeople.user.service;
 
-import com.alek.influentialpeople.common.SearchService;
-import com.alek.influentialpeople.hero.entity.Hero;
-import com.alek.influentialpeople.hero.model.HeroSearch;
-import com.alek.influentialpeople.hero.persistence.HeroRepository;
+import com.alek.influentialpeople.common.abstraction.SearchService;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserSearch;
 import com.alek.influentialpeople.user.persistence.UserRepository;

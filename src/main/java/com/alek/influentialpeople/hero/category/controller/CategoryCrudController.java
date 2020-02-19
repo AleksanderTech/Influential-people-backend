@@ -2,11 +2,12 @@ package com.alek.influentialpeople.hero.category.controller;
 
 import com.alek.influentialpeople.common.ConvertersFactory;
 import com.alek.influentialpeople.common.TwoWayConverter;
+import com.alek.influentialpeople.common.abstraction.CrudService;
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.model.CategoryChanges;
 import com.alek.influentialpeople.hero.category.model.CategoryRequest;
 import com.alek.influentialpeople.hero.category.model.CategoryResponse;
-import com.alek.influentialpeople.hero.category.service.CategoryCrudService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,36 +21,38 @@ import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.
 @RequestMapping("/category")
 public class CategoryCrudController {
 
-    private CategoryCrudService categoryCrudService;
-    private TwoWayConverter<Category, CategoryResponse> categoryConverter = ConvertersFactory.getConverter(CATEGORY_TO_CATEGORY_RESPONSE);
-    private TwoWayConverter<CategoryChanges,Category> changesConverter = ConvertersFactory.getConverter(CATEGORY_CHANGES_TO_CATEGORY);
+    private final CrudService<Category, String> categoryCrudService;
 
-    public CategoryCrudController(CategoryCrudService categoryCrudService) {
+    private TwoWayConverter<Category, CategoryResponse> categoryConverter = ConvertersFactory.getConverter(CATEGORY_TO_CATEGORY_RESPONSE);
+    private TwoWayConverter<CategoryChanges, Category> changesConverter = ConvertersFactory.getConverter(CATEGORY_CHANGES_TO_CATEGORY);
+
+    public CategoryCrudController(@Qualifier("categoryCrudService") CrudService<Category, String> categoryCrudService) {
         this.categoryCrudService = categoryCrudService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<CategoryResponse>> findCategories() {
-        return new ResponseEntity<>(categoryConverter.convertMany(categoryCrudService.findCategories()), HttpStatus.OK);
+    public ResponseEntity<List<CategoryResponse>> findAll() {
+        return new ResponseEntity<>(categoryConverter.convertMany(categoryCrudService.findAll(null).getContent()), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<CategoryResponse> createCategory(@RequestBody CategoryRequest categoryRequest) {
-        return new ResponseEntity<>(categoryConverter.convert(categoryCrudService.addCategory(new Category(categoryRequest.getName(), categoryRequest.getDescription()))), HttpStatus.CREATED);
+    public ResponseEntity<CategoryResponse> create(@RequestBody CategoryRequest categoryRequest) {
+        return new ResponseEntity<>(categoryConverter.convert(categoryCrudService.create(new Category(categoryRequest.getName(), categoryRequest.getDescription()))), HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/{name}")
-    public ResponseEntity<CategoryResponse> updateCategory(@RequestBody CategoryChanges changes, @PathVariable String name) {
-        return new ResponseEntity<>(categoryConverter.convert(categoryCrudService.updateCategory(name,changesConverter.convert(changes))), HttpStatus.CREATED);
+    public ResponseEntity<CategoryResponse> update(@RequestBody CategoryChanges changes, @PathVariable String name) {
+        return new ResponseEntity<>(categoryConverter.convert(categoryCrudService.update(name, changesConverter.convert(changes))), HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{name}")
-    public ResponseEntity<String> deleteCategory(@PathVariable String name) {
-        return new ResponseEntity<>(categoryCrudService.deleteCategory(name), HttpStatus.NO_CONTENT);
+    public ResponseEntity delete(@PathVariable String name) {
+        categoryCrudService.delete(name);
+        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{name}")
-    public ResponseEntity<CategoryResponse> findCategory(@PathVariable String name) {
-        return new ResponseEntity<>(categoryConverter.convert(categoryCrudService.findCategory(name)), HttpStatus.OK);
+    public ResponseEntity<CategoryResponse> findOne(@PathVariable String name) {
+        return new ResponseEntity<>(categoryConverter.convert(categoryCrudService.findOne(name)), HttpStatus.OK);
     }
 }

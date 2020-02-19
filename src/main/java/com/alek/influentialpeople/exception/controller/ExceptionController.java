@@ -3,6 +3,7 @@ package com.alek.influentialpeople.exception.controller;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.ExceptionResponse;
 import com.alek.influentialpeople.exception.exceptions.*;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -59,7 +60,11 @@ public class ExceptionController {
 
     @ExceptionHandler({IncorrectPasswordException.class})
     public ResponseEntity<ExceptionResponse> incorrectPasswordHandler(IncorrectPasswordException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.UNAUTHORIZED.value(), ExceptionMessages.INCORRECT_PASSWORD_MESSAGE),HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.UNAUTHORIZED.value(), ExceptionMessages.INCORRECT_PASSWORD_MESSAGE), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    public ResponseEntity<ExceptionResponse> dataIntegrityViolationHandler(DataIntegrityViolationException ex) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.METHOD_NOT_ALLOWED.value(), ExceptionMessages.DATA_INTEGRITY_VIOLATION_MESSAGE), HttpStatus.METHOD_NOT_ALLOWED);
+    }
 }

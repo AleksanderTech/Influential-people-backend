@@ -3,10 +3,10 @@ package com.alek.influentialpeople.article.controller;
 import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.model.ArticleResponse;
 import com.alek.influentialpeople.article.model.ArticleSearch;
-import com.alek.influentialpeople.common.SearchService;
+import com.alek.influentialpeople.common.abstraction.SearchService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.entity.Hero;
-import com.alek.influentialpeople.hero.persistence.HeroRepository;
+import com.alek.influentialpeople.hero.persistence.HeroCrudRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +29,9 @@ public class SearchArticleController {
 
     private TwoWayConverter<Article, ArticleResponse> articleResponseConverter = getConverter(ARTICLE_TO_ARTICLE_RESPONSE);
     private SearchService<Article, ArticleSearch> searchService;
-    private HeroRepository heroRepository;
+    private HeroCrudRepository heroRepository;
 
-    public SearchArticleController(SearchService<Article, ArticleSearch> searchService, HeroRepository heroRepository) {
+    public SearchArticleController(SearchService<Article, ArticleSearch> searchService, HeroCrudRepository heroRepository) {
         this.searchService = searchService;
         this.heroRepository = heroRepository;
     }

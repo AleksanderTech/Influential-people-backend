@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.hero.controller;
 
-import com.alek.influentialpeople.common.SearchService;
+import com.alek.influentialpeople.common.abstraction.SearchService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.persistence.CategoryCrudRepository;
@@ -27,18 +27,18 @@ import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 @PreAuthorize("hasAnyRole('USER','ADMIN')")
 public class SearchHeroController {
 
+    private final SearchService<Hero, HeroSearch> searchService;
+    private final CategoryCrudRepository categoryRepository;
 
-    private CategoryCrudRepository categoryCrudRepository;
     private TwoWayConverter<Hero, HeroDetail> heroResponseConverter = getConverter(HERO_TO_HERO_DETAIL);
-    private SearchService<Hero, HeroSearch> searchService;
 
-    public SearchHeroController(SearchService<Hero, HeroSearch> searchService, CategoryCrudRepository categoryCrudRepository) {
+    public SearchHeroController(SearchService<Hero, HeroSearch> searchService, CategoryCrudRepository categoryRepository) {
         this.searchService = searchService;
-        this.categoryCrudRepository = categoryCrudRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Iterable<HeroDetail>> getAll(@RequestParam(value = "paging", defaultValue = "true") Boolean paging,
+    public ResponseEntity<Iterable<HeroDetail>> find(@RequestParam(value = "paging", defaultValue = "true") Boolean paging,
                                                        @RequestParam(value = "name", required = false) String name,
                                                        @RequestParam(value = "rate", required = false) Integer rate,
                                                        @RequestParam(value = "category", required = false) List<String> categories,
@@ -46,7 +46,7 @@ public class SearchHeroController {
                                                        Pageable pageRequest) {
         List<Category> categoriesDb = null;
         if (categories != null) {
-            categoriesDb = categoryCrudRepository.findByNameIn(categories);
+            categoriesDb = categoryRepository.findByNameIn(categories);
         }
         HeroSearch heroSearch = new HeroSearch(name, rate, categoriesDb, sorting, pageRequest);
         if (paging) {

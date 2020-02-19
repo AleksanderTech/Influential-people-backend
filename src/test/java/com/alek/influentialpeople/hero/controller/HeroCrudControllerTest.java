@@ -1,10 +1,10 @@
 package com.alek.influentialpeople.hero.controller;
 
 import com.alek.influentialpeople.article.service.ArticleService;
+import com.alek.influentialpeople.common.abstraction.CrudService;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.entity.Hero;
-import com.alek.influentialpeople.hero.service.HeroService;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,16 +25,16 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 @RunWith(MockitoJUnitRunner.class)
-public class HeroControllerTest {
+public class HeroCrudControllerTest {
 
     @Mock
-    private HeroService heroService;
+    private CrudService<Hero,String> heroService;
 
     @Mock
     private ArticleService articleService;
 
     @InjectMocks
-    private HeroController heroController;
+    private HeroCrudController heroCrudController;
 
     private MockMvc mockMvc;
     private Hero hero1;
@@ -49,13 +49,13 @@ public class HeroControllerTest {
         tyrant = new Category("tyrant","");
         this.hero1 = Hero.builder().name("hero1").rate(1).avatarImagePath("/hero1/path").heroCategories(new HashSet<>(Arrays.asList(tyrant, philosopher))).build();
         this.hero2 = Hero.builder().name("hero2").rate(2).avatarImagePath("/hero2/path").heroCategories(new HashSet<>(Arrays.asList(tyrant, philosopher))).build();
-        mockMvc = MockMvcBuilders.standaloneSetup(heroController).setControllerAdvice(new ExceptionController()).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(heroCrudController).setControllerAdvice(new ExceptionController()).setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).build();
     }
 
     @Test
     public void findAllHeroes_heroesFound_shouldReturnHeroes() throws Exception {
 
-        Mockito.when(heroService.findHeroes(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.newArrayList(hero1, hero2)));
+        Mockito.when(heroService.findAll(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.newArrayList(hero1, hero2)));
         mockMvc.perform(MockMvcRequestBuilders.get("/hero")).andExpect(MockMvcResultMatchers.status().isOk());
     }
 

@@ -1,9 +1,9 @@
 package com.alek.influentialpeople.quote.controller;
 
-import com.alek.influentialpeople.common.SearchService;
+import com.alek.influentialpeople.common.abstraction.SearchService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.entity.Hero;
-import com.alek.influentialpeople.hero.persistence.HeroRepository;
+import com.alek.influentialpeople.hero.persistence.HeroCrudRepository;
 import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.model.QuoteResponse;
 import com.alek.influentialpeople.quote.model.QuoteSearch;
@@ -29,9 +29,9 @@ public class SearchQuoteController {
 
     private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter = getConverter(QUOTE_TO_QUOTE_RESPONSE);
     private SearchService<Quote, QuoteSearch> searchService;
-    private HeroRepository heroRepository;
+    private HeroCrudRepository heroRepository;
 
-    public SearchQuoteController(SearchService<Quote, QuoteSearch> searchService, HeroRepository heroRepository) {
+    public SearchQuoteController(SearchService<Quote, QuoteSearch> searchService, HeroCrudRepository heroRepository) {
         this.searchService = searchService;
         this.heroRepository = heroRepository;
     }

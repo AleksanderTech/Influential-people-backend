@@ -7,7 +7,9 @@ import com.alek.influentialpeople.article.repository.ArticleRepository;
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.persistence.CategoryCrudRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
-import com.alek.influentialpeople.hero.persistence.HeroRepository;
+import com.alek.influentialpeople.hero.persistence.HeroCrudRepository;
+import com.alek.influentialpeople.hero.persistence.HeroFavouriteRepository;
+import com.alek.influentialpeople.hero.persistence.HeroSearchRepository;
 import com.alek.influentialpeople.hero.rate.persistence.HeroRateRepository;
 import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.persistence.QuoteRepository;
@@ -27,7 +29,7 @@ import java.util.HashSet;
 public class DevInitializer {
 
     @Autowired
-    public DevInitializer(HeroRateRepository heroRateRepository, ArticleCommentRepository articleCommentRepository, QuoteRepository quoteRepository, CategoryCrudRepository categoryCrudRepository, ArticleRepository articleRepository, HeroRepository heroRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public DevInitializer(HeroRateRepository heroRateRepository, HeroCrudRepository heroCrudRepository, ArticleCommentRepository articleCommentRepository, QuoteRepository quoteRepository, CategoryCrudRepository categoryCrudRepository, ArticleRepository articleRepository, HeroFavouriteRepository heroFavouriteRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))
@@ -78,7 +80,7 @@ public class DevInitializer {
         Quote edison1 = Quote.builder().content("I have not failed. I've just found 10,000 ways that won't work.").hero(edison).build();
         Quote galileo2 = Quote.builder().content("I do not feel obliged to believe that the same God who has endowed us with sense, reason, and intellect has intended us to forgo their use.").hero(galileo).build();
         Quote galileo3 = Quote.builder().content("You cannot teach a man anything, you can only help him find it within himself.").hero(galileo).build();
-        heroRepository.saveAll(Arrays.asList(edison, stalin, galileo, julius, christ, socrates, plato, aristotle, newton));
+        heroCrudRepository.saveAll(Arrays.asList(edison, stalin, galileo, julius, christ, socrates, plato, aristotle, newton));
 
         quoteRepository.saveAll(Arrays.asList(galileo1, galileo2, galileo3, edison1));
         articleRepository.saveAll(Arrays.asList(edisonArticle, edisonArticle2, stalinArticle, platoArticle));
@@ -101,12 +103,12 @@ public class DevInitializer {
         heroRateRepository.rate(user.getUsername(), galileo.getName(), 7);
         heroRateRepository.rate(admin.getUsername(), stalin.getName(), 6);
 
-        heroRepository.updateScore(stalin.getName());
-        heroRepository.updateScore(edison.getName());
-        heroRepository.updateScore(galileo.getName());
-        heroRepository.addToFavourites(aristotle.getName(),admin.getUsername());
-        heroRepository.addToFavourites(galileo.getName(),admin.getUsername());
-        heroRepository.addToFavourites(plato.getName(),admin.getUsername());
+        heroCrudRepository.updateScore(stalin.getName());
+        heroCrudRepository.updateScore(edison.getName());
+        heroCrudRepository.updateScore(galileo.getName());
+        heroFavouriteRepository.add(aristotle.getName(),admin.getUsername());
+        heroFavouriteRepository.add(galileo.getName(),admin.getUsername());
+        heroFavouriteRepository.add(plato.getName(),admin.getUsername());
         articleRepository.addToFavourites(1,admin.getUsername());
         articleRepository.addToFavourites(2,admin.getUsername());
         articleRepository.addToFavourites(3,admin.getUsername());

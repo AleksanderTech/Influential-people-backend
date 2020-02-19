@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.hero.rate.controller;
 
 import com.alek.influentialpeople.hero.model.Rate;
-import com.alek.influentialpeople.hero.persistence.HeroRepository;
+import com.alek.influentialpeople.hero.persistence.HeroCrudRepository;
 import com.alek.influentialpeople.hero.rate.entity.HeroRate;
 import com.alek.influentialpeople.hero.rate.entity.HeroRateId;
 import com.alek.influentialpeople.hero.rate.persistence.HeroRateRepository;
@@ -18,20 +18,18 @@ import java.util.Optional;
 public class HeroRateController {
 
     private final HeroRateRepository heroRateRepository;
-    private final HeroRepository heroRepository;
+    private final HeroCrudRepository heroRepository;
     private final UserDataHolder<User> userHolder;
 
-    public HeroRateController(final UserDataHolder<User> userHolder, final HeroRateRepository heroRateRepository, final HeroRepository heroRepository) {
-        this.userHolder = userHolder;
+    public HeroRateController(HeroRateRepository heroRateRepository, HeroCrudRepository heroRepository, UserDataHolder<User> userHolder) {
         this.heroRateRepository = heroRateRepository;
         this.heroRepository = heroRepository;
+        this.userHolder = userHolder;
     }
 
     @RequestMapping(path = "/{heroName}/rate", method = RequestMethod.PUT)
     public ResponseEntity rate(@RequestBody Rate rate, @PathVariable(name = "heroName") String heroName) {
-
         String username = userHolder.getUsername();
-        System.out.println(username);
         Optional<HeroRate> heroRate = heroRateRepository.findById(new HeroRateId(username, heroName));
         if (heroRate.isPresent()) {
             heroRateRepository.updateRate(rate.getRate(), heroName, username);
@@ -44,7 +42,6 @@ public class HeroRateController {
 
     @RequestMapping(path = "/{heroName}/rate/user", method = RequestMethod.GET)
     public ResponseEntity<Rate> getUserRate(@PathVariable(name = "heroName") String heroName) {
-
         String username = userHolder.getUsername();
         Optional<HeroRate> heroRate = heroRateRepository.findById(new HeroRateId(username, heroName));
         Rate rate = heroRate.map(e -> new Rate(e.getRate())).orElse(new Rate(0));

@@ -1,4 +1,4 @@
-package com.alek.influentialpeople.common;
+package com.alek.influentialpeople.common.abstraction;
 
 import org.springframework.data.domain.Page;
 

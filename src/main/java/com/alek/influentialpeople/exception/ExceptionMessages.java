@@ -15,10 +15,12 @@ public class ExceptionMessages {
     public static final String ENTITY_ALREADY_EXIST_MESSAGE = "Entity already exists";
     public static final String EMPTY_FILE_EXCEPTION = "File is empty !";
     public static final String USER_ALREADY_EXIST_MESSAGE = "User with this username already exists";
+    public static final String CATEGORY_EXISTS_MESSAGE = "The Category with given name already exists";
     public static final String INCORRECT_DATA_MESSAGE = "Incorrect values of provided data";
     public static final String UNPROCESSABLE_ENTITY_MESSAGE = "Incorrect provided data";
     public static final String FILE_STORAGE_FAIL_MESSAGE = "Failed to store file";
     public static final String STATE_CONFLICT_MESSAGE = "Conflict occurred with the current state of the resource";
     public static final String USER_DISABLED_MESSAGE = "User is disabled";
     public static final String INCORRECT_PASSWORD_MESSAGE = "Incorrect password";
+    public static final String DATA_INTEGRITY_VIOLATION_MESSAGE = "Performed method on this resource is not allowed";
 }

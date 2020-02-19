@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.user.service;
 
-import com.alek.influentialpeople.common.ImageService;
+import com.alek.influentialpeople.common.ImageManager;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.exceptions.StateConflictException;
 import com.alek.influentialpeople.user.entity.User;
@@ -25,15 +25,15 @@ public class TheUserService implements UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private CurrentUserHolder userHolder;
-    private ImageService imageService;
+    private ImageManager imageManager;
 
     private static final int FIXED_GENERATED_PASSWORD_LENGTH = 10;
 
-    public TheUserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CurrentUserHolder userHolder, ImageService imageService) {
+    public TheUserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CurrentUserHolder userHolder, ImageManager imageManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userHolder = userHolder;
-        this.imageService = imageService;
+        this.imageManager = imageManager;
     }
 
     @Override
@@ -127,7 +127,7 @@ public class TheUserService implements UserService {
             throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_IMAGE_MESSAGE);
         }
         File directory = new File(path);
-        byte[] image = imageService.getImage(path);
+        byte[] image = imageManager.getImage(path);
         return image;
     }
 
@@ -142,13 +142,13 @@ public class TheUserService implements UserService {
         }
         String path = userRepository.findAvatarPath(name);
         if (path == null || !new File(path).exists()) {
-            path = imageService.createPath(ImageService.StorageOf.USER, name);
-            userRepository.updateImagePath(imageService.appendImageName(name, path), name);
-            imageService.storeImage(ImageService.StorageOf.USER, name, image);
+            path = imageManager.createPath(ImageManager.StorageOf.USER, name);
+            userRepository.updateImagePath(imageManager.appendImageName(name, path), name);
+            imageManager.storeImage(ImageManager.StorageOf.USER, name, image);
         } else {
-            imageService.storeImage(path, image);
+            imageManager.storeImage(path, image);
         }
-        return imageService.createUrl(ImageService.StorageOf.USER, name);
+        return imageManager.createUrl(ImageManager.StorageOf.USER, name);
     }
 
     private User checkIfExist(String username) {

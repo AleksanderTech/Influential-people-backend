@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.user.controller;
 
-import com.alek.influentialpeople.common.SearchService;
+import com.alek.influentialpeople.common.abstraction.SearchService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserResponse;
