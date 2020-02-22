@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthService {
+public class AuthService implements AuthManager{
 
     private final AuthenticationManager manager;
     private final UserDetailsService userDetService;
@@ -26,8 +26,8 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
+    @Override
     public String authenticate(String username, String password) {
-
         final UserDetails userDetails = userDetService.loadUserByUsername(username);
         validate(userDetails.isEnabled(),userDetails.getPassword(),password);
         manager.authenticate(new UsernamePasswordAuthenticationToken(username, password));

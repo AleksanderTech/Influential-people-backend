@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.user.service;
 
 import com.alek.influentialpeople.user.entity.User;
-import com.alek.influentialpeople.user.persistence.UserRepository;
+import com.alek.influentialpeople.user.persistence.UserCrudRepository;
 import com.alek.influentialpeople.user.role.entity.Role;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -9,15 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CurrentUserHolder implements UserDataHolder<User> {
 
-    private UserRepository userRepository;
+    private UserCrudRepository userRepository;
 
-    public CurrentUserHolder(UserRepository userRepository) {
+    public CurrentUserHolder(UserCrudRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public User getUser() {
-
         return userRepository.findById(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()).get();
     }
 

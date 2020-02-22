@@ -7,5 +7,4 @@ public interface UserDataHolder<T> {
     String getUsername();
 
     boolean isUserAdmin(T user);
-
 }

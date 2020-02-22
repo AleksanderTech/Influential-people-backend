@@ -2,7 +2,7 @@ package com.alek.influentialpeople.security.controller;
 
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.security.model.UserRegistration;
-import com.alek.influentialpeople.security.service.RegisterService;
+import com.alek.influentialpeople.security.service.RegisterManager;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserResponse;
 import org.springframework.http.HttpStatus;
@@ -16,11 +16,11 @@ import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 @RestController
 public class RegisterController {
 
-    private RegisterService registerService;
+    private RegisterManager<User> registerService;
     private TwoWayConverter<UserRegistration,User>regConverter=getConverter(ConverterType.USER_REGISTRATION_TO_USER);
     private TwoWayConverter<User,UserResponse>resConverter=getConverter(ConverterType.USER_TO_USER_RESPONSE);
 
-    public RegisterController(RegisterService registerService) {
+    public RegisterController(RegisterManager<User> registerService) {
         this.registerService = registerService;
     }
 

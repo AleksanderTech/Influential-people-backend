@@ -2,7 +2,7 @@ package com.alek.influentialpeople.security.service;
 
 import com.alek.influentialpeople.security.model.CurrentUser;
 import com.alek.influentialpeople.user.entity.User;
-import com.alek.influentialpeople.user.persistence.UserRepository;
+import com.alek.influentialpeople.user.persistence.UserCrudRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -16,10 +16,10 @@ import java.util.Collection;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserCrudRepository userRepository;
 
     @Autowired
-    public UserDetailsServiceImpl(UserRepository userRepository) {
+    public UserDetailsServiceImpl(UserCrudRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -3,7 +3,7 @@ package com.alek.influentialpeople.user.service;
 import com.alek.influentialpeople.common.abstraction.SearchService;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserSearch;
-import com.alek.influentialpeople.user.persistence.UserRepository;
+import com.alek.influentialpeople.user.persistence.UserSearchRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,9 @@ import java.util.List;
 @Service
 public class SearchUserService implements SearchService<User, UserSearch> {
 
+    private final UserSearchRepository userRepository;
 
-    private UserRepository userRepository;
-
-    public SearchUserService(UserRepository userRepository) {
+    public SearchUserService(UserSearchRepository userRepository) {
         this.userRepository = userRepository;
     }
 

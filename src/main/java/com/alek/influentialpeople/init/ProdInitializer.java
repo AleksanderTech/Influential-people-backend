@@ -1,7 +1,7 @@
 package com.alek.influentialpeople.init;
 
 import com.alek.influentialpeople.user.entity.User;
-import com.alek.influentialpeople.user.persistence.UserRepository;
+import com.alek.influentialpeople.user.persistence.UserCrudRepository;
 import com.alek.influentialpeople.user.role.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -16,7 +16,7 @@ import java.util.HashSet;
 public class ProdInitializer {
 
     @Autowired
-    public ProdInitializer(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public ProdInitializer(UserCrudRepository userRepository, PasswordEncoder passwordEncoder) {
 
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))

@@ -24,9 +24,8 @@ import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 @PreAuthorize("hasAnyRole('USER','ADMIN')")
 public class SearchUserController {
 
-
+    private final SearchService<User, UserSearch> searchService;
     private TwoWayConverter<User, UserResponse> userResponseConverter = getConverter(USER_TO_USER_RESPONSE);
-    private SearchService<User, UserSearch> searchService;
 
     public SearchUserController(SearchService<User, UserSearch> searchService) {
         this.searchService = searchService;
