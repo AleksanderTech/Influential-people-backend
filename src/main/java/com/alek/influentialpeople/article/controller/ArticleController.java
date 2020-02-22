@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.*;
@@ -47,11 +48,13 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.OK).body(articleResponseConverter.convert(articleService.findArticle(id)));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ArticleHeader> createHeroArticle(@RequestBody ArticleRequest articleRequest) {
         Article article = articleService.createHeroArticle(articleRequestConverter.convert(articleRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(articleHeaderConverter.convert(article));
     }
+
 
     @RequestMapping(path = "/{id}/favourite", method = RequestMethod.POST)
     public ResponseEntity addToFavourites(@PathVariable(name = "id") long articleId) {

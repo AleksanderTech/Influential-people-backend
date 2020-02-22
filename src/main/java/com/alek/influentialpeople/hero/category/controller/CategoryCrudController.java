@@ -10,6 +10,7 @@ import com.alek.influentialpeople.hero.category.model.CategoryResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,20 +36,23 @@ public class CategoryCrudController {
         return new ResponseEntity<>(categoryConverter.convertMany(categoryCrudService.findAll(null).getContent()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<CategoryResponse> create(@RequestBody CategoryRequest categoryRequest) {
         return new ResponseEntity<>(categoryConverter.convert(categoryCrudService.create(new Category(categoryRequest.getName(), categoryRequest.getDescription()))), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.PATCH, value = "/{name}")
     public ResponseEntity<CategoryResponse> update(@RequestBody CategoryChanges changes, @PathVariable String name) {
         return new ResponseEntity<>(categoryConverter.convert(categoryCrudService.update(name, changesConverter.convert(changes))), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.DELETE, value = "/{name}")
     public ResponseEntity delete(@PathVariable String name) {
         categoryCrudService.delete(name);
-        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{name}")

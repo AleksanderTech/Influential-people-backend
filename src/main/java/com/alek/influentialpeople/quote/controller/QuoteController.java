@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.QUOTE_REQUEST_TO_QUOTE;
@@ -51,6 +52,7 @@ public class QuoteController {
         return ResponseEntity.status(HttpStatus.OK).body(quoteResponseConverter.convert(quoteService.findQuote(id)));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<QuoteResponse> createHeroQuote(@RequestBody QuoteRequest quoteRequest) {
 

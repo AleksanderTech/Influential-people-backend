@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.*;
@@ -41,18 +42,21 @@ public class HeroCrudController {
         return ResponseEntity.status(HttpStatus.OK).body(heroes);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<HeroResponse> create(@RequestBody HeroRequest heroRequest) {
         Hero hero = heroService.create(heroRequestConverter.convert(heroRequest));
         return new ResponseEntity<>(heroResponseConverter.convert(hero), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/{name}",method = RequestMethod.PATCH)
     public ResponseEntity<HeroResponse> update(@PathVariable(name = "name") String name,@RequestBody HeroRequest heroRequest) {
         Hero hero = heroService.update(name,heroRequestConverter.convert(heroRequest));
         return new ResponseEntity<>(heroResponseConverter.convert(hero), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/{name}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable(name = "name") String name) {
         heroService.delete(name);
