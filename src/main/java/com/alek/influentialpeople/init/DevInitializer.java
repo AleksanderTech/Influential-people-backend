@@ -9,10 +9,9 @@ import com.alek.influentialpeople.hero.category.persistence.CategoryCrudReposito
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroCrudRepository;
 import com.alek.influentialpeople.hero.persistence.HeroFavouriteRepository;
-import com.alek.influentialpeople.hero.persistence.HeroSearchRepository;
 import com.alek.influentialpeople.hero.rate.persistence.HeroRateRepository;
 import com.alek.influentialpeople.quote.entity.Quote;
-import com.alek.influentialpeople.quote.persistence.QuoteRepository;
+import com.alek.influentialpeople.quote.persistence.QuoteSearchRepository;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.persistence.UserRepository;
 import com.alek.influentialpeople.user.role.entity.Role;
@@ -29,7 +28,7 @@ import java.util.HashSet;
 public class DevInitializer {
 
     @Autowired
-    public DevInitializer(HeroRateRepository heroRateRepository, HeroCrudRepository heroCrudRepository, ArticleCommentRepository articleCommentRepository, QuoteRepository quoteRepository, CategoryCrudRepository categoryCrudRepository, ArticleRepository articleRepository, HeroFavouriteRepository heroFavouriteRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public DevInitializer(HeroRateRepository heroRateRepository, HeroCrudRepository heroCrudRepository, ArticleCommentRepository articleCommentRepository, QuoteSearchRepository quoteRepository, CategoryCrudRepository categoryCrudRepository, ArticleRepository articleRepository, HeroFavouriteRepository heroFavouriteRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))
@@ -112,9 +111,5 @@ public class DevInitializer {
         articleRepository.addToFavourites(1,admin.getUsername());
         articleRepository.addToFavourites(2,admin.getUsername());
         articleRepository.addToFavourites(3,admin.getUsername());
-        quoteRepository.addToFavourites(1, admin.getUsername());
-        quoteRepository.addToFavourites(2, admin.getUsername());
-        quoteRepository.addToFavourites(3, admin.getUsername());
-        quoteRepository.addToFavourites(1, user.getUsername());
     }
 }

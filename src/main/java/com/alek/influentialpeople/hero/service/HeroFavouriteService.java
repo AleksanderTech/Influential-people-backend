@@ -34,7 +34,7 @@ public class HeroFavouriteService implements FavouriteService<Hero, String> {
     }
 
     @Override
-    public Page<Hero> find(Pageable pageable) {
+    public Page<Hero> findAll(Pageable pageable) {
         return heroRepository.find(pageable, userHolder.getUsername());
     }
 
@@ -53,6 +53,5 @@ public class HeroFavouriteService implements FavouriteService<Hero, String> {
              return;
          }
          throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_HERO_MESSAGE);
-
     }
 }

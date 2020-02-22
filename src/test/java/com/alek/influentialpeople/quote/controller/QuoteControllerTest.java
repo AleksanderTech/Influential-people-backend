@@ -6,7 +6,7 @@ import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.model.QuoteRequest;
 import com.alek.influentialpeople.quote.model.QuoteResponse;
-import com.alek.influentialpeople.quote.service.QuoteService;
+import com.alek.influentialpeople.quote.service.QuoteCrudService;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,11 +30,10 @@ import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteControllerTest {
 
-
     @Mock
-    private QuoteService quoteService;
+    private QuoteCrudService quoteService;
     @InjectMocks
-    private QuoteController quoteController;
+    private QuoteCrudController quoteController;
 
     private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter = getConverter(QUOTE_TO_QUOTE_RESPONSE);
     private TwoWayConverter<QuoteRequest, Quote> quoteRequestConverter = getConverter(QUOTE_REQUEST_TO_QUOTE);
@@ -55,14 +54,14 @@ public class QuoteControllerTest {
     @Test
     public void findQuotes_quotesExist_returnsQuotesAndStatus200() throws Exception {
 
-        Mockito.when(quoteService.findQuotes(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.list(quote1, quote2)));
+        Mockito.when(quoteService.findAll(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.list(quote1, quote2)));
         mockMvc.perform(MockMvcRequestBuilders.get("/quote")).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void findHeroQuotes_quotesExist_returnsQuotesAndStatus200() throws Exception {
 
-        Mockito.when(quoteService.findHeroQuotes(Mockito.eq("Aristotle"), Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.list(quote1, quote2)));
+        Mockito.when(quoteService.findByHero(Mockito.eq("Aristotle"), Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.list(quote1, quote2)));
         mockMvc.perform(MockMvcRequestBuilders.get("/quote/hero/"+aristotle.getName())).andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

@@ -7,7 +7,7 @@ public interface FavouriteService<T, ID> {
 
     T find(ID ownerId);
 
-    Page<T> find(Pageable pageable);
+    Page<T> findAll(Pageable pageable);
 
     void add(ID ownerId);
 

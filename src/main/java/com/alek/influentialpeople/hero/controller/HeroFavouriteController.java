@@ -35,8 +35,8 @@ public class HeroFavouriteController {
     }
 
     @RequestMapping(path = "/favourite", method = RequestMethod.GET)
-    public ResponseEntity<Page<HeroTile>> find(Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(heroService.find(pageable).map(hero -> new HeroTile(hero.getName())));
+    public ResponseEntity<Page<HeroTile>> findAll(Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(heroService.findAll(pageable).map(hero -> new HeroTile(hero.getName())));
     }
 
     @RequestMapping(path = "/{name}/favourite", method = RequestMethod.GET)

@@ -28,8 +28,8 @@ import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 public class SearchQuoteController {
 
     private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter = getConverter(QUOTE_TO_QUOTE_RESPONSE);
-    private SearchService<Quote, QuoteSearch> searchService;
-    private HeroCrudRepository heroRepository;
+    private final SearchService<Quote, QuoteSearch> searchService;
+    private final HeroCrudRepository heroRepository;
 
     public SearchQuoteController(SearchService<Quote, QuoteSearch> searchService, HeroCrudRepository heroRepository) {
         this.searchService = searchService;
