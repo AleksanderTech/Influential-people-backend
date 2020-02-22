@@ -27,9 +27,9 @@ import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 @PreAuthorize("hasAnyRole('USER','ADMIN')")
 public class SearchArticleController {
 
+    private final SearchService<Article, ArticleSearch> searchService;
+    private final HeroCrudRepository heroRepository;
     private TwoWayConverter<Article, ArticleResponse> articleResponseConverter = getConverter(ARTICLE_TO_ARTICLE_RESPONSE);
-    private SearchService<Article, ArticleSearch> searchService;
-    private HeroCrudRepository heroRepository;
 
     public SearchArticleController(SearchService<Article, ArticleSearch> searchService, HeroCrudRepository heroRepository) {
         this.searchService = searchService;

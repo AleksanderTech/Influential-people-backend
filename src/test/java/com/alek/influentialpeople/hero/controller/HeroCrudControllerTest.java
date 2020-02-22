@@ -1,6 +1,6 @@
 package com.alek.influentialpeople.hero.controller;
 
-import com.alek.influentialpeople.article.service.ArticleService;
+import com.alek.influentialpeople.article.service.ArticleCrudService;
 import com.alek.influentialpeople.common.abstraction.CrudService;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
 import com.alek.influentialpeople.hero.category.entity.Category;
@@ -31,7 +31,7 @@ public class HeroCrudControllerTest {
     private CrudService<Hero,String> heroService;
 
     @Mock
-    private ArticleService articleService;
+    private ArticleCrudService articleService;
 
     @InjectMocks
     private HeroCrudController heroCrudController;

@@ -23,7 +23,7 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
-    private Long id;
+    private long id;
     @Column(nullable = false, unique = true)
     private String title;
     @Column(nullable = false)

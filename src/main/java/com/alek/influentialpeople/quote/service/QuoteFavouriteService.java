@@ -24,12 +24,12 @@ public class QuoteFavouriteService implements FavouriteService<Quote, Long> {
     }
 
     @Override
-    public Quote find(Long ownerId) {
-        Quote quote = quoteRepository.find(ownerId, userHolder.getUsername());
+    public Quote find(Long id) {
+        Quote quote = quoteRepository.find(id, userHolder.getUsername());
         if (quote == null) {
             throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_QUOTE_FAVOURITE_MESSAGE);
         }
-        return quoteRepository.find(ownerId, userHolder.getUsername());
+        return quoteRepository.find(id, userHolder.getUsername());
     }
 
     @Override
@@ -38,12 +38,12 @@ public class QuoteFavouriteService implements FavouriteService<Quote, Long> {
     }
 
     @Override
-    public void add(Long ownerId) {
-        quoteRepository.add(ownerId, userHolder.getUsername());
+    public void add(Long id) {
+        quoteRepository.add(id, userHolder.getUsername());
     }
 
     @Override
-    public void delete(Long ownerId) {
-        quoteRepository.delete(userHolder.getUsername(), ownerId);
+    public void delete(Long id) {
+        quoteRepository.delete(userHolder.getUsername(), id);
     }
 }

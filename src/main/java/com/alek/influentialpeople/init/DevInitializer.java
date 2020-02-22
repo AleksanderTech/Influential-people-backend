@@ -3,7 +3,7 @@ package com.alek.influentialpeople.init;
 import com.alek.influentialpeople.article.comment.entity.ArticleComment;
 import com.alek.influentialpeople.article.comment.persistence.ArticleCommentRepository;
 import com.alek.influentialpeople.article.entity.Article;
-import com.alek.influentialpeople.article.repository.ArticleRepository;
+import com.alek.influentialpeople.article.persistence.ArticleSearchRepository;
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.persistence.CategoryCrudRepository;
 import com.alek.influentialpeople.hero.entity.Hero;
@@ -28,7 +28,7 @@ import java.util.HashSet;
 public class DevInitializer {
 
     @Autowired
-    public DevInitializer(HeroRateRepository heroRateRepository, HeroCrudRepository heroCrudRepository, ArticleCommentRepository articleCommentRepository, QuoteSearchRepository quoteRepository, CategoryCrudRepository categoryCrudRepository, ArticleRepository articleRepository, HeroFavouriteRepository heroFavouriteRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public DevInitializer(HeroRateRepository heroRateRepository, HeroCrudRepository heroCrudRepository, ArticleCommentRepository articleCommentRepository, QuoteSearchRepository quoteRepository, CategoryCrudRepository categoryCrudRepository, ArticleSearchRepository articleRepository, HeroFavouriteRepository heroFavouriteRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         User admin = User.builder().username("admin")
                 .password(passwordEncoder.encode("admin"))
@@ -108,8 +108,5 @@ public class DevInitializer {
         heroFavouriteRepository.add(aristotle.getName(),admin.getUsername());
         heroFavouriteRepository.add(galileo.getName(),admin.getUsername());
         heroFavouriteRepository.add(plato.getName(),admin.getUsername());
-        articleRepository.addToFavourites(1,admin.getUsername());
-        articleRepository.addToFavourites(2,admin.getUsername());
-        articleRepository.addToFavourites(3,admin.getUsername());
     }
 }

@@ -5,11 +5,11 @@ import org.springframework.data.domain.Pageable;
 
 public interface FavouriteService<T, ID> {
 
-    T find(ID ownerId);
+    T find(ID id);
 
     Page<T> findAll(Pageable pageable);
 
-    void add(ID ownerId);
+    void add(ID id);
 
-    void delete(ID ownerId);
+    void delete(ID id);
 }

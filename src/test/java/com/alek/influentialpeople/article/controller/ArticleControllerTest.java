@@ -4,7 +4,7 @@ import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.model.ArticleHeader;
 import com.alek.influentialpeople.article.model.ArticleRequest;
 import com.alek.influentialpeople.article.model.ArticleResponse;
-import com.alek.influentialpeople.article.service.ArticleService;
+import com.alek.influentialpeople.article.service.ArticleCrudService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
 import com.alek.influentialpeople.hero.entity.Hero;
@@ -33,9 +33,9 @@ import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 public class ArticleControllerTest {
 
     @Mock
-    private ArticleService articleService;
+    private ArticleCrudService articleService;
     @InjectMocks
-    private ArticleController articleController;
+    private ArticleFavouriteController articleController;
 
     private TwoWayConverter<ArticleRequest, Article> articleRequestConverter = getConverter(ARTICLE_REQUEST_TO_ARTICLE);
     private TwoWayConverter<Article, ArticleHeader> articleHeaderConverter = getConverter(ARTICLE_TO_ARTICLE_HEADER);
@@ -56,7 +56,7 @@ public class ArticleControllerTest {
     @Test
     public void findArticles_articlesExist_returnsArticlesAndStatus200() throws Exception {
 
-        Mockito.when(articleService.findArticles(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.list(article1, article2)));
+        Mockito.when(articleService.findAll(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(Lists.list(article1, article2)));
         mockMvc.perform(MockMvcRequestBuilders.get("/article")).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
