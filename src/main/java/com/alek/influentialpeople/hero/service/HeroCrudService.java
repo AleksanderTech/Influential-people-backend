@@ -31,7 +31,7 @@ public class HeroCrudService implements CrudService<Hero, String> {
         if (hero == null) {
             throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_HERO_MESSAGE);
         }
-        return heroRepository.findByName(name);
+        return hero;
     }
 
     @Override
