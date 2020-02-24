@@ -2,6 +2,7 @@ package com.alek.influentialpeople.user.service;
 
 import com.alek.influentialpeople.common.abstraction.CrudService;
 import com.alek.influentialpeople.exception.ExceptionMessages;
+import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
 import com.alek.influentialpeople.exception.exceptions.StateConflictException;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.persistence.UserCrudRepository;
@@ -48,6 +49,9 @@ public class UserCrudService implements CrudService<User, String> {
 
     @Override
     public User create(User user) {
+        if (userRepository.findByUsername(user.getUsername())!=null) {
+            throw new EntityExistsException(ExceptionMessages.USER_EXISTS_MESSAGE);
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }

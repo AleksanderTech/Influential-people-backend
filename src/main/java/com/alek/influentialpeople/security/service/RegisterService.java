@@ -5,6 +5,7 @@ import com.alek.influentialpeople.common.Urls;
 import com.alek.influentialpeople.email.Email;
 import com.alek.influentialpeople.email.EmailSender;
 import com.alek.influentialpeople.exception.ExceptionMessages;
+import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.persistence.UserCrudRepository;
 import com.alek.influentialpeople.user.verification.entity.VerificationToken;
@@ -60,6 +61,9 @@ public class RegisterService implements RegisterManager<User> {
     }
 
     public User create(User user) {
+        if (userRepository.findByUsername(user.getUsername())!=null) {
+            throw new EntityExistsException(ExceptionMessages.USER_EXISTS_MESSAGE);
+        }
         user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
