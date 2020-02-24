@@ -63,26 +63,24 @@ public class UserCrudService implements CrudService<User, String> {
         throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_USER_MESSAGE);
     }
 
+    @Override
+    public void delete(String username) {
+        User user = userRepository.findById(username).orElse(null);
+        if (user == null) {
+            throw new UsernameNotFoundException(ExceptionMessages.NOT_FOUND_USER_MESSAGE);
+        }
+        if (userHolder.getUser().getUsername().equals(username)) {
+            throw new StateConflictException(ExceptionMessages.STATE_CONFLICT_MESSAGE);
+        }
+        userRepository.deleteById(username);
+    }
+
     private User setChanges(User user, User changes) {
         user.setPassword(passwordEncoder.encode(changes.getPassword()));
         user.setEmail(changes.getEmail());
         user.setEnabled(changes.isEnabled());
         user.setRoles(changes.getRoles());
         return user;
-    }
-
-    @Override
-    public void delete(String username) {
-        System.out.println(username + " logs username");
-        User user = userRepository.findById(username).orElse(null);
-        if (user == null) {
-            throw new UsernameNotFoundException(ExceptionMessages.NOT_FOUND_USER_MESSAGE);
-        }
-        if (userHolder.getUser().getUsername().equals(username)) {
-                throw new StateConflictException(ExceptionMessages.STATE_CONFLICT_MESSAGE);
-        }
-        System.out.println(username + " logs2 username");
-        userRepository.deleteById(username);
     }
 
     private boolean isAllowed(String username) {

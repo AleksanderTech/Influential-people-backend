@@ -26,7 +26,6 @@ public class RegisterController {
 
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     public ResponseEntity<UserResponse> signUp(@RequestBody UserRegistration userRegistration) {
-
         User user = regConverter.convert(userRegistration);
         user= registerService.signUp(user);
         return new ResponseEntity(resConverter.convert(user), HttpStatus.CREATED);
@@ -34,7 +33,6 @@ public class RegisterController {
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)
     public RedirectView confirm(@RequestParam(required = true, name = "token") String token) {
-
         return new RedirectView(registerService.confirm(token));
     }
 }

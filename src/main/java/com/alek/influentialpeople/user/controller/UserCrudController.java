@@ -55,8 +55,8 @@ public class UserCrudController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(method = RequestMethod.PATCH)
-    public ResponseEntity<UserResponse> update(@RequestBody UserAccount user) {
-        return new ResponseEntity<>(resConverter.convert(userService.update(user.getUsername(), accConverter.convert(user))), HttpStatus.OK);
+    @RequestMapping(path = "/{username}", method = RequestMethod.PATCH)
+    public ResponseEntity<UserResponse> update(@PathVariable String username, @RequestBody UserAccount user) {
+        return new ResponseEntity<>(resConverter.convert(userService.update(username, accConverter.convert(user))), HttpStatus.OK);
     }
 }

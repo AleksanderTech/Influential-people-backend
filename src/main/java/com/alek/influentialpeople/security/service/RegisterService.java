@@ -6,9 +6,10 @@ import com.alek.influentialpeople.email.Email;
 import com.alek.influentialpeople.email.EmailSender;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.user.entity.User;
-import com.alek.influentialpeople.user.service.UserCrudService;
+import com.alek.influentialpeople.user.persistence.UserCrudRepository;
 import com.alek.influentialpeople.user.verification.entity.VerificationToken;
 import com.alek.influentialpeople.user.verification.persistence.VerificationTokenRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -19,20 +20,22 @@ import java.util.UUID;
 public class RegisterService implements RegisterManager<User> {
 
     private final Properties properties;
+    private final PasswordEncoder encoder;
     private final EmailSender emailSender;
-    private final UserCrudService userService;
+    private final UserCrudRepository userRepository;
     private final VerificationTokenRepository tokenRepository;
 
-    public RegisterService(Properties properties, EmailSender emailSender, UserCrudService userService, VerificationTokenRepository tokenRepository) {
+    public RegisterService(Properties properties, PasswordEncoder encoder, EmailSender emailSender, UserCrudRepository userRepository, VerificationTokenRepository tokenRepository) {
         this.properties = properties;
+        this.encoder = encoder;
         this.emailSender = emailSender;
-        this.userService = userService;
+        this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
     }
 
     @Override
     public User signUp(User user) {
-        userService.create(user);
+        create(user);
         VerificationToken token = tokenRepository.save(makeToken(user));
         emailSender.sendEmail(new Email(user.getEmail(), properties.getConfig("spring.mail.username"), properties.getConfig("email.verification.subject"), properties.getConfig("email.verification.message") + "\n\n" + makeConfirmationUrl(token.getValue())));
         return user;
@@ -48,8 +51,17 @@ public class RegisterService implements RegisterManager<User> {
         if (verificationToken.getExpireDate().after(new Date())) {
             user.setEnabled(true);
         }
-        userService.update(user.getUsername(),user);
-        return properties.getConfig("gui.origin")+"/sign-in?activated=true";
+        save(user);
+        return properties.getConfig("gui.origin") + "/sign-in?activated=true";
+    }
+
+    private User save(User user) {
+        return userRepository.save(user);
+    }
+
+    public User create(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     private VerificationToken makeToken(User user) {
@@ -58,6 +70,6 @@ public class RegisterService implements RegisterManager<User> {
     }
 
     private String makeConfirmationUrl(String token) {
-        return Urls.ROOT_URL+ "/confirm?token=" + token;
+        return Urls.ROOT_URL + "/confirm?token=" + token;
     }
 }
