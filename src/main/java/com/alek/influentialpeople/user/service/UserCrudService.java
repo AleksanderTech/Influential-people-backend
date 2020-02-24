@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
+
 @Service
 public class UserCrudService implements CrudService<User, String> {
 
@@ -51,20 +54,34 @@ public class UserCrudService implements CrudService<User, String> {
 
     @Override
     public User update(String username, User changes) {
-       return userRepository.save(changes);
+        Optional<User> optionalUser = userRepository.findById(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user = setChanges(user, changes);
+            return userRepository.save(user);
+        }
+        throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_USER_MESSAGE);
+    }
+
+    private User setChanges(User user, User changes) {
+        user.setPassword(passwordEncoder.encode(changes.getPassword()));
+        user.setEmail(changes.getEmail());
+        user.setEnabled(changes.isEnabled());
+        user.setRoles(changes.getRoles());
+        return user;
     }
 
     @Override
     public void delete(String username) {
+        System.out.println(username + " logs username");
         User user = userRepository.findById(username).orElse(null);
-        if (userHolder.getUser().getUsername().equals(username)) {
-            if (user.getUsername().equals(username)) {
-                throw new StateConflictException(ExceptionMessages.STATE_CONFLICT_MESSAGE);
-            }
-            if (user == null) {
-                throw new UsernameNotFoundException(ExceptionMessages.NOT_FOUND_USER_MESSAGE);
-            }
+        if (user == null) {
+            throw new UsernameNotFoundException(ExceptionMessages.NOT_FOUND_USER_MESSAGE);
         }
+        if (userHolder.getUser().getUsername().equals(username)) {
+                throw new StateConflictException(ExceptionMessages.STATE_CONFLICT_MESSAGE);
+        }
+        System.out.println(username + " logs2 username");
         userRepository.deleteById(username);
     }
 

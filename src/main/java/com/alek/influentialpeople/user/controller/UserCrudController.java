@@ -19,11 +19,11 @@ import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 @RequestMapping("/user")
 public class UserCrudController {
 
-    private final CrudService<User,String> userService;
+    private final CrudService<User, String> userService;
     private TwoWayConverter<UserAccount, User> accConverter = getConverter(ConverterType.USER_ACCOUNT_TO_USER);
     private TwoWayConverter<User, UserResponse> resConverter = getConverter(ConverterType.USER_TO_USER_RESPONSE);
 
-    public UserCrudController(CrudService<User,String> userService) {
+    public UserCrudController(CrudService<User, String> userService) {
         this.userService = userService;
     }
 
@@ -52,5 +52,11 @@ public class UserCrudController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<UserResponse> create(@RequestBody UserAccount user) {
         return new ResponseEntity<>(resConverter.convert(userService.create(accConverter.convert(user))), HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(method = RequestMethod.PATCH)
+    public ResponseEntity<UserResponse> update(@RequestBody UserAccount user) {
+        return new ResponseEntity<>(resConverter.convert(userService.update(user.getUsername(), accConverter.convert(user))), HttpStatus.OK);
     }
 }

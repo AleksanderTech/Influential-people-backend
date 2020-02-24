@@ -29,7 +29,7 @@ public class User {
     @Transient
     private String avatarImageUrl;
     @Column(nullable = false)
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"),
             inverseJoinColumns = @JoinColumn(name = "role_name", referencedColumnName = "name"))
