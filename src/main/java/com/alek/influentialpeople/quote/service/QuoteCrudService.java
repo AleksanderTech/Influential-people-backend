@@ -52,6 +52,7 @@ public class QuoteCrudService implements CrudService<Quote, Long> {
         if (quoteRepository.existsById(quote.getId())) {
             throw new EntityExistsException(ExceptionMessages.QUOTE_EXISTS_MESSAGE);
         }
+        quote.setUser(new User(userHolder.getUsername()));
         return quoteRepository.save(quote);
     }
 

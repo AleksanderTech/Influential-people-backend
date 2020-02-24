@@ -35,7 +35,7 @@ public class ArticleCrudService implements CrudService<Article, Long> {
         if (optionalArticle.isPresent()) {
             return optionalArticle.get();
         }
-        throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_QUOTE_MESSAGE);
+        throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_ARTICLE_MESSAGE);
     }
 
     @Override
@@ -45,11 +45,10 @@ public class ArticleCrudService implements CrudService<Article, Long> {
 
     @Override
     public Article create(Article article) {
-        System.out.println(article.getId()+ "id article null");
-
         if (articleRepository.existsById(article.getId())) {
-            throw new EntityExistsException(ExceptionMessages.QUOTE_EXISTS_MESSAGE);
+            throw new EntityExistsException(ExceptionMessages.ARTICLE_EXISTS_MESSAGE);
         }
+        article.setUser(new User(userHolder.getUsername()));
         return articleRepository.save(article);
     }
 
@@ -61,7 +60,7 @@ public class ArticleCrudService implements CrudService<Article, Long> {
             article = setChanges(article, changes);
             return articleRepository.save(article);
         }
-        throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_QUOTE_MESSAGE);
+        throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_ARTICLE_MESSAGE);
     }
 
     private Article setChanges(Article article, Article changes) {
@@ -77,6 +76,6 @@ public class ArticleCrudService implements CrudService<Article, Long> {
             articleRepository.deleteById(id);
             return;
         }
-        throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_QUOTE_MESSAGE);
+        throw new EntityNotFoundException(ExceptionMessages.NOT_FOUND_ARTICLE_MESSAGE);
     }
 }

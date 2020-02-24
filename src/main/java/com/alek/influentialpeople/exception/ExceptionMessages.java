@@ -5,6 +5,7 @@ public class ExceptionMessages {
     public static final String NOT_FOUND_USER_MESSAGE = "The User with given username does not exist";
     public static final String HERO_EXISTS_MESSAGE = "The Hero with given name already exists";
     public static final String QUOTE_EXISTS_MESSAGE = "The Quote with given id already exists";
+    public static final String ARTICLE_EXISTS_MESSAGE = "The Article with given id already exists";
     public static final String NOT_FOUND_HERO_MESSAGE = "The Hero with given name does not exist";
     public static final String NOT_FOUND_CATEGORY_MESSAGE = "The Category with given name does not exist";
     public static final String NOT_FOUND_QUOTE_MESSAGE = "The Quote with given id does not exist";
