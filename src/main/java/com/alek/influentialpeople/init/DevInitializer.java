@@ -68,7 +68,7 @@ public class DevInitializer {
         Hero socrates = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Socrates").build();
         Hero newton = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Isaac Newton").build();
         Hero stalin = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(leaders))).name("Joseph Stalin").avatarImagePath("storage/images/heroes/Joseph_Stalin/avatar/Joseph_Stalin.jpg").build();
-        Hero galileo = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Galileo Galilei").avatarImagePath("storage/images/heroes/Galileo_Galilei/avatar/Galileo Galilei.jpg").build();
+        Hero galileo = Hero.builder().heroCategories(new HashSet<>(Arrays.asList(scientists, philosophers))).name("Galileo Galilei").avatarImagePath("storage/images/heroes/Galileo_Galilei/avatar/Galileo_Galilei.jpg").build();
 
         Article edisonArticle = Article.builder().title("Edison the wise man").text("Edison whas not only genius in science field but ... ").hero(edison).build();
         Article platoArticle = Article.builder().title("Plato the wise man").text("Plato was not only genius in science field but ... ").hero(edison).build();

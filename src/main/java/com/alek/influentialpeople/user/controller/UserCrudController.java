@@ -1,10 +1,15 @@
 package com.alek.influentialpeople.user.controller;
 
+import com.alek.influentialpeople.common.ImageManager;
+import com.alek.influentialpeople.common.ImageType;
+import com.alek.influentialpeople.common.Properties;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.common.abstraction.CrudService;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserAccount;
 import com.alek.influentialpeople.user.model.UserResponse;
+import com.alek.influentialpeople.user.service.UserAccountConverter;
+import com.alek.influentialpeople.user.service.UserResponseConverter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -12,25 +17,31 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType;
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
 @RequestMapping("/user")
 public class UserCrudController {
 
-    private final CrudService<User, String> userService;
-    private TwoWayConverter<UserAccount, User> accConverter = getConverter(ConverterType.USER_ACCOUNT_TO_USER);
-    private TwoWayConverter<User, UserResponse> resConverter = getConverter(ConverterType.USER_TO_USER_RESPONSE);
+    private TwoWayConverter<UserAccount, User> accConverter = new UserAccountConverter();
+    private TwoWayConverter<User, UserResponse> resConverter = new UserResponseConverter();
 
-    public UserCrudController(CrudService<User, String> userService) {
+    private final Properties properties;
+    private final CrudService<User, String> userService;
+
+    public UserCrudController(Properties properties, CrudService<User, String> userService) {
+        this.properties = properties;
         this.userService = userService;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Page<UserResponse>> findAll(Pageable pageable) {
-        Page<UserResponse> userResponses = userService.findAll(pageable).map(user -> resConverter.convert(user));
+        Page<UserResponse> userResponses = userService.findAll(pageable)
+                .map(user -> {
+                    UserResponse response = resConverter.convert(user);
+                    response.setAvatarImageUrl(ImageManager.createUrl(user.getAvatarImagePath(), properties.getConfig("server.url"), ImageType.USER, user.getUsername()));
+                    return response;
+                });
         return new ResponseEntity<>(userResponses, HttpStatus.OK);
     }
 
@@ -45,7 +56,9 @@ public class UserCrudController {
     @RequestMapping(path = "/{username}", method = RequestMethod.GET)
     public ResponseEntity<UserResponse> findOne(@PathVariable String username) {
         User user = userService.findOne(username);
-        return new ResponseEntity<>(resConverter.convert(user), HttpStatus.OK);
+        UserResponse response = resConverter.convert(user);
+        response.setAvatarImageUrl(ImageManager.createUrl(user.getAvatarImagePath(), properties.getConfig("server.url"), ImageType.USER, user.getUsername()));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

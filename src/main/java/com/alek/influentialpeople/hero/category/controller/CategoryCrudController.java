@@ -1,12 +1,16 @@
 package com.alek.influentialpeople.hero.category.controller;
 
-import com.alek.influentialpeople.common.ConvertersFactory;
+import com.alek.influentialpeople.common.ImageManager;
+import com.alek.influentialpeople.common.ImageType;
+import com.alek.influentialpeople.common.Properties;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.common.abstraction.CrudService;
 import com.alek.influentialpeople.hero.category.entity.Category;
 import com.alek.influentialpeople.hero.category.model.CategoryChanges;
 import com.alek.influentialpeople.hero.category.model.CategoryRequest;
 import com.alek.influentialpeople.hero.category.model.CategoryResponse;
+import com.alek.influentialpeople.hero.category.service.CategoryChangesConverter;
+import com.alek.influentialpeople.hero.category.service.CategoryResponseConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,26 +18,34 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.CATEGORY_CHANGES_TO_CATEGORY;
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.CATEGORY_TO_CATEGORY_RESPONSE;
 
 @RestController
 @RequestMapping("/category")
 public class CategoryCrudController {
 
     private final CrudService<Category, String> categoryCrudService;
+    private final Properties properties;
 
-    private TwoWayConverter<Category, CategoryResponse> categoryConverter = ConvertersFactory.getConverter(CATEGORY_TO_CATEGORY_RESPONSE);
-    private TwoWayConverter<CategoryChanges, Category> changesConverter = ConvertersFactory.getConverter(CATEGORY_CHANGES_TO_CATEGORY);
+    private TwoWayConverter<Category, CategoryResponse> categoryConverter = new CategoryResponseConverter();
+    private TwoWayConverter<CategoryChanges, Category> changesConverter = new CategoryChangesConverter();
 
-    public CategoryCrudController(@Qualifier("categoryCrudService") CrudService<Category, String> categoryCrudService) {
+    public CategoryCrudController(@Qualifier("categoryCrudService") CrudService<Category, String> categoryCrudService, Properties properties) {
         this.categoryCrudService = categoryCrudService;
+        this.properties = properties;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CategoryResponse>> findAll() {
-        return new ResponseEntity<>(categoryConverter.convertMany(categoryCrudService.findAll(null).getContent()), HttpStatus.OK);
+        List<CategoryResponse> categories = categoryCrudService.findAll(null).getContent().stream()
+                .map(cat -> {
+                    CategoryResponse response = categoryConverter.convert(cat);
+                    response.setImageUrl(ImageManager.createUrl(cat.getImagePath(), properties.getConfig("server.url"), ImageType.CATEGORY, cat.getName()));
+                    return response;
+                }).collect(Collectors.toList());
+
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -57,6 +69,9 @@ public class CategoryCrudController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{name}")
     public ResponseEntity<CategoryResponse> findOne(@PathVariable String name) {
+        Category category = categoryCrudService.findOne(name);
+        CategoryResponse categoryResponse = categoryConverter.convert(category);
+        categoryResponse.setImageUrl(ImageManager.createUrl(category.getImagePath(), properties.getConfig("server.url"), ImageType.CATEGORY, category.getName()));
         return new ResponseEntity<>(categoryConverter.convert(categoryCrudService.findOne(name)), HttpStatus.OK);
     }
 }

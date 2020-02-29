@@ -8,11 +8,11 @@ public class ArtCommentResponseConverter extends TwoWayConverter<ArticleComment,
 
     @Override
     public ArticleCommentResponse convert(ArticleComment from) {
-        return ArticleCommentResponse.builder().username(from.getUser().getUsername()).id(from.getId()).createdAt(from.getCreatedAt()).content(from.getContent()).avatarUrl(from.getUser().buildAndSetAvatarUrl()).build();
+        return ArticleCommentResponse.builder().username(from.getUser().getUsername()).id(from.getId()).createdAt(from.getCreatedAt()).content(from.getContent()).build();
     }
 
     @Override
     public ArticleComment convertBack(ArticleCommentResponse from) {
-        return null;
+        return ArticleComment.builder().content(from.getContent()).build();
     }
 }

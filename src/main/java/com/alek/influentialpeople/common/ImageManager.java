@@ -20,12 +20,6 @@ public class ImageManager {
     private static final String AVATAR = "avatar";
     private static final String PRIME = "prime";
 
-    public enum StorageOf {
-        USER,
-        HERO,
-        CATEGORY
-    }
-
     public ImageManager(Properties properties) {
         this.properties = properties;
     }
@@ -54,11 +48,11 @@ public class ImageManager {
         }
     }
 
-    public void storeImage(StorageOf storageType, String name, MultipartFile image) {
+    public void storeImage(ImageType imageType, String name, MultipartFile image) {
         if (image == null) {
             throw new EmptyFileException(ExceptionMessages.EMPTY_FILE_EXCEPTION);
         }
-        String path = createPath(storageType, name);
+        String path = createPath(imageType, name);
         File directory = new File(path);
         if (!directory.exists()) {
             directory.mkdirs();
@@ -77,19 +71,17 @@ public class ImageManager {
         return name.replace(" ", "_") + "." + IMAGE_FORMAT;
     }
 
-    public String createPath(StorageOf storageType, String name) {
+    public String createPath(ImageType imageType, String name) {
         String path = null;
-        if (storageType.equals(StorageOf.USER)) {
-            System.out.println("user type");
-            System.out.println(name);
+        if (imageType.equals(ImageType.USER)) {
             String modifiedUsername = name.replace(" ", "_");
             path = properties.getConfig("users.images.path") + File.separatorChar + modifiedUsername + File.separatorChar + AVATAR;
             System.out.println(path + " result path");
-        } else if (storageType.equals(StorageOf.HERO)) {
+        } else if (imageType.equals(ImageType.HERO)) {
             String modifiedFullName = name.replace(" ", "_");
             path = properties.getConfig("heroes.images.path") + File.separatorChar + modifiedFullName + File.separatorChar + AVATAR;
             System.out.println(path + " result path hero");
-        } else if (storageType.equals(StorageOf.CATEGORY)) {
+        } else if (imageType.equals(ImageType.CATEGORY)) {
             String modifiedFullName = name.replace(" ", "_");
             path = properties.getConfig("category.images.path") + File.separatorChar + modifiedFullName + File.separatorChar + PRIME;
             System.out.println(path + " result path category");
@@ -97,19 +89,44 @@ public class ImageManager {
         return path;
     }
 
-    public String createUrl(StorageOf storageType, String name) {
+    public String createUrl(ImageType imageType, String name) {
+        name = name.replace(" ", "%20");
         String url = null;
-        if (storageType.equals(StorageOf.USER)) {
-            url = Urls.ROOT_URL + Urls.USER + File.separatorChar + name + Urls.IMAGE;
-        } else if (storageType.equals(StorageOf.HERO)) {
-            url = Urls.ROOT_URL + Urls.HERO + File.separatorChar + name + Urls.IMAGE;
-        } else if (storageType.equals(StorageOf.CATEGORY)) {
-            url = Urls.ROOT_URL + Urls.CATEGORY + File.separatorChar + name + Urls.IMAGE;
+        if (imageType.equals(ImageType.USER)) {
+            url = properties.getConfig("server.url") + Urls.USER + File.separatorChar + name + Urls.IMAGE;
+        } else if (imageType.equals(ImageType.HERO)) {
+            url = properties.getConfig("server.url") + Urls.HERO + File.separatorChar + name + Urls.IMAGE;
+        } else if (imageType.equals(ImageType.CATEGORY)) {
+            url = properties.getConfig("server.url") + Urls.CATEGORY + File.separatorChar + name + Urls.IMAGE;
         }
         return url;
+    }
+
+    public static String createUrl(String imagePath, String serverUrl, ImageType type, String id) {
+        if (imagePath != null) {
+            id = id.replace(" ", "%20");
+            String url = "";
+            switch (type) {
+                case USER: {
+                    url = serverUrl + Urls.USER + "/" + id + Urls.IMAGE;
+                    break;
+                }
+                case HERO: {
+                    url = serverUrl + Urls.HERO + "/" + id + Urls.IMAGE;
+                    break;
+                }
+                case CATEGORY: {
+                    url = serverUrl + Urls.CATEGORY + "/" + id + Urls.IMAGE;
+                    break;
+                }
+            }
+            return url;
+        }
+        return null;
     }
 
     public String appendImageName(String name, String path) {
         return path + File.separatorChar + createFileName(name);
     }
+
 }

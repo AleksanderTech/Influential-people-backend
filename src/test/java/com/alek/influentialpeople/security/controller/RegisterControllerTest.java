@@ -1,11 +1,11 @@
 package com.alek.influentialpeople.security.controller;
 
 import com.alek.influentialpeople.TestUtils;
-import com.alek.influentialpeople.common.ConvertersFactory;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
 import com.alek.influentialpeople.security.model.UserRegistration;
 import com.alek.influentialpeople.security.service.RegisterService;
+import com.alek.influentialpeople.security.service.UserRegistrationConverter;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.role.entity.Role;
 import com.google.common.collect.Sets;
@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.stream.Collectors;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -50,7 +49,7 @@ public class RegisterControllerTest {
     @Test
     public void signUp_userDoesNotExists_shouldReturnStatus201() throws Exception {
 
-        TwoWayConverter<UserRegistration, User> converterR = getConverter(ConvertersFactory.ConverterType.USER_REGISTRATION_TO_USER);
+        TwoWayConverter<UserRegistration, User> converterR = new UserRegistrationConverter();
 
         Mockito.when(registerService.signUp(any(User.class))).thenReturn(user);
 
@@ -65,11 +64,11 @@ public class RegisterControllerTest {
     @Test
     public void confirm_properToken_shouldRedirect() throws Exception {
 
-        String verificationToken="token";
+        String verificationToken = "token";
 
         Mockito.when(registerService.confirm(any(String.class))).thenReturn(verificationToken);
 
-        mockMvc.perform(get("/confirm?token="+verificationToken).contentType(APPLICATION_JSON_UTF8))
+        mockMvc.perform(get("/confirm?token=" + verificationToken).contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isFound());
     }
 }

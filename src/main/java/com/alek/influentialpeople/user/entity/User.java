@@ -39,8 +39,8 @@ public class User {
         this.username = username;
     }
 
-    public String buildAndSetAvatarUrl() {
-        avatarImageUrl = Urls.ROOT_URL + Urls.USER + "/" + this.username + Urls.IMAGE;
+    public String buildAvatarUrl(String serverUrl) {
+        avatarImageUrl = serverUrl + Urls.USER + "/" + this.username + Urls.IMAGE;
         return avatarImagePath != null ? avatarImageUrl : null;
     }
 }

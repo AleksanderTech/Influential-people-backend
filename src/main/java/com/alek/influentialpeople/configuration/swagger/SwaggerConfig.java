@@ -1,6 +1,8 @@
 package com.alek.influentialpeople.configuration.swagger;
 
+import com.alek.influentialpeople.common.Properties;
 import com.alek.influentialpeople.common.Urls;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -14,9 +16,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     @Bean
-    public Docket api() {
+    public Docket api(@Autowired Properties properties) {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host(Urls.ROOT_URL)
+                .host(properties.getConfig("server.url"))
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())

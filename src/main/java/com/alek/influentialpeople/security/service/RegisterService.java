@@ -38,7 +38,7 @@ public class RegisterService implements RegisterManager<User> {
     public User signUp(User user) {
         create(user);
         VerificationToken token = tokenRepository.save(makeToken(user));
-        emailSender.sendEmail(new Email(user.getEmail(), properties.getConfig("spring.mail.username"), properties.getConfig("email.verification.subject"), properties.getConfig("email.verification.message") + "\n\n" + makeConfirmationUrl(token.getValue())));
+        emailSender.sendEmail(new Email(user.getEmail(), properties.getConfig("spring.mail.username"), properties.getConfig("email.verification.subject"), properties.getConfig("email.verification.message") + "\n\n" + properties.getConfig("gui.url.confirmation-token") + token));
         return user;
     }
 
@@ -53,7 +53,7 @@ public class RegisterService implements RegisterManager<User> {
             user.setEnabled(true);
         }
         save(user);
-        return properties.getConfig("gui.origin") + "/sign-in?activated=true";
+        return properties.getConfig("gui.url.sign-in-activated");
     }
 
     private User save(User user) {
@@ -61,7 +61,7 @@ public class RegisterService implements RegisterManager<User> {
     }
 
     public User create(User user) {
-        if (userRepository.findByUsername(user.getUsername())!=null) {
+        if (userRepository.findByUsername(user.getUsername()) != null) {
             throw new EntityExistsException(ExceptionMessages.USER_EXISTS_MESSAGE);
         }
         user.setPassword(encoder.encode(user.getPassword()));
@@ -71,9 +71,5 @@ public class RegisterService implements RegisterManager<User> {
     private VerificationToken makeToken(User user) {
         String token = UUID.randomUUID().toString();
         return VerificationToken.builder().user(user).value(token).expireDate(new Date(new Date().toInstant().toEpochMilli() + VerificationToken.VALIDITY_TIME)).build();
-    }
-
-    private String makeConfirmationUrl(String token) {
-        return Urls.ROOT_URL + "/confirm?token=" + token;
     }
 }

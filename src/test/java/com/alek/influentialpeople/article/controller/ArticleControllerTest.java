@@ -26,20 +26,17 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Date;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.*;
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
-
 @RunWith(MockitoJUnitRunner.class)
 public class ArticleControllerTest {
 
     @Mock
     private ArticleCrudService articleService;
     @InjectMocks
-    private ArticleFavouriteController articleController;
+    private ArticleCrudController articleController;
 
-    private TwoWayConverter<ArticleRequest, Article> articleRequestConverter = getConverter(ARTICLE_REQUEST_TO_ARTICLE);
-    private TwoWayConverter<Article, ArticleHeader> articleHeaderConverter = getConverter(ARTICLE_TO_ARTICLE_HEADER);
-    private TwoWayConverter<Article, ArticleResponse> articleResponseConverter = getConverter(ARTICLE_TO_ARTICLE_RESPONSE);
+    private TwoWayConverter<ArticleRequest, Article> articleRequestConverter;
+    private TwoWayConverter<Article, ArticleHeader> articleHeaderConverter;
+    private TwoWayConverter<Article, ArticleResponse> articleResponseConverter;
 
     private Article article1;
     private Article article2;

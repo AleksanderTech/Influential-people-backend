@@ -23,9 +23,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.QUOTE_REQUEST_TO_QUOTE;
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.QUOTE_TO_QUOTE_RESPONSE;
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteControllerTest {
@@ -34,9 +31,10 @@ public class QuoteControllerTest {
     private QuoteCrudService quoteService;
     @InjectMocks
     private QuoteCrudController quoteController;
-
-    private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter = getConverter(QUOTE_TO_QUOTE_RESPONSE);
-    private TwoWayConverter<QuoteRequest, Quote> quoteRequestConverter = getConverter(QUOTE_REQUEST_TO_QUOTE);
+    @Mock
+    private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter;
+    @Mock
+    private TwoWayConverter<QuoteRequest, Quote> quoteRequestConverter;
 
     private Hero aristotle;
     private Quote quote1;

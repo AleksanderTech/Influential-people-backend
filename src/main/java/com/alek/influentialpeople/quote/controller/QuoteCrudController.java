@@ -5,6 +5,9 @@ import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.model.QuoteRequest;
 import com.alek.influentialpeople.quote.model.QuoteResponse;
 import com.alek.influentialpeople.quote.service.QuoteCrudService;
+import com.alek.influentialpeople.quote.service.QuoteRequestConverter;
+import com.alek.influentialpeople.quote.service.QuoteResponseConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -12,17 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.QUOTE_REQUEST_TO_QUOTE;
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.QUOTE_TO_QUOTE_RESPONSE;
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
-
 @RestController
 @RequestMapping("/quote")
 public class QuoteCrudController {
 
+    private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter = new QuoteResponseConverter();
+    private TwoWayConverter<QuoteRequest, Quote> quoteRequestConverter = new QuoteRequestConverter();
+
     private final QuoteCrudService quoteService;
-    private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter = getConverter(QUOTE_TO_QUOTE_RESPONSE);
-    private TwoWayConverter<QuoteRequest, Quote> quoteRequestConverter = getConverter(QUOTE_REQUEST_TO_QUOTE);
 
     public QuoteCrudController(QuoteCrudService quoteService) {
         this.quoteService = quoteService;

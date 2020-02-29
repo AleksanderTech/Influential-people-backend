@@ -1,5 +1,6 @@
 package com.alek.influentialpeople.hero.category.service;
 
+import com.alek.influentialpeople.common.ImageType;
 import com.alek.influentialpeople.common.abstraction.ImageService;
 import com.alek.influentialpeople.common.ImageManager;
 import com.alek.influentialpeople.exception.ExceptionMessages;
@@ -40,12 +41,12 @@ public class CategoryImageService implements ImageService<String> {
         }
         String path = categoryRepository.findImagePath(name);
         if (path == null || !new File(path).exists()) {
-            path = imageManager.createPath(ImageManager.StorageOf.CATEGORY, name);
+            path = imageManager.createPath(ImageType.CATEGORY, name);
             categoryRepository.updateImagePath(imageManager.appendImageName(name, path), name);
-            imageManager.storeImage(ImageManager.StorageOf.CATEGORY, name, image);
+            imageManager.storeImage(ImageType.CATEGORY, name, image);
         } else {
             imageManager.storeImage(path, image);
         }
-        return imageManager.createUrl(ImageManager.StorageOf.CATEGORY, name);
+        return imageManager.createUrl(ImageType.CATEGORY, name);
     }
 }

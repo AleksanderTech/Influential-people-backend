@@ -29,7 +29,7 @@ public class Category {
         this.description = description;
     }
 
-    public String buildUrl() {
-         return Urls.ROOT_URL + Urls.CATEGORY + "/" + this.name + Urls.IMAGE;
+    public String buildUrl(String serverUrl) {
+         return serverUrl + Urls.CATEGORY + "/" + this.name + Urls.IMAGE;
      }
 }

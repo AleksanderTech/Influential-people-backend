@@ -16,6 +16,4 @@ public class ArticleRequestConverter extends TwoWayConverter<ArticleRequest, Art
     public ArticleRequest convertBack(Article from) {
         return ArticleRequest.builder().text(from.getText()).title(from.getTitle()).build();
     }
-
-
 }

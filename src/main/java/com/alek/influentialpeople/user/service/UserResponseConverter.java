@@ -7,12 +7,11 @@ import com.alek.influentialpeople.user.role.entity.Role;
 
 import java.util.stream.Collectors;
 
-
 public class UserResponseConverter extends TwoWayConverter<User, UserResponse> {
 
     @Override
     public UserResponse convert(User from) {
-        return UserResponse.builder().username(from.getUsername()).email(from.getEmail()).avatarImageUrl(from.buildAndSetAvatarUrl()).enabled(from.isEnabled()).roles(from.getRoles().stream().map(role -> role.getName()).collect(Collectors.toSet())).build();
+        return UserResponse.builder().username(from.getUsername()).email(from.getEmail()).enabled(from.isEnabled()).roles(from.getRoles().stream().map(role -> role.getName()).collect(Collectors.toSet())).build();
     }
 
     @Override

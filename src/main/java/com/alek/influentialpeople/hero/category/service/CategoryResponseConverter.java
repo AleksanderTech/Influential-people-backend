@@ -8,11 +8,11 @@ public class CategoryResponseConverter extends TwoWayConverter<Category, Categor
 
     @Override
     public CategoryResponse convert(Category from) {
-        return new CategoryResponse(from.getName(),from.getDescription(),from.buildUrl());
+        return new CategoryResponse(from.getName(), from.getDescription());
     }
 
     @Override
     public Category convertBack(CategoryResponse from) {
-        return new Category(from.getName(),from.getDescription());
+        return new Category(from.getName(), from.getDescription());
     }
 }

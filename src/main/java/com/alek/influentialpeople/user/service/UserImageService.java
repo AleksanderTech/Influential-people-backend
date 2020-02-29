@@ -1,6 +1,7 @@
 package com.alek.influentialpeople.user.service;
 
 import com.alek.influentialpeople.common.ImageManager;
+import com.alek.influentialpeople.common.ImageType;
 import com.alek.influentialpeople.common.abstraction.ImageService;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.user.entity.User;
@@ -49,12 +50,12 @@ public class UserImageService implements ImageService<String> {
         }
         String path = userRepository.findAvatarPath(name);
         if (path == null || !new File(path).exists()) {
-            path = imageManager.createPath(ImageManager.StorageOf.USER, name);
+            path = imageManager.createPath(ImageType.USER, name);
             userRepository.updateImagePath(imageManager.appendImageName(name, path), name);
-            imageManager.storeImage(ImageManager.StorageOf.USER, name, image);
+            imageManager.storeImage(ImageType.USER, name, image);
         } else {
             imageManager.storeImage(path, image);
         }
-        return imageManager.createUrl(ImageManager.StorageOf.USER, name);
+        return imageManager.createUrl(ImageType.USER, name);
     }
 }

@@ -7,6 +7,7 @@ import com.alek.influentialpeople.hero.persistence.HeroCrudRepository;
 import com.alek.influentialpeople.quote.entity.Quote;
 import com.alek.influentialpeople.quote.model.QuoteResponse;
 import com.alek.influentialpeople.quote.model.QuoteSearch;
+import com.alek.influentialpeople.quote.service.QuoteResponseConverter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.QUOTE_TO_QUOTE_RESPONSE;
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
-
 @RestController
 @RequestMapping("/quote/search")
 @PreAuthorize("hasAnyRole('USER','ADMIN')")
 public class SearchQuoteController {
 
-    private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter = getConverter(QUOTE_TO_QUOTE_RESPONSE);
+    private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter=new QuoteResponseConverter();
+
     private final SearchService<Quote, QuoteSearch> searchService;
     private final HeroCrudRepository heroRepository;
 

@@ -3,22 +3,22 @@ package com.alek.influentialpeople.user.controller;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.*;
+import com.alek.influentialpeople.user.service.UserAccountConverter;
 import com.alek.influentialpeople.user.service.UserManager;
+import com.alek.influentialpeople.user.service.UserResponseConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType;
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
-
 @RestController
 @RequestMapping("/user")
 public class UserManagementController {
 
+    private TwoWayConverter<UserAccount, User> accConverter = new UserAccountConverter();
+    private TwoWayConverter<User, UserResponse> resConverter = new UserResponseConverter();
+
     private final UserManager userService;
-    private TwoWayConverter<UserAccount, User> accConverter = getConverter(ConverterType.USER_ACCOUNT_TO_USER);
-    private TwoWayConverter<User, UserResponse> resConverter = getConverter(ConverterType.USER_TO_USER_RESPONSE);
 
     public UserManagementController(UserManager userService) {
         this.userService = userService;

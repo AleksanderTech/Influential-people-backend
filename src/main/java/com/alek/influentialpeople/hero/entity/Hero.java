@@ -35,8 +35,8 @@ public class Hero {
     @JoinTable(name = "favourite_user_hero", joinColumns = @JoinColumn(name = "hero_name", referencedColumnName = "name"), inverseJoinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
     private Set<User> userFavourites;
 
-    public String buildAndSetAvatarUrl() {
-        this.avatarImageUrl = Urls.ROOT_URL + Urls.HERO + "/" + this.name + Urls.IMAGE;
+    public String buildAvatarUrl(String serverUrl) {
+        avatarImageUrl = serverUrl + Urls.HERO + "/" + this.name + Urls.IMAGE;
         return this.avatarImageUrl;
     }
 

@@ -5,9 +5,7 @@ import com.alek.influentialpeople.security.model.UserRegistration;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.role.entity.Role;
 import com.google.common.collect.Sets;
-import org.springframework.stereotype.Component;
 
-@Component
 public class UserRegistrationConverter extends TwoWayConverter<UserRegistration, User> {
 
     @Override

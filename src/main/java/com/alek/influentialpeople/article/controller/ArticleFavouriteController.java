@@ -4,6 +4,9 @@ import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.model.ArticleHeader;
 import com.alek.influentialpeople.article.model.ArticleRequest;
 import com.alek.influentialpeople.article.model.ArticleResponse;
+import com.alek.influentialpeople.article.service.ArticleHeaderConverter;
+import com.alek.influentialpeople.article.service.ArticleRequestConverter;
+import com.alek.influentialpeople.article.service.ArticleResponseConverter;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.common.abstraction.FavouriteService;
 import org.springframework.data.domain.Page;
@@ -15,20 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.*;
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
 @RequestMapping("/article")
 public class ArticleFavouriteController {
 
+    private TwoWayConverter<ArticleRequest, Article> articleRequestConverter = new ArticleRequestConverter();
+    private TwoWayConverter<Article, ArticleHeader> articleHeaderConverter = new ArticleHeaderConverter();
+    private TwoWayConverter<Article, ArticleResponse> articleResponseConverter = new ArticleResponseConverter();
+
     private final FavouriteService<Article, Long> articleService;
 
-    private TwoWayConverter<ArticleRequest, Article> articleRequestConverter = getConverter(ARTICLE_REQUEST_TO_ARTICLE);
-    private TwoWayConverter<Article, ArticleHeader> articleHeaderConverter = getConverter(ARTICLE_TO_ARTICLE_HEADER);
-    private TwoWayConverter<Article, ArticleResponse> articleResponseConverter = getConverter(ARTICLE_TO_ARTICLE_RESPONSE);
-
-    public ArticleFavouriteController(FavouriteService<Article, Long>articleService) {
+    public ArticleFavouriteController(FavouriteService<Article, Long> articleService) {
         this.articleService = articleService;
     }
 

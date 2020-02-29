@@ -3,10 +3,12 @@ package com.alek.influentialpeople.article.controller;
 import com.alek.influentialpeople.article.entity.Article;
 import com.alek.influentialpeople.article.model.ArticleResponse;
 import com.alek.influentialpeople.article.model.ArticleSearch;
+import com.alek.influentialpeople.article.service.ArticleResponseConverter;
 import com.alek.influentialpeople.common.abstraction.SearchService;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.hero.persistence.HeroCrudRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.ARTICLE_TO_ARTICLE_RESPONSE;
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 @RestController
 @RequestMapping("/article/search")
@@ -29,7 +29,7 @@ public class SearchArticleController {
 
     private final SearchService<Article, ArticleSearch> searchService;
     private final HeroCrudRepository heroRepository;
-    private TwoWayConverter<Article, ArticleResponse> articleResponseConverter = getConverter(ARTICLE_TO_ARTICLE_RESPONSE);
+    private TwoWayConverter<Article, ArticleResponse> articleResponseConverter = new ArticleResponseConverter();
 
     public SearchArticleController(SearchService<Article, ArticleSearch> searchService, HeroCrudRepository heroRepository) {
         this.searchService = searchService;

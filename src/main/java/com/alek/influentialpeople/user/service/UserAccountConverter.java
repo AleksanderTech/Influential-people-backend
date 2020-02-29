@@ -8,7 +8,6 @@ import com.alek.influentialpeople.user.role.entity.Role;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
 public class UserAccountConverter extends TwoWayConverter<UserAccount, User> {
 
     @Override

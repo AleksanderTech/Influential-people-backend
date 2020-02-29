@@ -1,5 +1,6 @@
 package com.alek.influentialpeople.hero.service;
 
+import com.alek.influentialpeople.common.ImageType;
 import com.alek.influentialpeople.common.abstraction.ImageService;
 import com.alek.influentialpeople.common.ImageManager;
 import com.alek.influentialpeople.exception.ExceptionMessages;
@@ -40,12 +41,12 @@ public class HeroImageService implements ImageService<String> {
         }
         String path = heroRepository.findAvatarPath(heroName);
         if (path == null || !new File(path).exists()) {
-            path = imageManager.createPath(ImageManager.StorageOf.HERO, heroName);
+            path = imageManager.createPath(ImageType.HERO, heroName);
             heroRepository.updateImagePath(imageManager.appendImageName(heroName, path), heroName);
-            imageManager.storeImage(ImageManager.StorageOf.HERO, heroName, image);
+            imageManager.storeImage(ImageType.HERO, heroName, image);
         } else {
             imageManager.storeImage(path, image);
         }
-        return imageManager.createUrl(ImageManager.StorageOf.HERO, heroName);
+        return imageManager.createUrl(ImageType.HERO, heroName);
     }
 }

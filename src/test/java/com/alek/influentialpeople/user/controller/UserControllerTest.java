@@ -1,7 +1,6 @@
 package com.alek.influentialpeople.user.controller;
 
 import com.alek.influentialpeople.TestUtils;
-import com.alek.influentialpeople.common.ConvertersFactory;
 import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
@@ -10,6 +9,7 @@ import com.alek.influentialpeople.exception.exceptions.StateConflictException;
 import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserAccount;
 import com.alek.influentialpeople.user.role.entity.Role;
+import com.alek.influentialpeople.user.service.UserAccountConverter;
 import com.alek.influentialpeople.user.service.UserCrudService;
 import com.google.common.collect.Sets;
 import org.assertj.core.util.Lists;
@@ -29,7 +29,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.stream.Collectors;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,13 +42,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
 
-    private TwoWayConverter<UserAccount, User> converterA = getConverter(ConvertersFactory.ConverterType.USER_ACCOUNT_TO_USER);
+    private TwoWayConverter<UserAccount, User> converterA=new UserAccountConverter();
     private MockMvc mockMvc;
     private User user1;
     private User user2;
 
     @InjectMocks
-    private UserManagementController userController;
+    private UserCrudController userController;
 
     @Mock
     private UserCrudService userService;

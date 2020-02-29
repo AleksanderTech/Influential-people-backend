@@ -26,9 +26,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Date;
 
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.ART_COMMENT_REQUEST_TO_ART_COMMENT;
-import static com.alek.influentialpeople.common.ConvertersFactory.ConverterType.ART_COMMENT_TO_ART_COMMENT_RESPONSE;
-import static com.alek.influentialpeople.common.ConvertersFactory.getConverter;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -39,9 +36,10 @@ public class ArticleCommentControllerTest {
 
     @Mock
     private ArticleCommentService commentService;
-
-    private TwoWayConverter<ArticleComment, ArticleCommentResponse> commentResponseConverter = getConverter(ART_COMMENT_TO_ART_COMMENT_RESPONSE);
-    private TwoWayConverter<ArticleCommentRequest, ArticleComment> commentRequestConverter = getConverter(ART_COMMENT_REQUEST_TO_ART_COMMENT);
+    @Mock
+    private TwoWayConverter<ArticleComment, ArticleCommentResponse> commentResponseConverter;
+    @Mock
+    private TwoWayConverter<ArticleCommentRequest, ArticleComment> commentRequestConverter;
 
     private MockMvc mockMvc;
     private Article article;
