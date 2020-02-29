@@ -1,7 +1,6 @@
 package com.alek.influentialpeople.security.service;
 
 import com.alek.influentialpeople.common.Properties;
-import com.alek.influentialpeople.common.Urls;
 import com.alek.influentialpeople.email.Email;
 import com.alek.influentialpeople.email.EmailSender;
 import com.alek.influentialpeople.exception.ExceptionMessages;
@@ -38,7 +37,7 @@ public class RegisterService implements RegisterManager<User> {
     public User signUp(User user) {
         create(user);
         VerificationToken token = tokenRepository.save(makeToken(user));
-        emailSender.sendEmail(new Email(user.getEmail(), properties.getConfig("spring.mail.username"), properties.getConfig("email.verification.subject"), properties.getConfig("email.verification.message") + "\n\n" + properties.getConfig("gui.url.confirmation-token") + token));
+        emailSender.sendEmail(new Email(user.getEmail(), properties.getConfig("spring.mail.username"), properties.getConfig("email.verification.subject"), properties.getConfig("email.verification.message") + "\n\n" + properties.getConfig("gui.url.confirmation-token") + token.getValue()));
         return user;
     }
 
@@ -56,15 +55,15 @@ public class RegisterService implements RegisterManager<User> {
         return properties.getConfig("gui.url.sign-in-activated");
     }
 
-    private User save(User user) {
-        return userRepository.save(user);
-    }
-
     public User create(User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
             throw new EntityExistsException(ExceptionMessages.USER_EXISTS_MESSAGE);
         }
         user.setPassword(encoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    private User save(User user) {
         return userRepository.save(user);
     }
 
