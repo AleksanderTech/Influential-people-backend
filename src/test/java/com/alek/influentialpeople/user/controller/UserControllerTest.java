@@ -1,7 +1,9 @@
 package com.alek.influentialpeople.user.controller;
 
 import com.alek.influentialpeople.TestUtils;
+import com.alek.influentialpeople.common.Properties;
 import com.alek.influentialpeople.common.TwoWayConverter;
+import com.alek.influentialpeople.common.abstraction.CrudService;
 import com.alek.influentialpeople.exception.ExceptionMessages;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
 import com.alek.influentialpeople.exception.exceptions.EntityExistsException;
@@ -10,7 +12,6 @@ import com.alek.influentialpeople.user.entity.User;
 import com.alek.influentialpeople.user.model.UserAccount;
 import com.alek.influentialpeople.user.role.entity.Role;
 import com.alek.influentialpeople.user.service.UserAccountConverter;
-import com.alek.influentialpeople.user.service.UserCrudService;
 import com.google.common.collect.Sets;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -42,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
 
-    private TwoWayConverter<UserAccount, User> converterA=new UserAccountConverter();
+    private TwoWayConverter<UserAccount, User> converterA = new UserAccountConverter();
     private MockMvc mockMvc;
     private User user1;
     private User user2;
@@ -51,7 +52,10 @@ public class UserControllerTest {
     private UserCrudController userController;
 
     @Mock
-    private UserCrudService userService;
+    private Properties properties;
+
+    @Mock
+    private CrudService<User,String> userService;
 
     @Before
     public void setUp() {
@@ -103,7 +107,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(user1.getUsername()))
                 .andExpect(jsonPath("$.email").value(user1.getEmail()))
-                .andExpect(jsonPath("$.roles.[*]").value(user1.getRoles().stream().map(role->role.getName()).collect(Collectors.toList())));
+                .andExpect(jsonPath("$.roles.[*]").value(user1.getRoles().stream().map(role -> role.getName()).collect(Collectors.toList())));
         verify(userService, Mockito.times(1)).findOne(any(String.class));
     }
 
@@ -131,7 +135,7 @@ public class UserControllerTest {
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.username").value(user1.getUsername()))
                 .andExpect(jsonPath("$.email").value(user1.getEmail()))
-                .andExpect(jsonPath("$.roles.[*]").value(user1.getRoles().stream().map(role->role.getName()).collect(Collectors.toList())));
+                .andExpect(jsonPath("$.roles.[*]").value(user1.getRoles().stream().map(role -> role.getName()).collect(Collectors.toList())));
 
         verify(userService, Mockito.times(1)).create(any(User.class));
     }

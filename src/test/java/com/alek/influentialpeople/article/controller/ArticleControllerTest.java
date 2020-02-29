@@ -1,11 +1,7 @@
 package com.alek.influentialpeople.article.controller;
 
 import com.alek.influentialpeople.article.entity.Article;
-import com.alek.influentialpeople.article.model.ArticleHeader;
-import com.alek.influentialpeople.article.model.ArticleRequest;
-import com.alek.influentialpeople.article.model.ArticleResponse;
 import com.alek.influentialpeople.article.service.ArticleCrudService;
-import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
 import com.alek.influentialpeople.hero.entity.Hero;
 import org.assertj.core.util.Lists;
@@ -33,10 +29,6 @@ public class ArticleControllerTest {
     private ArticleCrudService articleService;
     @InjectMocks
     private ArticleCrudController articleController;
-
-    private TwoWayConverter<ArticleRequest, Article> articleRequestConverter;
-    private TwoWayConverter<Article, ArticleHeader> articleHeaderConverter;
-    private TwoWayConverter<Article, ArticleResponse> articleResponseConverter;
 
     private Article article1;
     private Article article2;

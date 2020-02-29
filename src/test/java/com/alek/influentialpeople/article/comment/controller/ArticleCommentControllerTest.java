@@ -1,11 +1,9 @@
 package com.alek.influentialpeople.article.comment.controller;
 
 import com.alek.influentialpeople.article.comment.entity.ArticleComment;
-import com.alek.influentialpeople.article.comment.model.ArticleCommentRequest;
-import com.alek.influentialpeople.article.comment.model.ArticleCommentResponse;
 import com.alek.influentialpeople.article.comment.service.ArticleCommentService;
 import com.alek.influentialpeople.article.entity.Article;
-import com.alek.influentialpeople.common.TwoWayConverter;
+import com.alek.influentialpeople.common.Properties;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
 import com.alek.influentialpeople.user.entity.User;
 import org.assertj.core.util.Lists;
@@ -37,9 +35,7 @@ public class ArticleCommentControllerTest {
     @Mock
     private ArticleCommentService commentService;
     @Mock
-    private TwoWayConverter<ArticleComment, ArticleCommentResponse> commentResponseConverter;
-    @Mock
-    private TwoWayConverter<ArticleCommentRequest, ArticleComment> commentRequestConverter;
+    private Properties properties;
 
     private MockMvc mockMvc;
     private Article article;

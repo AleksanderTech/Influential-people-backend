@@ -1,11 +1,8 @@
 package com.alek.influentialpeople.quote.controller;
 
-import com.alek.influentialpeople.common.TwoWayConverter;
 import com.alek.influentialpeople.exception.controller.ExceptionController;
 import com.alek.influentialpeople.hero.entity.Hero;
 import com.alek.influentialpeople.quote.entity.Quote;
-import com.alek.influentialpeople.quote.model.QuoteRequest;
-import com.alek.influentialpeople.quote.model.QuoteResponse;
 import com.alek.influentialpeople.quote.service.QuoteCrudService;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -31,10 +28,6 @@ public class QuoteControllerTest {
     private QuoteCrudService quoteService;
     @InjectMocks
     private QuoteCrudController quoteController;
-    @Mock
-    private TwoWayConverter<Quote, QuoteResponse> quoteResponseConverter;
-    @Mock
-    private TwoWayConverter<QuoteRequest, Quote> quoteRequestConverter;
 
     private Hero aristotle;
     private Quote quote1;
