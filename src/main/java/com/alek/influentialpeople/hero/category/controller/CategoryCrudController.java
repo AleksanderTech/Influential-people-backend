@@ -69,9 +69,9 @@ public class CategoryCrudController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{name}")
     public ResponseEntity<CategoryResponse> findOne(@PathVariable String name) {
-        Category category = categoryCrudService.findOne(name);
-        CategoryResponse categoryResponse = categoryConverter.convert(category);
-        categoryResponse.setImageUrl(ImageManager.createUrl(category.getImagePath(), properties.getConfig("server.url"), ImageType.CATEGORY, category.getName()));
-        return new ResponseEntity<>(categoryConverter.convert(categoryCrudService.findOne(name)), HttpStatus.OK);
+        Category cat = categoryCrudService.findOne(name);
+        CategoryResponse categoryResponse = categoryConverter.convert(cat);
+        categoryResponse.setImageUrl(ImageManager.createUrl(cat.getImagePath(), properties.getConfig("server.url"), ImageType.CATEGORY, cat.getName()));
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 }
